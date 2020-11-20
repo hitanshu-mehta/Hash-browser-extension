@@ -1,0 +1,90 @@
+<div class="container-flex">
+  <form>
+    <div class="form-group row">
+      <label for="exampleInputEmail1">Username</label>
+      <input
+        #usr
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Username"
+      />
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword1">Password</label>
+      <div class="input-group px-0">
+        <input
+          type="text"
+          class="form-control"
+          aria-label="Password"
+          placeholder="Password"
+        />
+        <div class="input-group-append">
+          <button
+            type="button"
+            class="btn btn-light"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title=" {{ showPassword ? 'Hide Password' : 'Show Password' }}"
+            (click)="togglePassword()"
+          >
+            {{ showPassword ? "😑" : "🤑" }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword1">Re-enter Password</label>
+      <div class="input-group px-0">
+        <input
+          type="text"
+          class="form-control"
+          aria-label="Re-enter Password"
+          placeholder="Re-enter Password"
+        />
+        <div class="input-group-append">
+          <button
+            type="button"
+            class="btn btn-light"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title=" {{ showPassword ? 'Hide Password' : 'Show Password' }}"
+            (click)="togglePassword()"
+          >
+            {{ showPassword ? "😑" : "🤑" }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+      <label class="form-check-label" for="exampleCheck1">
+        Generate Password
+      </label>
+    </div>
+
+    <div class="row pull-right submit-button">
+      <button
+        appStopProp
+        appStopClick
+        type="submit"
+        class="btn btn-primary btn-block"
+        [routerLink]="'/main'"
+      >
+        Submit
+      </button>
+    </div>
+    <div class="row pull-right submit-button">
+      <button
+        appStopProp
+        appStopClick
+        type="submit"
+        class="btn btn-secondary btn-block"
+        [routerLink]="'/home'"
+      >
+        Back
+      </button>
+    </div>
+  </form>
+</div>

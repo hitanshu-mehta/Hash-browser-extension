@@ -1,0 +1,26 @@
+<app-nav-bar></app-nav-bar>
+<div class="container-flex my-6">
+  <div class="row my-2">
+    <button
+      appStopProp
+      appStopClick
+      type="button"
+      class="btn btn-primary btn-block"
+      [routerLink]="'/login'"
+    >
+      Login
+    </button>
+  </div>
+  <div class="row my-3">
+    <button
+      appStopProp
+      appStopClick
+      type="button"
+      class="btn btn-secondary btn-block"
+      (click)="createAccount()"
+      [routerLink]="'/new-user'"
+    >
+      Create Account
+    </button>
+  </div>
+</div>

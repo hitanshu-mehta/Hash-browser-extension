@@ -1,0 +1,44 @@
+<div class="remove-margin container-fluid">
+  <div class="row" *ngIf="loggedIn">
+    <!-- <nav class="navbar navbar-light bg-light justify-content-between">
+      <form class="form-inline">
+        <img class="mx-2" src="favicon.ico" width="30" height="30" />
+        <input
+          class="form-control-sm"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="inputGroup-sizing-sm"
+        />
+      </form>
+    </nav> -->
+    <div class="remove-margin pos-f-t">
+      <div class="collapse" id="navbarToggleExternalContent">
+        <app-settings></app-settings>
+      </div>
+      <nav class="navbar navbar-light bg-light">
+        <button
+          class="navbar-toggler ml-2"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!loggedIn">
+    <nav class="navbar navbar-light bg-light">
+      <div class="navbar-brand" href="#">
+        🥸
+        <!-- <img src="favicon.ico" width="30" height="30" /> -->
+        {{ appName }}
+      </div>
+    </nav>
+  </div>
+</div>
