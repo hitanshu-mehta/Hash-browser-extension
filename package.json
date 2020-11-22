@@ -1,5 +1,5 @@
 {
-  "name": "angular-chrome-extension",
+  "name": "hash-password-manager",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -12,7 +12,6 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.3",
-    "@angular/cdk": "~8.2.3",
     "@angular/common": "~8.2.3",
     "@angular/compiler": "~8.2.3",
     "@angular/core": "~8.2.3",
@@ -23,6 +22,7 @@
     "bootstrap": "^5.0.0-alpha3",
     "hammerjs": "^2.0.8",
     "jquery": "^3.5.1",
+    "ngx-bootstrap-slider": "^1.9.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

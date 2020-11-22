@@ -1,0 +1,4 @@
+[submodule "hash-password-manager"]
+	path = hash-password-manager
+	url = https://github.com/sarvagyab/hash-password-manager.git
+	branch = master

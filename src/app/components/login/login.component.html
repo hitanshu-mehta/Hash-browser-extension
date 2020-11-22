@@ -1,18 +1,18 @@
 <div class="container-flex">
   <form>
     <div class="form-group row">
-      <label for="exampleInputEmail1">Username</label>
+      <label for="email">Username</label>
       <input
         #usr
-        type="email"
+        type="text"
         class="form-control"
-        id="exampleInputEmail1"
+        id="email"
         aria-describedby="emailHelp"
         placeholder="Username"
       />
     </div>
     <div class="form-group row">
-      <label for="exampleInputPassword1">Password</label>
+      <label for="Password">Password</label>
       <div class="input-group px-0">
         <input
           #pwd
@@ -35,16 +35,22 @@
         </div>
       </div>
     </div>
+    <div
+      *ngIf="isLoginFailed"
+      class="alert alert-danger py-1 align-items-center"
+      role="alert"
+    >
+      Incorrect Password!
+    </div>
     <div class="row pull-right submit-button">
       <button
         appStopProp
         appStopClick
         type="submit"
         class="btn btn-primary btn-block"
-        (click)="onSubmit(pwd.value, usr.value)"
-        [routerLink]="'/main'"
+        (click)="onSubmit(usr.value, pwd.value)"
       >
-        Submit
+        Login
       </button>
     </div>
     <div class="row pull-right submit-button">

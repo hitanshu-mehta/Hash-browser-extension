@@ -1,23 +1,14 @@
 <div class="remove-margin container-fluid">
-  <div class="row" *ngIf="loggedIn">
-    <!-- <nav class="navbar navbar-light bg-light justify-content-between">
-      <form class="form-inline">
-        <img class="mx-2" src="favicon.ico" width="30" height="30" />
-        <input
-          class="form-control-sm"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="inputGroup-sizing-sm"
-        />
-      </form>
-    </nav> -->
+  <div class="row" *ngIf="this.authService.isLoggedIn">
     <div class="remove-margin pos-f-t">
       <div class="collapse" id="navbarToggleExternalContent">
         <app-settings></app-settings>
       </div>
       <nav class="navbar navbar-light bg-light">
         <button
+          appStopProp
+          appBlurClick
+          appStopClick
           class="navbar-toggler ml-2"
           type="button"
           data-toggle="collapse"
@@ -32,7 +23,7 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="!loggedIn">
+  <div class="row" *ngIf="!this.authService.isLoggedIn">
     <nav class="navbar navbar-light bg-light">
       <div class="navbar-brand" href="#">
         🥸

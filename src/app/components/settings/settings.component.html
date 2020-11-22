@@ -1,8 +1,16 @@
 <div class="list-group">
-  <button type="button" class="list-group-item list-group-item-action active">
-    Change Master Password
-  </button>
-  <button type="button" class="list-group-item list-group-item-action">
-    Generate Random Password
-  </button>
+  <div *ngFor="let setting of settings">
+    <button
+      appStopProp
+      appBlurClick
+      appStopClick
+      type="button"
+      class="list-group-item list-group-item-action"
+      [class.active]="setting.active"
+      (click)="onClick(setting.index)"
+      [routerLink]="setting.route"
+    >
+      {{ setting.title }}
+    </button>
+  </div>
 </div>

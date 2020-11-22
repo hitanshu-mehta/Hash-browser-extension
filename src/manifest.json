@@ -1,7 +1,7 @@
 {
-    "name": "Great Extension",
-    "version": "1.0",
-    "description": "Build an Extension with Angular",
+    "name": "Hash Password Manager",
+    "version": "0.1",
+    "description": "Manage your password securely",
     "manifest_version": 2,
     "permissions": [
         "activeTab",
@@ -10,8 +10,7 @@
     ],
     "background": {
         "scripts": [
-            "background.js",
-            "runtime.js"
+            "background.js"
         ]
     },
     "browser_action": {

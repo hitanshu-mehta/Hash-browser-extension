@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  loggedIn = false;
+
   appName = 'Hash Password Manager';
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
   }
