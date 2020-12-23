@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-chrome-extension": {
+    "hash-password-manager-browser": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
             "customWebpackConfig": {
               "path": "./custom-webpack.config.js"
             },
-            "outputPath": "dist/angular-chrome-extension",
+            "outputPath": "dist/hash-password-manager-browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -35,9 +35,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"
             ]
           },
           "configurations": {
@@ -80,18 +77,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-chrome-extension:build"
+            "browserTarget": "hash-password-manager-browser:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-chrome-extension:build:production"
+              "browserTarget": "hash-password-manager-browser:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-chrome-extension:build"
+            "browserTarget": "hash-password-manager-browser:build"
           }
         },
         "test": {
@@ -128,15 +125,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-chrome-extension:serve"
+            "devServerTarget": "hash-password-manager-browser:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-chrome-extension:serve:production"
+              "devServerTarget": "hash-password-manager-browser:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "angular-chrome-extension"
+  "defaultProject": "hash-password-manager-browser"
 }

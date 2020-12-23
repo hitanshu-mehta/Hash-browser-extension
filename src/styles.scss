@@ -1,15 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap/scss/bootstrap";
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css";
 
-button {
-  border-style: none;
-}
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "../node_modules/bootstrap/scss/bootstrap-grid.scss";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css";
 
 body {
   height: 500px;
   width: 400px;
+  padding: 0rem;
+  margin: 0rem;
 }
 
 .container-flex {
@@ -21,4 +21,14 @@ body {
 .my-6 {
   margin-top: ($spacer * 6) !important;
   margin-bottom: ($spacer * 6) !important;
+}
+
+:focus {
+  outline: 0 !important;
+}
+
+#main {
+  margin: 0rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }

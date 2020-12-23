@@ -1,6 +1,7 @@
+import { EventEmitter } from '@angular/core';
 import { GeneratePasswordService, PasswordConfig } from './../../../services/generate-password.service';
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-random-password-setting',
@@ -8,6 +9,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./random-password-setting.component.scss'],
 })
 export class RandomPasswordSettingComponent {
+
+  hide = true;
 
   settings: PasswordConfig;
   currentSelectedLength: number;

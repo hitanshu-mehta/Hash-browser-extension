@@ -1,66 +1,74 @@
 <div class="container-flex">
-  <form>
-    <div class="form-group row">
-      <label for="email">Username</label>
-      <input
-        #usr
-        type="text"
-        class="form-control"
-        id="email"
-        aria-describedby="emailHelp"
-        placeholder="Username"
-      />
-    </div>
-    <div class="form-group row">
-      <label for="Password">Password</label>
-      <div class="input-group px-0">
+  <form [formGroup]="loginForm">
+    <!-- username  -->
+    <div class="row">
+      <mat-form-field appearance="standard">
+        <mat-label>Username</mat-label>
         <input
-          #pwd
-          type="{{ showPassword ? 'text' : 'password' }}"
-          class="form-control"
-          aria-label="Password"
+          matInput
+          formControlName="username"
+          type="text"
+          id="username"
+          autocomplete="off"
+          aria-describedby="Username"
+          placeholder="Username"
+        />
+        <mat-error *ngIf="username.invalid">{{
+          getUsernameErrorMessage()
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- password -->
+    <div class="row">
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hide ? 'password' : 'text'"
+          id="password"
+          autocomplete="off"
+          aria-describedby="Password"
           placeholder="Password"
         />
-        <div class="input-group-append">
-          <button
-            type="button"
-            class="btn btn-light"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title=" {{ showPassword ? 'Hide Password' : 'Show Password' }}"
-            (click)="togglePassword()"
-          >
-            {{ showPassword ? "😑" : "🤑" }}
-          </button>
-        </div>
-      </div>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.invalid">{{
+          getPasswordErrorMessage()
+        }}</mat-error>
+      </mat-form-field>
     </div>
-    <div
-      *ngIf="isLoginFailed"
-      class="alert alert-danger py-1 align-items-center"
-      role="alert"
-    >
-      Incorrect Password!
-    </div>
+
+    <!-- error message -->
+    <mat-error *ngIf="isLoginFailed">
+      Incorrect Username or Password
+    </mat-error>
+
+    <!-- login button -->
     <div class="row pull-right submit-button">
       <button
+        mat-raised-button
         appStopProp
         appStopClick
         type="submit"
-        class="btn btn-primary btn-block"
-        (click)="onSubmit(usr.value, pwd.value)"
+        color="primary"
+        (click)="onSubmit()"
       >
         Login
       </button>
     </div>
+
+    <!-- back button -->
     <div class="row pull-right submit-button">
-      <button
-        appStopProp
-        appStopClick
-        type="submit"
-        class="btn btn-secondary btn-block"
-        [routerLink]="'/home'"
-      >
+      <button mat-raised-button appStopProp appStopClick [routerLink]="'/home'">
         Back
       </button>
     </div>

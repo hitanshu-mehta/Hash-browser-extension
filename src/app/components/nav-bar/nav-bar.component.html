@@ -1,35 +1,30 @@
 <div class="remove-margin container-fluid">
-  <div class="row" *ngIf="this.authService.isLoggedIn">
+  <div class="row" *ngIf="!this.authService.isLoggedIn">
     <div class="remove-margin pos-f-t">
-      <div class="collapse" id="navbarToggleExternalContent">
-        <app-settings></app-settings>
-      </div>
-      <nav class="navbar navbar-light bg-light">
-        <button
-          appStopProp
-          appBlurClick
-          appStopClick
-          class="navbar-toggler ml-2"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarToggleExternalContent"
-          aria-controls="navbarToggleExternalContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </nav>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-description>
+              <mat-toolbar>
+                <button appStopProp appBlurClick appStopClick mat-icon-button>
+                  <mat-icon>menu</mat-icon>
+                </button>
+
+                <span class="example-spacer"></span>
+                <span>{{ appName }}</span>
+              </mat-toolbar>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-settings></app-settings>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </div>
 
-  <div class="row" *ngIf="!this.authService.isLoggedIn">
-    <nav class="navbar navbar-light bg-light">
-      <div class="navbar-brand" href="#">
-        🥸
-        <!-- <img src="favicon.ico" width="30" height="30" /> -->
-        {{ appName }}
-      </div>
-    </nav>
+  <div class="row" *ngIf="this.authService.isLoggedIn">
+    <mat-toolbar>
+      <span> {{ appName }}</span>
+      <span class="example-spacer"></span>
+    </mat-toolbar>
   </div>
 </div>

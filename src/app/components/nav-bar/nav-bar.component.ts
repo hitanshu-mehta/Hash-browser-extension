@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-
   appName = 'Hash Password Manager';
   constructor(public authService: AuthService) { }
 

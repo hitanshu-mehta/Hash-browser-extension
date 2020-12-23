@@ -1,103 +1,117 @@
 <div class="container-flex">
-  <form>
-    <div class="form-group row">
-      <label for="exampleInputEmail1">Username</label>
-      <input
-        [value]="username"
-        type="email"
-        class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
-        placeholder="Username"
-      />
-    </div>
-    <div class="form-group row">
-      <label for="exampleInputPassword1">Password</label>
-      <div class="input-group px-0">
+  <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
+    <!-- Username -->
+    <div class="row">
+      <mat-form-field appearance="standard">
+        <mat-label>Username</mat-label>
         <input
-          #pwd
-          type="{{ showPassword ? 'text' : 'password' }}"
-          class="form-control"
-          aria-label="Password"
-          placeholder="Password"
-          (blur)="verifyBothPasswords(pwd.value, pwdr.value, false)"
+          matInput
+          formControlName="username"
+          type="text"
+          id="username"
+          autocomplete="off"
+          arai-discribedby="Username"
+          placeholder="Username"
         />
-        <div class="input-group-append">
-          <button
-            type="button"
-            class="btn btn-light"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title=" {{ showPassword ? 'Hide Password' : 'Show Password' }}"
-            (click)="togglePassword()"
-          >
-            {{ showPassword ? "😑" : "🤑" }}
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="exampleInputPassword1">Re-enter Password</label>
-      <div class="input-group px-0">
-        <input
-          #pwdr
-          type="{{ showPassword ? 'text' : 'password' }}"
-          class="form-control"
-          aria-label="Re-enter Password"
-          placeholder="Re-enter Password"
-          (blur)="verifyBothPasswords(pwd.value, pwdr.value, true)"
-          (keyup.enter)="verifyBothPasswords(pwd.value, pwdr.value, true)"
-        />
-        <div class="input-group-append">
-          <button
-            type="button"
-            class="btn btn-light"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title=" {{ showPassword ? 'Hide Password' : 'Show Password' }}"
-            (click)="togglePassword()"
-          >
-            {{ showPassword ? "😑" : "🤑" }}
-          </button>
-        </div>
-      </div>
-    </div>
-    <div
-      *ngIf="!bothPasswordSame"
-      class="alert alert-danger py-1 align-items-center"
-      role="alert"
-    >
-      Passwords are not matching!
-    </div>
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-      <label class="form-check-label" for="exampleCheck1">
-        Generate Password
-      </label>
+        <mat-error *ngIf="username.touched && username.invalid">
+          {{ getUsernameErrorMessages() }}
+        </mat-error>
+      </mat-form-field>
     </div>
 
-    <div class="row pull-right submit-button">
+    <!-- Password -->
+    <div class="row">
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          #pwd
+          matInput
+          type="text"
+          autocomplete="off"
+          formControlName="password"
+          [type]="hide ? 'password' : 'text'"
+          id="password"
+          aria-describedby="Password"
+          placeholder="Password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide Password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.touched && password.invalid">
+          {{ getPasswordErrorMessages() }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Re-Enter Password -->
+    <div class="row">
+      <mat-form-field appearance="standard">
+        <mat-label>Re-Enter Password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          autocomplete="off"
+          formControlName="repassword"
+          [attr.aria-describeBy]="repassword"
+          placeholder="Re Enter Password"
+        />
+        <button
+          #rpwd
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide Password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="repassword.touched">
+          {{ getRepasswordErrorMessages() }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Generate Password -->
+    <div class="row">
+      <div class="col">
+        <button mat-stroked-button type="button">Generate Password</button>
+      </div>
+      <div class="col"></div>
+    </div>
+
+    <div class="row submit-button">
       <button
+        mat-raised-button
+        color="primary"
         appStopProp
         appStopClick
         type="submit"
-        class="btn btn-primary btn-block"
-        [routerLink]="'/main'"
-        (click)="register(pwd.value, pwdr.value, true)"
+        (click)="onSubmit()"
       >
+        <!-- [routerLink]="'/main'" -->
         Submit
       </button>
     </div>
-    <div class="mb-3 row pull-right submit-button">
-      <button
-        appStopProp
-        appStopClick
-        type="submit"
-        class="btn btn-secondary btn-block"
-        [routerLink]="'/home'"
-      >
-        Back
-      </button>
-    </div>
   </form>
+
+  <!-- Back -->
+  <div class="mb-3 row submit-button">
+    <button
+      mat-raised-button
+      appStopProp
+      appStopClick
+      type="submit"
+      [routerLink]="'/home'"
+    >
+      Back
+    </button>
+  </div>
 </div>

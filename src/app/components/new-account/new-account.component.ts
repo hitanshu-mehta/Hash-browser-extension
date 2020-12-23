@@ -1,7 +1,11 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 
 // services
 import { NewUserService } from '../../services/new-user.service';
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
+import { isString } from 'util';
+import { throwMatDuplicatedDrawerError } from '@angular/material/sidenav';
 
 
 @Component({
@@ -11,32 +15,94 @@ import { NewUserService } from '../../services/new-user.service';
 })
 export class NewAccountComponent {
 
+  createAccountForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    repassword: new FormControl('', [])
+  })
+
+  hide = true;
   showPassword = false;
   bothPasswordSame = true;
   reenterTouched = false;
-  username = '';
 
   constructor(private newAccountService: NewUserService) { }
+
+
+  // Getter functions
+  get username() {
+    return this.createAccountForm.get('username');
+  }
+
+  get password() {
+    return this.createAccountForm.get('password');
+  }
+
+  get repassword() {
+    return this.createAccountForm.get('repassword');
+  }
+
+
+  // Error messages
+  getUsernameErrorMessages(): string {
+
+    if (this.username.hasError('required')) {
+      return 'Username is required';
+    }
+  }
+
+  getPasswordErrorMessages(): string {
+
+    if (this.password.hasError('required')) {
+      return `Password is required`;
+    }
+    if (this.password.hasError('minlength')) {
+      return `Password must be of length ${this.password.errors.minlength.requiredLength}`;
+    }
+
+  }
+
+  getRepasswordErrorMessages(): string {
+
+    if (this.password.touched && this.password.valid) {
+      const matched = this.password.value === this.repassword.value;
+
+      // mat-error will not be displayed untill FormControl has an error.
+      // So we have to set error to repassword FormControl.
+      if (matched) {
+        this.repassword.setErrors(null);
+      }
+      else {
+        this.repassword.setErrors({ notMatched: true });
+      }
+
+      return 'Passwords are not matching';
+    }
+
+  }
+
+
+  onSubmit() {
+    // console.log(this.createAccountForm)
+    // this.verifyBothPasswords(this.password, this.repassword)
+  }
 
   generatePassword(): void {
     // this.newAccountService.register()
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
-  }
 
-  verifyBothPasswords(password1: string, password2: string, isReenter: boolean): boolean {
-    this.reenterTouched = this.reenterTouched || isReenter;
-    this.bothPasswordSame = this.reenterTouched ? (password1 === password2) : true;
-    return (password1 === password2);
-  }
+  // verifyBothPasswords(password1: string, password2: string, isReenter: boolean): boolean {
+  //   this.reenterTouched = this.reenterTouched || isReenter;
+  //   this.bothPasswordSame = this.reenterTouched ? (password1 === password2) : true;
+  //   return (password1 === password2);
+  // }
 
   register(password1: string, password2: string, isReenter: boolean): void {
-    if (!this.verifyBothPasswords(password1, password2, isReenter)) {
-      return;
-    }
-    this.newAccountService.register(password1, this.username);
+    // if (!this.verifyBothPasswords(password1, password2, isReenter)) {
+    //   return;
+    // }
+    // this.newAccountService.register(password1, this.username);
 
   }
 
