@@ -28,7 +28,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 
 // Components
 import { LoginComponent } from './components/login/login.component';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
 import { MainTabComponent } from './components/main-tab/main-tab.component';
 import { NewAccountComponent } from './components/new-account/new-account.component';
@@ -40,6 +39,7 @@ import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { StopPropDirective } from './directives/stop-prop.directive';
 import { StopClickDirective } from './directives/stop-click.directive';
 import { BlurClickDirective } from './directives/blur-click.directive';
+import { VaultComponent } from './vault/vault.component';
 
 
 const routes: Routes = [
@@ -81,12 +81,12 @@ const routes: Routes = [
     StopPropDirective,
     StopClickDirective,
     BlurClickDirective,
-    NavBarComponent,
     HomeComponent,
     MainTabComponent,
     NewAccountComponent,
     SettingsComponent,
-    RandomPasswordSettingComponent
+    RandomPasswordSettingComponent,
+    VaultComponent
   ],
   imports: [
     BrowserModule,
