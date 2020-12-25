@@ -1,11 +1,41 @@
-<div class="card mt-0 mb-1 mt-2">
-  <div class="card-header">Stored Logins</div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">duckduckgo.com</li>
-    <li class="list-group-item">google.com</li>
-    <li class="list-group-item">instagram.com</li>
-    <li class="list-group-item">twitter.com</li>
-    <li class="list-group-item">whatsapp.com</li>
-    <!-- <li class="list-group-item">telegram.com</li> -->
-  </ul>
+<div class="container-fluid px-0">
+  <div class="row fixed-top">
+    <mat-form-field appearance="fill">
+      <mat-label> Search Vault</mat-label>
+      <input matInput type="text" />
+      <button mat-icon-button matPrefix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="row fixed-bottom">
+    <mat-tab-group
+      class="align-items-center"
+      [color]="'primary'"
+      headerPosition="below"
+    >
+      <mat-tab label="Vault">
+        <ng-template mat-tab-label>
+          <mat-icon class="material-icons">enhanced_encryption</mat-icon>
+        </ng-template>
+        Content 1
+      </mat-tab>
+      <mat-tab label="Generate Password">
+        <ng-template mat-tab-label>
+          <mat-icon class="material-icons">vpn_key</mat-icon>
+        </ng-template>
+        <div class="container">
+          <div class="row align-items-center">
+            <app-random-password-setting></app-random-password-setting>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="settings">
+        <ng-template mat-tab-label>
+          <mat-icon class="material-icons">settings</mat-icon>
+        </ng-template>
+        Content 1
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

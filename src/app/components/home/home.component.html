@@ -1,5 +1,5 @@
 <div class="container-flex my-6">
-  <div class="row my-2">
+  <div class="row my-2 mx-2">
     <button
       mat-raised-button
       *ngIf="checkIfMasterPasswordPresent()"
@@ -11,19 +11,19 @@
       Login
     </button>
   </div>
-  <div class="row my-3">
+  <div class="row my-3 mx-2">
     <button
       *ngIf="!checkIfMasterPasswordPresent()"
       appStopProp
       appStopClick
       mat-raised-button
       color="primary"
-      [routerLink]="'/new-user'"
+      [routerLink]="'/main'"
     >
       Create Account
     </button>
   </div>
-  <div class="row my-3">
+  <div class="row my-3 mx-2">
     <button
       appStopProp
       appStopClick

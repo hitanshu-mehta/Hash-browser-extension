@@ -21,6 +21,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Angular cdk
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -104,6 +105,7 @@ const routes: Routes = [
     MatBadgeModule,
     MatButtonToggleModule,
     MatExpansionModule,
+    MatTabsModule,
     ClipboardModule,
     RouterModule.forRoot(routes)
   ],
