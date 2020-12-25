@@ -1,117 +1,119 @@
 <div class="container-flex">
-  <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
-    <!-- Username -->
-    <div class="row">
-      <mat-form-field appearance="standard">
-        <mat-label>Username</mat-label>
-        <input
-          matInput
-          formControlName="username"
-          type="text"
-          id="username"
-          autocomplete="off"
-          arai-discribedby="Username"
-          placeholder="Username"
-        />
-        <mat-error *ngIf="username.touched && username.invalid">
-          {{ getUsernameErrorMessages() }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <!-- Password -->
-    <div class="row">
-      <mat-form-field appearance="standard">
-        <mat-label>Password</mat-label>
-        <input
-          #pwd
-          matInput
-          type="text"
-          autocomplete="off"
-          formControlName="password"
-          [type]="hide ? 'password' : 'text'"
-          id="password"
-          aria-describedby="Password"
-          placeholder="Password"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide Password'"
-          [attr.aria-pressed]="hide"
-        >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
-        <mat-error *ngIf="password.touched && password.invalid">
-          {{ getPasswordErrorMessages() }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <!-- Re-Enter Password -->
-    <div class="row">
-      <mat-form-field appearance="standard">
-        <mat-label>Re-Enter Password</mat-label>
-        <input
-          matInput
-          [type]="hide ? 'password' : 'text'"
-          autocomplete="off"
-          formControlName="repassword"
-          [attr.aria-describeBy]="repassword"
-          placeholder="Re Enter Password"
-        />
-        <button
-          #rpwd
-          type="button"
-          mat-icon-button
-          matSuffix
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide Password'"
-          [attr.aria-pressed]="hide"
-        >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
-        <mat-error *ngIf="repassword.touched">
-          {{ getRepasswordErrorMessages() }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <!-- Generate Password -->
-    <div class="row">
-      <div class="col">
-        <button mat-stroked-button type="button">Generate Password</button>
+  <div class="row align-items-center mx-2">
+    <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="row">
+        <mat-form-field appearance="standard">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            type="text"
+            id="username"
+            autocomplete="off"
+            arai-discribedby="Username"
+            placeholder="Username"
+          />
+          <mat-error *ngIf="username.touched && username.invalid">
+            {{ getUsernameErrorMessages() }}
+          </mat-error>
+        </mat-form-field>
       </div>
-      <div class="col"></div>
-    </div>
 
-    <div class="row submit-button">
-      <button
-        mat-raised-button
-        color="primary"
-        appStopProp
-        appStopClick
-        type="submit"
-        (click)="onSubmit()"
-      >
-        <!-- [routerLink]="'/main'" -->
-        Submit
-      </button>
-    </div>
-  </form>
+      <!-- Password -->
+      <div class="row">
+        <mat-form-field appearance="standard">
+          <mat-label>Password</mat-label>
+          <input
+            #pwd
+            matInput
+            type="text"
+            autocomplete="off"
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+            id="password"
+            aria-describedby="Password"
+            placeholder="Password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide Password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="password.touched && password.invalid">
+            {{ getPasswordErrorMessages() }}
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <!-- Back -->
-  <div class="mb-3 row submit-button">
-    <button
-      mat-raised-button
-      appStopProp
-      appStopClick
-      type="submit"
-      [routerLink]="'/home'"
-    >
-      Back
-    </button>
+      <!-- Re-Enter Password -->
+      <div class="row">
+        <mat-form-field appearance="standard">
+          <mat-label>Re-Enter Password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            autocomplete="off"
+            formControlName="repassword"
+            [attr.aria-describeBy]="repassword"
+            placeholder="Re Enter Password"
+          />
+          <button
+            #rpwd
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide Password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="repassword.touched">
+            {{ getRepasswordErrorMessages() }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Generate Password -->
+      <div class="row">
+        <div class="col">
+          <button mat-stroked-button type="button">Generate Password</button>
+        </div>
+        <div class="col"></div>
+      </div>
+
+      <div class="row mx-3 submit-button">
+        <button
+          mat-raised-button
+          color="primary"
+          appStopProp
+          appStopClick
+          type="submit"
+          (click)="onSubmit()"
+          [routerLink]="'/main'"
+        >
+          Submit
+        </button>
+      </div>
+
+      <!-- Back -->
+      <div class="mb-3 mx-3 row submit-button">
+        <button
+          mat-raised-button
+          appStopProp
+          appStopClick
+          type="button"
+          [routerLink]="'/home'"
+        >
+          Back
+        </button>
+      </div>
+    </form>
   </div>
 </div>

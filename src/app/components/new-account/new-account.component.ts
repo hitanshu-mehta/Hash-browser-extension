@@ -83,27 +83,11 @@ export class NewAccountComponent {
 
 
   onSubmit() {
-    // console.log(this.createAccountForm)
-    // this.verifyBothPasswords(this.password, this.repassword)
+    this.newAccountService.register(this.password.value, this.username.value);
   }
 
   generatePassword(): void {
     // this.newAccountService.register()
-  }
-
-
-  // verifyBothPasswords(password1: string, password2: string, isReenter: boolean): boolean {
-  //   this.reenterTouched = this.reenterTouched || isReenter;
-  //   this.bothPasswordSame = this.reenterTouched ? (password1 === password2) : true;
-  //   return (password1 === password2);
-  // }
-
-  register(password1: string, password2: string, isReenter: boolean): void {
-    // if (!this.verifyBothPasswords(password1, password2, isReenter)) {
-    //   return;
-    // }
-    // this.newAccountService.register(password1, this.username);
-
   }
 
 

@@ -18,8 +18,13 @@
         <ng-template mat-tab-label>
           <mat-icon class="material-icons">enhanced_encryption</mat-icon>
         </ng-template>
-        Content 1
+        <div class="container">
+          <div class="row align-items-center">
+            <app-vault></app-vault>
+          </div>
+        </div>
       </mat-tab>
+
       <mat-tab label="Generate Password">
         <ng-template mat-tab-label>
           <mat-icon class="material-icons">vpn_key</mat-icon>
@@ -30,6 +35,7 @@
           </div>
         </div>
       </mat-tab>
+
       <mat-tab label="settings">
         <ng-template mat-tab-label>
           <mat-icon class="material-icons">settings</mat-icon>
