@@ -1,7 +1,7 @@
 import { LoadingSpinnerService } from './../../services/loading-spinner.service';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // Import services
@@ -11,7 +11,6 @@ import { AuthService } from './../../services/auth.service';
 // Import Models
 import { ProcessStatus } from '../../model/processStatus'
 
-import { InstanstErrorStateMatcher } from './../../utils/instant-error-state.matcher';
 
 
 @Component({
@@ -34,8 +33,11 @@ export class LoginComponent {
   isLoginFailed = false;
 
 
-  constructor(private authService: AuthService, private router: Router, private spinner: LoadingSpinnerService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private spinner: LoadingSpinnerService,
+    private location: Location) { }
 
   // Getter functions
   get username() {
@@ -93,6 +95,10 @@ export class LoginComponent {
     const auth$ = this.authService.Login(this.username.value, this.password.value);
     setTimeout(() => auth$.subscribe(authObserver), 1000);
 
+  }
+
+  back(): void {
+    this.location.back();
   }
 
 

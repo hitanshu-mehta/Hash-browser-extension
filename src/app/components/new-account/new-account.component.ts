@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 // services
 import { NewUserService } from '../../services/new-user.service';
@@ -27,7 +28,12 @@ export class NewAccountComponent {
   bothPasswordSame = true;
   reenterTouched = false;
 
-  constructor(private router: Router, private newAccountService: NewUserService, private spinner: LoadingSpinnerService) { }
+  constructor(
+    private router: Router,
+    private newAccountService: NewUserService,
+    private spinner: LoadingSpinnerService,
+    private location: Location
+  ) { }
 
 
   // Getter functions
@@ -116,5 +122,8 @@ export class NewAccountComponent {
     // this.newAccountService.register()
   }
 
+  back(): void {
+    this.location.back();
+  }
 
 }

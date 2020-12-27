@@ -1,7 +1,6 @@
-import { EventEmitter } from '@angular/core';
 import { GeneratePasswordService, PasswordConfig } from './../../../services/generate-password.service';
-import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
-import { Component, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-random-password-setting',
@@ -33,7 +32,7 @@ export class RandomPasswordSettingComponent {
   errorMsg = '';
 
 
-  constructor(private generatePasswordService: GeneratePasswordService) {
+  constructor(private generatePasswordService: GeneratePasswordService, private location: Location) {
     this.settings = generatePasswordService.getSettings();
     this.currentSelectedLength = this.settings.length;
     this.MaxLowerLength = this.MaxUpperLength = this.MaxDigitLength = this.MaxSpecialLength = this.settings.maxLength;
@@ -66,6 +65,10 @@ export class RandomPasswordSettingComponent {
         (err) => {
           this.errorMsg = err.message;
         });
+  }
+
+  back(): void {
+    this.location.back();
   }
 
 }
