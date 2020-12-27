@@ -1,5 +1,11 @@
-<div class="container-flex my-6">
-  <div class="row my-2 mx-2">
+<div class="container-flex mt-5">
+  <div class="row mb-2">
+    <p>Hash Password Manager</p>
+  </div>
+  <div class="row mx-2 align-items-center">
+    <img src="../../../assets/security_2.svg" alt="Image" height="190px" />
+  </div>
+  <div class="row mb-2 mx-2">
     <button
       mat-raised-button
       *ngIf="checkIfMasterPasswordPresent()"
@@ -11,7 +17,7 @@
       Login
     </button>
   </div>
-  <div class="row my-3 mx-2">
+  <div class="row mb-2 mx-2">
     <button
       *ngIf="!checkIfMasterPasswordPresent()"
       appStopProp
@@ -23,7 +29,7 @@
       Create Account
     </button>
   </div>
-  <div class="row my-3 mx-2">
+  <div class="row mx-2">
     <button
       appStopProp
       appStopClick
