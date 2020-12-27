@@ -22,9 +22,12 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 // Angular cdk
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 // Components
 import { LoginComponent } from './components/login/login.component';
@@ -33,13 +36,13 @@ import { MainTabComponent } from './components/main-tab/main-tab.component';
 import { NewAccountComponent } from './components/new-account/new-account.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { RandomPasswordSettingComponent } from './components/settings/random-password-setting/random-password-setting.component';
-import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
+import { VaultComponent } from './components/vault/vault.component';
 
 // Directives
 import { StopPropDirective } from './directives/stop-prop.directive';
 import { StopClickDirective } from './directives/stop-click.directive';
 import { BlurClickDirective } from './directives/blur-click.directive';
-import { VaultComponent } from './vault/vault.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 
 const routes: Routes = [
@@ -86,12 +89,12 @@ const routes: Routes = [
     NewAccountComponent,
     SettingsComponent,
     RandomPasswordSettingComponent,
-    VaultComponent
+    VaultComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NgxBootstrapSliderModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
@@ -105,11 +108,14 @@ const routes: Routes = [
     MatBadgeModule,
     MatButtonToggleModule,
     MatExpansionModule,
+    MatProgressSpinnerModule,
     MatTabsModule,
     ClipboardModule,
+    OverlayModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent],
   exports: [RouterModule]
 })

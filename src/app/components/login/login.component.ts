@@ -1,15 +1,17 @@
+import { LoadingSpinnerService } from './../../services/loading-spinner.service';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { FormControl, FormGroup, Validators, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { flatten } from '@angular/compiler';
-
+// Import services
 import { AuthService } from './../../services/auth.service';
-import { verifyMasterPassword } from 'hash-password-manager/masterPassword.js';
+
+
+// Import Models
+import { ProcessStatus } from '../../model/processStatus'
 
 import { InstanstErrorStateMatcher } from './../../utils/instant-error-state.matcher';
-
 
 
 @Component({
@@ -24,15 +26,15 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  errorStateMatcher = new InstanstErrorStateMatcher();
+
+  isLoading = false;
 
   isLoggedIn = false;
   hide = true;
   isLoginFailed = false;
 
-  showPassword = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private spinner: LoadingSpinnerService) {
   }
 
   // Getter functions
@@ -63,14 +65,35 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    this.isLoggedIn = this.authService.Authenticate(this.username.value, this.password.value);
 
-    if (this.isLoggedIn) {
-      this.router.navigate(['/main']);
-      return;
-    }
-    this.isLoginFailed = true;
+    this.spinner.show('Verifying your masterpassword');
+
+    const authObserver = {
+      next: (processStatus: ProcessStatus) => {
+        // console.log(processStatus);
+        switch (processStatus.process) {
+          case 'Verification':
+            if (processStatus.complete) {
+              this.spinner.hide();
+              if (processStatus.status) {
+                this.router.navigate(['/main']);
+              }
+              else {
+                this.isLoginFailed = true;
+              }
+            }
+            break;
+          case 'Loading Vault':
+            console.log('Loading Vault');
+            break;
+        }
+      },
+    };
+
+    const auth$ = this.authService.Login(this.username.value, this.password.value);
+    setTimeout(() => auth$.subscribe(authObserver), 1000);
 
   }
+
 
 }

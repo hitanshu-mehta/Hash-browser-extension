@@ -1,12 +1,13 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 
 // services
 import { NewUserService } from '../../services/new-user.service';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
-import { isString } from 'util';
-import { throwMatDuplicatedDrawerError } from '@angular/material/sidenav';
+import { LoadingSpinnerService } from './../../services/loading-spinner.service';
 
+// models
+import { ProcessStatus } from './../../model/processStatus';
 
 @Component({
   selector: 'app-new-account',
@@ -26,7 +27,7 @@ export class NewAccountComponent {
   bothPasswordSame = true;
   reenterTouched = false;
 
-  constructor(private newAccountService: NewUserService) { }
+  constructor(private router: Router, private newAccountService: NewUserService, private spinner: LoadingSpinnerService) { }
 
 
   // Getter functions
@@ -83,7 +84,32 @@ export class NewAccountComponent {
 
 
   onSubmit() {
-    this.newAccountService.register(this.password.value, this.username.value);
+    this.spinner.show('Registering new user');
+
+    const regisObserver = {
+      next: (processStatus: ProcessStatus) => {
+
+        switch (processStatus.process) {
+          case 'Registration':
+            this.spinner.changeMessage('Encrypting masterpassword and registering user');
+            break;
+          case 'Login':
+            this.spinner.changeMessage('Logining user');
+            this.router.navigate(['/main']);
+            this.spinner.hide();
+            break;
+          case 'Loading':
+            break;
+        }
+
+
+      },
+      complete: () => { }
+    }
+
+
+    const regis$ = this.newAccountService.Register(this.password.value, this.username.value);
+    setTimeout(() => regis$.subscribe(regisObserver), 1000);
   }
 
   generatePassword(): void {
