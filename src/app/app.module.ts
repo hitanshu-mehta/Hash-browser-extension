@@ -2,6 +2,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -23,6 +24,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 
 // Angular cdk
@@ -45,38 +48,6 @@ import { BlurClickDirective } from './directives/blur-click.directive';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'main',
-    component: MainTabComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'new-user',
-    component: NewAccountComponent,
-  },
-  {
-    path: 'password-generator-settings',
-    component: RandomPasswordSettingComponent,
-  }
-];
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +64,7 @@ const routes: Routes = [
     LoadingSpinnerComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
@@ -110,9 +82,10 @@ const routes: Routes = [
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatCardModule,
+    MatListModule,
     ClipboardModule,
     OverlayModule,
-    RouterModule.forRoot(routes)
   ],
   providers: [
   ],

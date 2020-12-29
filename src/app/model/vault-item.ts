@@ -1,4 +1,4 @@
-export interface vaultItem {
+export interface VaultItem {
     username: string;
     encryptedPassword: string;
     url: string;

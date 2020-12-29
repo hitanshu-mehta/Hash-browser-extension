@@ -1,7 +1,7 @@
 import { isNgTemplate } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { stringify } from 'querystring';
-import { vaultItem } from './../model/vault.item';
+import { VaultItem } from '../model/vault-item';
 
 
 @Injectable({

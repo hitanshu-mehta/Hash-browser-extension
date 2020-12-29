@@ -1,0 +1,22 @@
+.mat-card {
+  padding: 0px !important;
+}
+
+::ng-deep.mat-tab-body-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mat-card-title {
+  font-size: 18px !important;
+  margin-bottom: 8px !important;
+}
+
+::ng-deep.mat-tab-body-content {
+  overflow: hidden !important;
+}
+
+::ng-deep.mat-list-text {
+  padding-left: 0px !important;
+  padding-right: 3px !important;
+}
