@@ -4,6 +4,6 @@
 - [ ] Change the api of random password generator
 - [x] Add progress spinner where required
 - [ ] Make vault component
-- [ ] Add feature to check whether user's password is breached or not (use: https://haveibeenpwnecom/API/v3#PwnedPasswords)
+- [ ] ~Add feature to check whether user's password is breached or not (use: https://haveibeenpwnecom/API/v3#PwnedPasswords)~ Have to purchase api-keys, so right now on hold.
 - [ ] Add feature to check password strength (use: zxcvb)
 - [ ] Add option to clear clipboard after some interval

@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 // services
 import { NewUserService } from '../../services/new-user.service';
 import { LoadingSpinnerService } from './../../services/loading-spinner.service';
+import { PasswordStrengthService } from './../../services/password-strength.service';
 
 // models
 import { ProcessStatus } from './../../model/processStatus';
@@ -32,7 +33,8 @@ export class NewAccountComponent {
     private router: Router,
     private newAccountService: NewUserService,
     private spinner: LoadingSpinnerService,
-    private location: Location
+    private location: Location,
+    private passwordStrength: PasswordStrengthService
   ) { }
 
 
@@ -47,6 +49,11 @@ export class NewAccountComponent {
 
   get repassword() {
     return this.createAccountForm.get('repassword');
+  }
+
+  // returns array of strings to feed password strength meter
+  getUserData(): string[]{
+    return [this.username.value];
   }
 
 
@@ -88,6 +95,13 @@ export class NewAccountComponent {
 
   }
 
+  getWarning(): string{
+    return this.passwordStrength.getWarning(this.password.value,[this.username.value]);
+  }
+
+  getSuggestions():string[]{
+    return this.passwordStrength.getSuggestions(this.password.value,[this.username.value]);
+  }
 
   onSubmit() {
     this.spinner.show('Registering new user');

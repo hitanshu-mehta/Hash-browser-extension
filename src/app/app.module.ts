@@ -26,6 +26,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 // Angular cdk
@@ -40,6 +41,10 @@ import { NewAccountComponent } from './components/new-account/new-account.compon
 import { SettingsComponent } from './components/settings/settings.component';
 import { RandomPasswordSettingComponent } from './components/settings/random-password-setting/random-password-setting.component';
 import { VaultComponent } from './components/vault/vault.component';
+
+// Modules
+import { StrongPasswordModule } from './strong-password/strong-password.module';
+
 
 // Directives
 import { StopPropDirective } from './directives/stop-prop.directive';
@@ -84,8 +89,10 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     MatTabsModule,
     MatCardModule,
     MatListModule,
+    MatStepperModule,
     ClipboardModule,
     OverlayModule,
+    StrongPasswordModule
   ],
   providers: [
   ],

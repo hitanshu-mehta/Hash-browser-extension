@@ -9,11 +9,7 @@
     </mat-form-field>
   </div>
   <div class="row fixed-bottom">
-    <mat-tab-group
-      class="align-items-center"
-      [color]="'primary'"
-      headerPosition="below"
-    >
+    <mat-tab-group class="align-items-center" [color]="'primary'" headerPosition="below">
       <mat-tab label="Vault">
         <ng-template mat-tab-label>
           <mat-icon class="material-icons">enhanced_encryption</mat-icon>
@@ -40,7 +36,7 @@
         <ng-template mat-tab-label>
           <mat-icon class="material-icons">settings</mat-icon>
         </ng-template>
-        Content 1
+        <app-settings></app-settings>
       </mat-tab>
     </mat-tab-group>
   </div>
