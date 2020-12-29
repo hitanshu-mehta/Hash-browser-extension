@@ -1,6 +1,6 @@
-import { merge, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { Injectable, Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { setMasterPassword } from 'hash-password-manager/masterPassword.js';
 
 // services

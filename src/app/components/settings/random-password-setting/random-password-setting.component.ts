@@ -2,6 +2,9 @@ import { GeneratePasswordService, PasswordConfig } from './../../../services/gen
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
+// services
+import { ClipboardService } from './../../../services/clipboard.service';
+
 @Component({
   selector: 'app-random-password-setting',
   templateUrl: './random-password-setting.component.html',
@@ -32,7 +35,7 @@ export class RandomPasswordSettingComponent {
   errorMsg = '';
 
 
-  constructor(private generatePasswordService: GeneratePasswordService, private location: Location) {
+  constructor(private generatePasswordService: GeneratePasswordService, private location: Location, private clipboard: ClipboardService) {
     this.settings = generatePasswordService.getSettings();
     this.currentSelectedLength = this.settings.length;
     this.MaxLowerLength = this.MaxUpperLength = this.MaxDigitLength = this.MaxSpecialLength = this.settings.maxLength;
@@ -69,6 +72,11 @@ export class RandomPasswordSettingComponent {
 
   back(): void {
     this.location.back();
+  }
+
+  copyToClipboard(): void{
+    this.clipboard.copy(this.generatedPassword);
+    this.clipboard.clearClipBoard();
   }
 
 }

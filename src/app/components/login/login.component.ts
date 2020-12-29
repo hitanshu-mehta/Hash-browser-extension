@@ -11,8 +11,6 @@ import { AuthService } from './../../services/auth.service';
 // Import Models
 import { ProcessStatus } from '../../model/processStatus'
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -69,7 +67,6 @@ export class LoginComponent {
   onSubmit(): void {
 
     this.spinner.show('Verifying your masterpassword');
-
     const authObserver = {
       next: (processStatus: ProcessStatus) => {
         // console.log(processStatus);
