@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
@@ -25,7 +25,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
 import {MatStepperModule} from '@angular/material/stepper';
 
 
@@ -40,10 +39,10 @@ import { MainTabComponent } from './components/main-tab/main-tab.component';
 import { NewAccountComponent } from './components/new-account/new-account.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { RandomPasswordSettingComponent } from './components/settings/random-password-setting/random-password-setting.component';
-import { VaultComponent } from './components/vault/vault.component';
 
 // Modules
 import { StrongPasswordModule } from './strong-password/strong-password.module';
+import { VaultModule } from './vault/vault.module';
 
 
 // Directives
@@ -65,7 +64,6 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     NewAccountComponent,
     SettingsComponent,
     RandomPasswordSettingComponent,
-    VaultComponent,
     LoadingSpinnerComponent
   ],
   imports: [
@@ -88,11 +86,11 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     MatProgressSpinnerModule,
     MatTabsModule,
     MatCardModule,
-    MatListModule,
     MatStepperModule,
     ClipboardModule,
     OverlayModule,
-    StrongPasswordModule
+    StrongPasswordModule,
+    VaultModule
   ],
   providers: [
   ],

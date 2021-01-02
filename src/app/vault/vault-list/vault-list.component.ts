@@ -4,10 +4,10 @@ import { VaultItem } from '../../model/vault-item';
 
 @Component({
   selector: 'app-vault',
-  templateUrl: './vault.component.html',
-  styleUrls: ['./vault.component.scss']
+  templateUrl: './vault-list.component.html',
+  styleUrls: ['./vault-list.component.scss']
 })
-export class VaultComponent {
+export class VaultListComponent {
 
   public vaultItems: Array<VaultItem>;
 
