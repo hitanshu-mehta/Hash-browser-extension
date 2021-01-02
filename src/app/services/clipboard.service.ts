@@ -14,7 +14,7 @@ export class ClipboardService {
     this.clipboard = new Clipboard(window.document);
   }
 
-  public copy(value : string){
+  public copy(value: string){
     this.clipboard.copy(value);
     if(this.currentSelectedIndex !== -1){
       this.clearClipBoard();

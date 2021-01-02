@@ -17,7 +17,7 @@ export class NewUserService {
 
   constructor(private router: Router, private authService: AuthService) { }
 
-  Register(password: string, username: string): Observable<ProcessStatus> {
+  register(password: string, username: string): Observable<ProcessStatus> {
 
     return new Observable<ProcessStatus>((observer) => {
       observer.next({ process: 'Registration', complete: false, status: null });
@@ -28,7 +28,8 @@ export class NewUserService {
       observer.next({ process: 'Login', complete: false, status: null });
 
       observer.complete();
-      return { unsubscribe() { } };
+      const unsubscribe = () => {};
+      return { unsubscribe };
     });
   }
 

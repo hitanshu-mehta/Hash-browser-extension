@@ -23,7 +23,7 @@ import { PasswordStrengthService } from './../../services/password-strength.serv
 export class StrengthMeterComponent implements  OnChanges {
 
   @Input() password = '';
-  @Input() userData :string[] = [];
+  @Input() userData: string[] = [];
 
   @Output() passwordStrength = new EventEmitter();
 
@@ -39,7 +39,7 @@ export class StrengthMeterComponent implements  OnChanges {
     this.getStrength(passwordChange ? passwordChange.currentValue : this.password, userDataChange ? userDataChange.currentValue : []);
   }
 
-  getStrength(password:string, userDate ?: string[]) {
+  getStrength(password: string, userDate?: string[]) {
     const estimation = this.passwordStrengthService.getStrength(password,userDate);
     this.strength = estimation;
     this.passwordStrength.emit({

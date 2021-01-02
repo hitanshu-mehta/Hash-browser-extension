@@ -22,7 +22,7 @@ export class NewAccountComponent {
     username: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     repassword: new FormControl('', [])
-  })
+  });
 
   hide = true;
   showPassword = false;
@@ -99,7 +99,7 @@ export class NewAccountComponent {
     return this.passwordStrength.getWarning(this.password.value,[this.username.value]);
   }
 
-  getSuggestions():string[]{
+  getSuggestions(): string[]{
     return this.passwordStrength.getSuggestions(this.password.value,[this.username.value]);
   }
 
@@ -125,10 +125,10 @@ export class NewAccountComponent {
 
       },
       complete: () => { }
-    }
+    };
 
 
-    const regis$ = this.newAccountService.Register(this.password.value, this.username.value);
+    const regis$ = this.newAccountService.register(this.password.value, this.username.value);
     setTimeout(() => regis$.subscribe(regisObserver), 1000);
   }
 

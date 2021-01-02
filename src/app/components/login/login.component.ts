@@ -9,7 +9,7 @@ import { AuthService } from './../../services/auth.service';
 
 
 // Import Models
-import { ProcessStatus } from '../../model/processStatus'
+import { ProcessStatus } from '../../model/processStatus';
 
 @Component({
   selector: 'app-login',
@@ -89,7 +89,7 @@ export class LoginComponent {
       },
     };
 
-    const auth$ = this.authService.Login(this.username.value, this.password.value);
+    const auth$ = this.authService.login(this.username.value, this.password.value);
     setTimeout(() => auth$.subscribe(authObserver), 1000);
 
   }

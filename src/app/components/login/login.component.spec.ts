@@ -26,7 +26,7 @@ describe('LoginComponent', () => {
   it('should create 2 form controls', () => {
     expect(component.loginForm.contains('username')).toBeTruthy();
     expect(component.loginForm.contains('password')).toBeTruthy();
-  })
+  });
 
   it('should make both controls required',() => {
     const usernameControl = component.loginForm.get('username');
@@ -37,12 +37,12 @@ describe('LoginComponent', () => {
 
     expect(usernameControl.valid).toBeFalsy();
     expect(passwordControl.valid).toBeFalsy();
-  })
+  });
 
   it('password controll should require minimum 8 charaters',() => {
     const control = component.loginForm.get('password');
     control.value('123456');
     expect(control.valid).toBeFalsy();
-  })
+  });
 
 });

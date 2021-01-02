@@ -14,7 +14,7 @@
  * Learn more in https://angular.io/guide/browser-support
  */
 
-/***************************************************************************************************
+/** *************************************************************************************************
  * BROWSER POLYFILLS
  */
 
@@ -52,12 +52,21 @@
  *
  */
 
-/***************************************************************************************************
+/** *************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
-
-/***************************************************************************************************
+/** *************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+/* eslint-disable */
+// Solution to error Uncaught ReferenceError: process is not defined
+(window as any).process = {
+    env: { DEBUG: undefined },
+};
+
+// Solution to error vendor.js:17055 Uncaught ReferenceError: global is not defined
+(window as any).global = window;
+/* eslint-enable */

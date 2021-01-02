@@ -18,16 +18,16 @@ export class RandomPasswordSettingComponent {
   currentSelectedLength: number;
 
   currentSelectedLowerLength: number;
-  MaxLowerLength: number;
+  maxLowerLength: number;
 
   currentSelectedUpperLength: number;
-  MaxUpperLength: number;
+  maxUpperLength: number;
 
   currentSelectedSpecialLength: number;
-  MaxSpecialLength: number;
+  maxSpecialLength: number;
 
   currentSelectedDigitLength: number;
-  MaxDigitLength: number;
+  maxDigitLength: number;
 
   isValueInvalid = false;
 
@@ -38,7 +38,7 @@ export class RandomPasswordSettingComponent {
   constructor(private generatePasswordService: GeneratePasswordService, private location: Location, private clipboard: ClipboardService) {
     this.settings = generatePasswordService.getSettings();
     this.currentSelectedLength = this.settings.length;
-    this.MaxLowerLength = this.MaxUpperLength = this.MaxDigitLength = this.MaxSpecialLength = this.settings.maxLength;
+    this.maxLowerLength = this.maxUpperLength = this.maxDigitLength = this.maxSpecialLength = this.settings.maxLength;
     this.currentSelectedLowerLength = this.settings.lowerMinLength;
     this.currentSelectedUpperLength = this.settings.upperMinLength;
     this.currentSelectedDigitLength = this.settings.digitsMinLength;

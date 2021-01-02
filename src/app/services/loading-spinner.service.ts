@@ -17,11 +17,6 @@ export class LoadingSpinnerService {
 
   constructor(private overlay: Overlay) { }
 
-  private disableAllClickEvents(e: Event) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-
   // @returns {OverLayRef} returns OverlayRef with spinner component attached using component Portal
   public show(message = ''): void {
     if (!this.overlayRef) {
@@ -52,5 +47,9 @@ export class LoadingSpinnerService {
     this.component.instance.message = message;
   }
 
+  private disableAllClickEvents(e: Event) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
 
 }

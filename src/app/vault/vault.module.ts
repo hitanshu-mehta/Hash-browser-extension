@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 // Components
-import {VaultListComponent} from './vault-list/vault-list.component'
+import {VaultListComponent} from './vault-list/vault-list.component';
 
 // Material Components
 import { MatListModule } from '@angular/material/list';
