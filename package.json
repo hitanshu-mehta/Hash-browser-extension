@@ -72,5 +72,8 @@
     "path": false,
     "constants": false,
     "stream": false
+  },
+  "config": {
+    "ionic_generate_source_map": false
   }
 }

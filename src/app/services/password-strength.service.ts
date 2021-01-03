@@ -14,25 +14,24 @@ export class PasswordStrengthService {
 
   constructor() { }
 
-  update(password: string, userData?: string[]): void{
-    if(password === this.passward && this.userDate === userData)
-      {return;}
-    this.passwordStrengthObj = zxcvbn(password,userData);
+  update(password: string, userData?: string[]): void {
+    if (password === this.passward && this.userDate === userData) { return; }
+    this.passwordStrengthObj = zxcvbn(password, userData);
   }
 
-  getStrength(password: string, userData?: string[]): number{
-    this.update(password,userData);
+  getStrength(password: string, userData?: string[]): number {
+    this.update(password, userData);
     return this.passwordStrengthObj.score;
   }
 
-  getSuggestions(password: string, userData?: string[]): string[]{
-    this.update(password,userData);
+  getSuggestions(password: string, userData?: string[]): string[] {
+    this.update(password, userData);
     return this.passwordStrengthObj.feedback.suggestions;
 
   }
 
-  getWarning(password: string, userData?: string[]): string{
-    this.update(password,userData);
+  getWarning(password: string, userData?: string[]): string {
+    this.update(password, userData);
     return this.passwordStrengthObj.feedback.warning;
   }
 

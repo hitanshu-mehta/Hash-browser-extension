@@ -1,6 +1,9 @@
 export interface VaultItem {
+    id: number;
+    name: string;
     username: string;
-    encryptedPassword: string;
+    password: string;
     url: string;
-    timestamp: Date;
+    created_at: number;
+    updated_at: number;
 }

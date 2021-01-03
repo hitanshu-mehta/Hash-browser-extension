@@ -1,1 +1,143 @@
-<p>vault-item works!</p>
+<div p-0 m-0>
+  <mat-toolbar>
+    <span>Item Information</span>
+  </mat-toolbar>
+  <div *ngIf="vaultItem$ | async as vaultItem">
+    <div class="container-flex">
+      <form [formGroup]="vaultItemForm">
+        <!-- Name -->
+        <div class="row">
+          <mat-form-field appearance="standard">
+            <mat-label>{{
+              name.dirty && name.value !== item.name ? "Name*" : "Name"
+            }}</mat-label>
+            <input
+              formControlName="name"
+              type="text"
+              [value]="vaultItem.name"
+              [readonly]="readOnly"
+              matInput
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Username -->
+        <div class="row">
+          <mat-form-field appearance="standard">
+            <mat-label>{{
+              username.dirty && username.value !== item.username
+                ? "Username*"
+                : "Username"
+            }}</mat-label>
+            <input
+              formControlName="username"
+              [type]="hide ? 'password' : 'text'"
+              [value]="vaultItem.username"
+              [readonly]="readOnly"
+              matInput
+            />
+            <div matSuffix style="display: flex">
+              <button
+                type="button"
+                mat-icon-button
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide Password'"
+              >
+                <mat-icon>
+                  {{ hide ? "visibility_off" : "visibility" }}
+                </mat-icon>
+              </button>
+              <button
+                type="button"
+                mat-icon-button
+                aria-label="Copy"
+                (click)="copyToClipboard()"
+              >
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+          </mat-form-field>
+        </div>
+
+        <!-- Password -->
+        <div class="row">
+          <mat-form-field appearance="standard">
+            <mat-label>{{
+              password.dirty && password.value !== item.password
+                ? "Password*"
+                : "Password"
+            }}</mat-label>
+            <input
+              [value]="vaultItem.password"
+              formControlName="password"
+              [type]="hide ? 'password' : 'text'"
+              [readonly]="readOnly"
+              matInput
+            />
+            <div matSuffix style="display: flex">
+              <button
+                type="button"
+                mat-icon-button
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide Password'"
+              >
+                <mat-icon>
+                  {{ hide ? "visibility_off" : "visibility" }}
+                </mat-icon>
+              </button>
+              <button
+                type="button"
+                mat-icon-button
+                aria-label="Copy"
+                (click)="copyToClipboard()"
+              >
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+          </mat-form-field>
+        </div>
+
+        <!-- url -->
+        <div class="row">
+          <mat-form-field>
+            <mat-label>Url</mat-label>
+            <input
+              type="text"
+              [value]="vaultItem.url"
+              [readonly]="true"
+              matInput
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="row justify-content-between mx-0">
+          <div class="col">
+            <button
+              mat-raised-button
+              type="button"
+              [color]="readOnly ? 'primary' : 'warn'"
+              appStopProp
+              appBlurClick
+              appStopClick
+              (click)="edit()"
+            >
+              {{ readOnly ? "Edit" : "Save" }}
+            </button>
+          </div>
+          <div class="col">
+            <button
+              mat-raised-button
+              type="button"
+              appStopProp
+              appBlurClick
+              appStopClick
+              (click)="back()"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
