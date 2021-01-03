@@ -26,7 +26,8 @@ export class VaultItemComponent implements OnInit {
 
   vaultItem$: Observable<VaultItem>
 
-  hide = true;
+  hideUsername = true;
+  hidePassword = true;
   readOnly = true;
 
   // private prevUsername: string;
