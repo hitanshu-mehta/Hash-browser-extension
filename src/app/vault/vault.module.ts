@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { VaultItemComponent, ConformationDialog } from './vault-item/vault-item.component';
 import { VaultRoutingModule } from './vault-routing.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { VaultRoutingModule } from './vault-routing.module';
         MatInputModule,
         MatDialogModule,
         MatButtonModule,
+        MatSnackBarModule,
         FormsModule,
         ReactiveFormsModule,
         VaultRoutingModule

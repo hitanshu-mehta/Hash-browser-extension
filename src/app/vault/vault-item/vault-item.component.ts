@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ClipboardService } from './../../services/clipboard.service';
 import { VaultItem } from 'src/app/model/vault-item';
@@ -41,7 +42,8 @@ export class VaultItemComponent implements OnInit {
     private router: Router,
     private vaultService: VaultService,
     private clipboard: ClipboardService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private snackbar: MatSnackBar) { }
 
   // get functions
   get name() {
@@ -95,9 +97,16 @@ export class VaultItemComponent implements OnInit {
       f.setErrors(() => { });
   }
 
-  copyToClipboard(): void {
-    this.clipboard.copy('');
+  copyToClipboard(value: string, msg: string): void {
+    this.clipboard.copy(value);
     this.clipboard.clearClipBoard();
+    this.openSnackBar(msg, 'Ok');
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackbar.open(message, action, {
+      duration: 2000,
+    });
   }
 
   openConfirmationDialog() {

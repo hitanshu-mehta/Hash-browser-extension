@@ -51,7 +51,9 @@
                 type="button"
                 mat-icon-button
                 aria-label="Copy"
-                (click)="copyToClipboard()"
+                (click)="
+                  copyToClipboard(this.username.value, 'Username Copied')
+                "
               >
                 <mat-icon>content_copy</mat-icon>
               </button>
@@ -89,7 +91,9 @@
                 type="button"
                 mat-icon-button
                 aria-label="Copy"
-                (click)="copyToClipboard()"
+                (click)="
+                  copyToClipboard(this.password.value, 'Password Copied')
+                "
               >
                 <mat-icon>content_copy</mat-icon>
               </button>
