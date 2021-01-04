@@ -6,11 +6,37 @@
     "permissions": [
         "activeTab",
         "webNavigation",
-        "storage"
+        "storage",
+        "http://*/*",
+        "https://*/*",
+        "tabs",
+        "contextMenus",
+        "storage",
+        "unlimitedStorage",
+        "clipboardRead",
+        "clipboardWrite",
+        "idle",
+        "webRequest",
+        "webRequestBlocking",
+        "nativeMessaging"
+    ],
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+                "content/autofill.js",
+                "runtime.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_end"
+        }
     ],
     "background": {
         "scripts": [
-            "background.js"
+            "background.js",
+            "runtime.js"
         ]
     },
     "browser_action": {

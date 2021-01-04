@@ -1,1 +1,1 @@
-console.log("sgsfgdfgf");
+console.log("content script loaded");
