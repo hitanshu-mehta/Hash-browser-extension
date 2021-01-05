@@ -8,7 +8,7 @@ module.exports = {
     plugins: [new ExtensionReloader({
         reloadPage: true,
         entries: {
-            contentScript: 'content/autofill',
+            contentScript: ['content/autofill','content/autofiller'],
             background: 'background',
         }
     })]

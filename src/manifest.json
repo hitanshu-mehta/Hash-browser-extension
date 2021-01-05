@@ -25,6 +25,7 @@
             "all_frames": true,
             "js": [
                 "content/autofill.js",
+                "content/autofiller.js",
                 "runtime.js"
             ],
             "matches": [
