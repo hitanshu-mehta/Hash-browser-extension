@@ -26,12 +26,13 @@
             "js": [
                 "content/autofill.js",
                 "content/autofiller.js",
+                "content/notification.js",
                 "runtime.js"
             ],
             "matches": [
                 "<all_urls>"
             ],
-            "run_at": "document_end"
+            "run_at": "document_start"
         }
     ],
     "background": {

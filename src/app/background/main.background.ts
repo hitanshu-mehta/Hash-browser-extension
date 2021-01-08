@@ -1,11 +1,15 @@
+import { AutofillService } from './../services/autofill.service';
 import { RuntimeBackground } from './runtime.background';
 
 export class MainBackground{
 
     private rumtimeBackGround: RuntimeBackground;
+    private autofillService: AutofillService;
 
     constructor(){
-        this.rumtimeBackGround = new RuntimeBackground(this);
+        this.autofillService = new AutofillService();
+
+        this.rumtimeBackGround = new RuntimeBackground(this,this.autofillService);
     }
 
     async bootstrap(){
@@ -15,11 +19,10 @@ export class MainBackground{
     collectPageDetails(tab:any, sender:string){
         if(tab == null || !tab.id)
             return;
-        console.log(tab);
         
         chrome.tabs.sendMessage(tab.id,{
             command:'collectPageDetails',
-            sender:'main-background'
+            sender: sender
         });
     }
 }

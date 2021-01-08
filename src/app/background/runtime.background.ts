@@ -1,9 +1,10 @@
+import { AutofillService } from './../services/autofill.service';
 import { MainBackground } from './main.background';
 
 export class RuntimeBackground{
     private runtime: any;
     
-    constructor(private main: MainBackground){
+    constructor(private main: MainBackground,private autoFillService:AutofillService){
         this.runtime = chrome.runtime;
     }
 
@@ -22,6 +23,14 @@ export class RuntimeBackground{
             case 'bgCollectFormDetails':
                 this.main.collectPageDetails(sender.tab,msg.sender);
                 break;
+            case 'CollectPageDetailsResponse':
+                // take action according to the sender
+                switch(msg.sender){
+                    case 'autofiller':
+                        console.log(this.autoFillService);
+                        this.autoFillService.doAutoFillActiveTab({details:msg.details});
+
+                }
         }
     }
 }

@@ -7,3 +7,4 @@
 - [ ] ~Add feature to check whether user's password is breached or not (use: https://haveibeenpwnecom/API/v3#PwnedPasswords)~ Have to purchase api-keys, so right now on hold.
 - [x] Add feature to check password strength (use: zxcvb)
 - [x] Add option to clear clipboard after some interval
+- [ ] Use redux for application state management
