@@ -1,4 +1,4 @@
-import { AutofillService } from './../services/autofill.service';
+import { AutofillService } from '../core/services/autofill.service';
 import { RuntimeBackground } from './runtime.background';
 
 export class MainBackground{
@@ -16,13 +16,13 @@ export class MainBackground{
         await this.rumtimeBackGround.init();
     }
 
-    collectPageDetails(tab:any, sender:string){
+    collectPageDetails(tab: any, sender: string){
         if(tab == null || !tab.id)
-            return;
-        
+            {return;}
+
         chrome.tabs.sendMessage(tab.id,{
             command:'collectPageDetails',
-            sender: sender
+            sender
         });
     }
 }

@@ -1,7 +1,8 @@
+/* eslint-disable */
 document.addEventListener('DOMContentLoaded',()=>{
 
-    const pageDetails:any = [];
-    const formData:any = [];
+    const pageDetails: any = [];
+    const formData: any = [];
 
     // get settings from local storage
 
@@ -9,10 +10,9 @@ document.addEventListener('DOMContentLoaded',()=>{
         processMessages(msg, sendResponse);
     });
 
-    function processMessages(msg:any, sendResponse: Function){
+    const processMessages = (msg: any, sendResponse: Function) => {
         // process messages sent from background scripts
-    }
-
-
+    };
 
 });
+/* eslint-enable */

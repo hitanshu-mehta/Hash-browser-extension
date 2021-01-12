@@ -4,6 +4,6 @@ export interface VaultItem {
     username: string;
     password: string;
     url: string;
-    created_at: number;
-    updated_at: number;
+    createdAt: number;
+    updatedAt: number;
 }

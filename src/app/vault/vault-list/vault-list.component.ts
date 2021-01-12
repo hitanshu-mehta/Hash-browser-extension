@@ -21,7 +21,7 @@ export class VaultListComponent implements OnInit {
 
   ngOnInit() {
     this.vaultItems$ = this.route.params.pipe(
-      switchMap(() => { return this.vaultService.getVaultItems() })
+      switchMap(() => this.vaultService.getVaultItems())
     );
   }
 

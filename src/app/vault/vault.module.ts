@@ -14,7 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { VaultItemComponent, ConformationDialog } from './vault-item/vault-item.component';
+import { VaultItemComponent, ConformationDialogComponent } from './vault-item/vault-item.component';
 import { VaultRoutingModule } from './vault-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -37,12 +37,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     declarations: [
         VaultListComponent,
         VaultItemComponent,
-        ConformationDialog
+        ConformationDialogComponent
     ],
     exports: [
         VaultListComponent,
         VaultItemComponent,
-        ConformationDialog
+        ConformationDialogComponent
     ]
 })
 export class VaultModule { }

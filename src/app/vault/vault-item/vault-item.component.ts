@@ -6,11 +6,24 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ClipboardService } from './../../services/clipboard.service';
+import { ClipboardService } from '../../core/services/clipboard.service';
 import { VaultItem } from 'src/app/model/vault-item';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { switchMap } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-confirmation-dialog',
+  template: `
+  <h2 mat-dialog-title>Confirm Changes</h2>
+  <div mat-dialog-content>Are you sure about the changes you made? Once these changes are made it cannot be undone.</div>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+  </mat-dialog-actions>
+  `
+})
+export class ConformationDialogComponent { }
 
 @Component({
   selector: 'app-vault-item',
@@ -25,7 +38,7 @@ export class VaultItemComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  vaultItem$: Observable<VaultItem>
+  vaultItem$: Observable<VaultItem>;
 
   hideUsername = true;
   hidePassword = true;
@@ -62,7 +75,7 @@ export class VaultItemComponent implements OnInit {
     // Load vault items
     this.vaultItem$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this.vaultService.getVaultItem(params.get('id')))
-    )
+    );
 
     // set intial values
     this.vaultItem$.subscribe(item => {
@@ -74,16 +87,16 @@ export class VaultItemComponent implements OnInit {
     });
 
     // listen to value changes of name, username and password FormControl
-    this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.item.name); })
-    this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.item.username); })
-    this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.item.password); })
+    this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.item.name); });
+    this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.item.username); });
+    this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.item.password); });
 
   }
 
   edit() {
     if (!this.readOnly && this.vaultItemForm.touched) {
       // show dialog
-      this.openConfirmationDialog()
+      this.openConfirmationDialog();
     }
     this.readOnly = !this.readOnly;
   }
@@ -94,7 +107,7 @@ export class VaultItemComponent implements OnInit {
 
   updateView(f: AbstractControl, prevValue: any) {
     if (f.value !== prevValue)
-      f.setErrors(() => { });
+      {f.setErrors(() => { });}
   }
 
   copyToClipboard(value: string, msg: string): void {
@@ -110,7 +123,7 @@ export class VaultItemComponent implements OnInit {
   }
 
   openConfirmationDialog() {
-    const dialogRef = this.dialog.open(ConformationDialog);
+    const dialogRef = this.dialog.open(ConformationDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -125,15 +138,3 @@ export class VaultItemComponent implements OnInit {
 
 }
 
-@Component({
-  selector: 'app-confirmation-dialog',
-  template: `
-  <h2 mat-dialog-title>Confirm Changes</h2>
-  <div mat-dialog-content>Are you sure about the changes you made? Once these changes are made it cannot be undone.</div>
-  <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
-  </mat-dialog-actions>
-  `
-})
-export class ConformationDialog { }
