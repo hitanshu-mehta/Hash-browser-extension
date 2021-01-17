@@ -13,7 +13,7 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { PasswordStrengthService } from './../../services/password-strength.service';
+import { PasswordStrengthService } from '../../core/services/password-strength.service';
 
 @Component({
   selector: 'app-strength-meter',

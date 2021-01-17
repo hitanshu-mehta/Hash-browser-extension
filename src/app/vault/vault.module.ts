@@ -1,48 +1,42 @@
+import { NewVaultItemComponent } from './components/new-vault-item/new-vault-item.component';
+import { VaultEffects } from './effects/vault.effects';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { SelectedVaultItemComponent } from './containers/selected-vault-item/selected-vault-item.component';
+import { ConformationDialogComponent } from './components/vault-item/vault-item.component';
+import { VaultItemComponent } from './components/vault-item/vault-item.component';
+import { VaultListComponent } from './components/vault-list/vault-list.component';
+import { VaultComponent } from './containers/vault-component/vault.component';
+import { MaterialModule } from './../material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-// Components
-import { VaultListComponent } from './vault-list/vault-list.component';
-
-// Material Components
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule } from '@angular/material/dialog';
-
-import { VaultItemComponent, ConformationDialog } from './vault-item/vault-item.component';
 import { VaultRoutingModule } from './vault-routing.module';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { reducers } from './reducers';
+import { AddVaultItemComponent } from './containers/add-vault-item/add-vault-item.component';
+
+export const COMPONENTS = [
+    VaultComponent,
+    VaultListComponent,
+    VaultItemComponent,
+    ConformationDialogComponent,
+    SelectedVaultItemComponent,
+    NewVaultItemComponent,
+    AddVaultItemComponent
+]
 
 @NgModule({
     imports: [
         CommonModule,
-        MatListModule,
-        MatIconModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatSnackBarModule,
         FormsModule,
+        MaterialModule,
         ReactiveFormsModule,
-        VaultRoutingModule
+        VaultRoutingModule,
+        StoreModule.forFeature('vault',reducers),
+        EffectsModule.forFeature([VaultEffects])
     ],
-    declarations: [
-        VaultListComponent,
-        VaultItemComponent,
-        ConformationDialog
-    ],
-    exports: [
-        VaultListComponent,
-        VaultItemComponent,
-        ConformationDialog
-    ]
+    declarations: COMPONENTS,
+    exports: COMPONENTS
 })
 export class VaultModule { }

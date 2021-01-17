@@ -1,0 +1,52 @@
+<div class="container-flex">
+  <div class="row align-items-center mx-2">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- username  -->
+      <div class="row">
+        <mat-form-field appearance="standard">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" type="text" id="username" autocomplete="off"
+            aria-describedby="Username" placeholder="Username" />
+          <mat-error *ngIf="username.invalid">{{
+            getUsernameErrorMessage()
+            }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- password -->
+      <div class="row">
+        <mat-form-field appearance="standard">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" id="password"
+            autocomplete="off" aria-describedby="Password" placeholder="Password" />
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="password.invalid">{{
+            getPasswordErrorMessage()
+            }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- error message -->
+      <mat-error *ngIf="errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+
+      <!-- login button -->
+      <div class="row mx-2 pull-right submit-button">
+        <button mat-raised-button appStopProp appStopClick type="submit" color="primary">
+          Login
+        </button>
+      </div>
+
+      <!-- back button -->
+      <div class="row mx-2 pull-right submit-button">
+        <button mat-raised-button appStopProp appStopClick type="button" (click)="back()">
+          Back
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

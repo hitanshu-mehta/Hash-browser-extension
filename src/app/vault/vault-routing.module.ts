@@ -1,14 +1,15 @@
+import { AddVaultItemComponent } from './containers/add-vault-item/add-vault-item.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { VaultItemComponent } from './vault-item/vault-item.component';
-import { VaultListComponent } from './vault-list/vault-list.component';
+import { SelectedVaultItemComponent } from './containers/selected-vault-item/selected-vault-item.component';
+import { VaultListComponent } from './components/vault-list/vault-list.component';
 
 const vaultRoutes: Routes = [
     { path: 'vault-list', redirectTo: 'main' },
     { path: 'vault-list', component: VaultListComponent },
-    { path: 'vault-item/:id', component: VaultItemComponent },
-
+    { path: 'vault-item/:id', component: SelectedVaultItemComponent },
+    { path: 'new-vault-item', component: AddVaultItemComponent }
 ];
 
 
