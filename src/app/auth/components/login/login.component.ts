@@ -1,4 +1,4 @@
-import { Credentials } from '../../../model/credentials';
+import { Credentials } from './../../models/user';
 import { LoadingSpinnerService } from '../../../core/services/loading-spinner.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -6,7 +6,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { LoginPageActions } from '../../actions';
 import * as fromAuth from '../../reducers';
-
 import { Store, select } from '@ngrx/store';
 
 @Component({
@@ -34,10 +33,11 @@ export class LoginComponent implements OnInit{
   ngOnInit(){
     this.pending$.subscribe( pending => {
       if(pending){
-        this.spinner.show();
+        // TODO: enable spinner when authorization is moved to web workers
+        // this.spinner.show();
         this.loginForm.disable();
       }else{
-        this.spinner.hide();
+        // this.spinner.hide();
         this.loginForm.enable();
       }
     });

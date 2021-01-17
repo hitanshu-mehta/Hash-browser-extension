@@ -1,8 +1,7 @@
-import { LoadingSpinnerService } from './../../core/services/loading-spinner.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
-import { Credentials } from './../../model/credentials';
+import { Credentials } from './../models/user';
 import { exhaustMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
@@ -87,6 +86,5 @@ export class AuthEffects{
         private authService: AuthService,
         private router: Router,
         private dialog: MatDialog,
-        private spinner: LoadingSpinnerService
     ){}
 }

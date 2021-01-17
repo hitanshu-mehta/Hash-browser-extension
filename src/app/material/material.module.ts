@@ -1,3 +1,5 @@
+import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgModule } from '@angular/core';
 
 import { MatDialogModule } from '@angular/material/dialog';
@@ -34,6 +36,9 @@ const MODULES = [
     MatIconModule,
     MatSidenavModule,
     MatDialogModule,
+    MatSnackBarModule,
+    MatListModule,
+    MatDialogModule
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 export interface VaultItem {
-    id: number;
+    id: string;
     name: string;
     username: string;
     password: string;

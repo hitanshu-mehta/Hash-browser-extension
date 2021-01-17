@@ -1,16 +1,13 @@
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
-import { VaultService } from '../vault.service';
-import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ClipboardService } from '../../core/services/clipboard.service';
-import { VaultItem } from 'src/app/model/vault-item';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ClipboardService } from '../../../core/services/clipboard.service';
+import { VaultItem } from 'src/app/vault/models/vault-item';
+import { Router } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -38,22 +35,17 @@ export class VaultItemComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  vaultItem$: Observable<VaultItem>;
 
   hideUsername = true;
   hidePassword = true;
   readOnly = true;
 
-  // private prevUsername: string;
-  // private prevPassword: string;
-  // private prevName: string;
-
-  item: VaultItem;
+  @Input() vaultItem: VaultItem;
+  @Output() update = new EventEmitter<VaultItem>();
+  @Output() add = new EventEmitter<VaultItem>();
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private vaultService: VaultService,
     private clipboard: ClipboardService,
     public dialog: MatDialog,
     private snackbar: MatSnackBar) { }
@@ -72,37 +64,50 @@ export class VaultItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Load vault items
-    this.vaultItem$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.vaultService.getVaultItem(params.get('id')))
-    );
 
-    // set intial values
-    this.vaultItem$.subscribe(item => {
-      this.name.setValue(item.name);
-      this.username.setValue(item.username);
-      this.password.setValue(item.password);
-
-      this.item = item;
-    });
-
+    // set initial values
+    this.name.setValue(this.vaultItem.name);
+    this.password.setValue(this.vaultItem.password);
+    this.username.setValue(this.vaultItem.username);
+    
     // listen to value changes of name, username and password FormControl
-    this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.item.name); });
-    this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.item.username); });
-    this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.item.password); });
+    this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.vaultItem.name); });
+    this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.vaultItem.username); });
+    this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.vaultItem.password); });
 
   }
 
   edit() {
     if (!this.readOnly && this.vaultItemForm.touched) {
       // show dialog
-      this.openConfirmationDialog();
+      this.openConfirmationDialog()
     }
     this.readOnly = !this.readOnly;
   }
 
-  updateVaultItem() {
-    console.log('updated');
+  updateItem() {
+    if (!this.readOnly && this.vaultItemForm.touched) {
+      // show dialog
+      this.openConfirmationDialog();
+    }
+    this.updateVaultItemObj();
+    this.update.emit(this.vaultItem);
+  }
+
+  addItem() {
+    if(!this.readOnly && this.vaultItemForm.touched){
+      this.openConfirmationDialog();
+    }
+
+    this.updateVaultItemObj();
+    this.add.emit(this.vaultItem);
+  }
+
+  updateVaultItemObj() {
+    this.vaultItem.username = this.username.value;
+    this.vaultItem.password = this.password.value;
+    this.vaultItem.name = this.name.value;
+    this.vaultItem.updatedAt = Date.now();
   }
 
   updateView(f: AbstractControl, prevValue: any) {
@@ -110,7 +115,7 @@ export class VaultItemComponent implements OnInit {
       {f.setErrors(() => { });}
   }
 
-  copyToClipboard(value: string, msg: string): void {
+  copyToClipboard(value: "", msg: string): void {
     this.clipboard.copy(value);
     this.clipboard.clearClipBoard();
     this.openSnackBar(msg, 'Ok');
@@ -122,12 +127,21 @@ export class VaultItemComponent implements OnInit {
     });
   }
 
+  undo(){
+    this.name.setValue(this.vaultItem.name);
+    this.username.setValue(this.vaultItem.username);
+    this.password.setValue(this.vaultItem.password);
+  }
+
   openConfirmationDialog() {
     const dialogRef = this.dialog.open(ConformationDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.updateVaultItem();
+        // this.updateVaultItem();
+      }
+      else{
+        this.undo();
       }
     });
   }

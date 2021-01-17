@@ -1,6 +1,6 @@
+import { VaultModule } from './../vault/vault.module';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { VaultModule } from './../vault/vault.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RandomPasswordSettingComponent } from './components/settings/random-password-setting/random-password-setting.component';
 import { MaterialModule } from './../material/material.module';
@@ -29,7 +29,7 @@ export const COMPONENTS = [
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        VaultModule,
+        VaultModule
     ],
     declarations: COMPONENTS,
     exports: COMPONENTS

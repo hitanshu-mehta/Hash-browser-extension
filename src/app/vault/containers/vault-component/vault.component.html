@@ -1,0 +1,17 @@
+<div class="container-flex m-0 p-0">
+    <div class="row title align-middle">
+        <mat-divider></mat-divider>
+        <div class="title-text">Logins</div>
+        <mat-divider></mat-divider>
+    </div>
+    <div class="row px-0">
+        <app-vault-list [vaultItems]="vaultItems$ | async"></app-vault-list>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col"></div>
+        <div class="col">
+            <button mat-stroked-button color="primary" (click)="addVaultItem()">Add Item</button>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>

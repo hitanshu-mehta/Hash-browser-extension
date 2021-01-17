@@ -3,8 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { verifyMasterPassword, setMasterPassword } from 'hash-password-manager/masterPassword.js';
-import { Credentials } from '../../model/credentials';
-
+import { Credentials } from './../models/user';
 import { User } from '../models/user';
 
 interface WorkerMessage{
@@ -48,9 +47,9 @@ export class AuthService {
     //   return of({ name: username });
     // }
     
-    if(verifyMasterPassword(password)){
-      return throwError('Invalid Username or Password');
-    } 
+    // if(!verifyMasterPassword(password)){
+    //   return throwError('Invalid Username or Password');
+    // } 
     return of({ name: username });
   }
 

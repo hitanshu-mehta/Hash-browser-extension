@@ -1,6 +1,6 @@
 <div class="container-flex">
   <div class="row align-items-center mx-2">
-    <form [formGroup]="loginForm">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- username  -->
       <div class="row">
         <mat-form-field appearance="standard">
@@ -19,7 +19,7 @@
           <mat-label>Password</mat-label>
           <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" id="password"
             autocomplete="off" aria-describedby="Password" placeholder="Password" />
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide">
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
@@ -36,7 +36,7 @@
 
       <!-- login button -->
       <div class="row mx-2 pull-right submit-button">
-        <button mat-raised-button appStopProp appStopClick type="submit" color="primary" (click)="onSubmit()">
+        <button mat-raised-button appStopProp appStopClick type="submit" color="primary">
           Login
         </button>
       </div>

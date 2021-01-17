@@ -1,4 +1,4 @@
-import { Credentials } from './../../../model/credentials';
+import { Credentials } from './../../models/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -10,6 +10,7 @@ import { PasswordStrengthService } from '../../../core/services/password-strengt
 import {NewAccountPageActions} from '../../actions';
 import * as fromAuth from '../../reducers';
 import { Store, select } from '@ngrx/store';
+
 
 @Component({
   selector: 'app-new-account',

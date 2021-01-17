@@ -1,3 +1,4 @@
+import { VaultModule } from './vault/vault.module';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +18,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 
 // Modules
 import { StrongPasswordModule } from './strong-password/strong-password.module';
-import { VaultModule } from './vault/vault.module';
 
 
 // Directives
