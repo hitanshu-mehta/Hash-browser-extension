@@ -19,7 +19,7 @@ export class VaultService {
 
   loadVault(): Observable<VaultItem[]> {
     // TODO
-    console.log("loading");
+    
     return of(VAULT);
     return new Observable<VaultItem[]>();
   }
