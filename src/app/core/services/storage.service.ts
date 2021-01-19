@@ -1,3 +1,4 @@
+import { Observable,of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 
@@ -32,7 +33,7 @@ export class StorageService{
             })
         })
     }
-
+    
     async remove(key: string): Promise<any> {
         return new Promise<void>((resolve) => {
             this.chromeStorageApi.remove(key, () => {

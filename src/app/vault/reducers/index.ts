@@ -1,3 +1,4 @@
+import { VaultItem } from 'src/app/vault/models/vault-item';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as fromVault from './vault.reducer';
@@ -60,4 +61,14 @@ export const selectVaultItemState = createSelector(
 export const addVaultItemState = createSelector(
     selectVaultState,
     (state: VaultState) => state.addVaultItemStatus
+)
+
+export const getVaultSize = createSelector(
+    getVault,
+    (vault: VaultItem[]) => {
+        if(vault === null)
+            return 0
+        else 
+            vault.length;
+    }
 )

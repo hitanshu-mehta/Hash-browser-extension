@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { StorageService } from './../../services/storage.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,6 +9,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  ngOnInit(): void {
-  }
+  constructor(){}
+  ngOnInit(): void {}
 }

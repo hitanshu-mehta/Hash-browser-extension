@@ -1,3 +1,4 @@
+import { MasterPasswordObj } from './../models/masterpassword';
 import { User } from '../models/user';
 import { createAction, props } from '@ngrx/store';
 
@@ -16,7 +17,7 @@ export const loginRedirect = createAction('[Auth/API] Login Redirect');
 
 export const signupSuccess = createAction(
   '[Auth/API] Sign Success',
-  props<{user: User}>()
+  props<{user: User, masterPasswordObj: MasterPasswordObj, masterpassword: string}>()
 );
 
 export const signupFailure = createAction(

@@ -27,5 +27,6 @@ export class VaultComponent implements OnInit{
 
     addVaultItem(){
         this.store.dispatch(VaultActions.addVaultItem());
+        this.store.dispatch(VaultActions.loadVault());
     }
 }

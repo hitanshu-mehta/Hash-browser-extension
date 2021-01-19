@@ -1,3 +1,4 @@
+import { VaultService } from './../../services/vault.service';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
@@ -40,6 +41,8 @@ export class VaultItemComponent implements OnInit {
   hidePassword = true;
   readOnly = true;
 
+  decryptedPassword: string;
+
   @Input() vaultItem: VaultItem;
   @Output() update = new EventEmitter<VaultItem>();
   @Output() add = new EventEmitter<VaultItem>();
@@ -48,7 +51,8 @@ export class VaultItemComponent implements OnInit {
     private router: Router,
     private clipboard: ClipboardService,
     public dialog: MatDialog,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar,
+    private vaultService: VaultService) { }
 
   // get functions
   get name() {
@@ -65,9 +69,11 @@ export class VaultItemComponent implements OnInit {
 
   ngOnInit() {
 
+    this.decryptedPassword = this.vaultService.decryptPassword(this.vaultItem.password);
+
     // set initial values
     this.name.setValue(this.vaultItem.name);
-    this.password.setValue(this.vaultItem.password);
+    this.password.setValue(this.decryptedPassword);
     this.username.setValue(this.vaultItem.username);
     
     // listen to value changes of name, username and password FormControl

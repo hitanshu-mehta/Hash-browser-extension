@@ -6,13 +6,13 @@
     <img src="../../../assets/security_2.svg" alt="Image" height="190px" />
   </div>
   <div class="row mb-2 mx-2">
-    <button mat-raised-button *ngIf="checkIfMasterPasswordPresent()" appStopProp appStopClick color="primary"
+    <button mat-raised-button *ngIf="masterPasswordPresent" appStopProp appStopClick color="primary"
       [routerLink]="'/login'">
       Login
     </button>
   </div>
   <div class="row mb-2 mx-2">
-    <button *ngIf="!checkIfMasterPasswordPresent()" appStopProp appStopClick mat-raised-button color="primary"
+    <button *ngIf="!masterPasswordPresent" appStopProp appStopClick mat-raised-button color="primary"
       [routerLink]="'/new-user'">
       Create Account
     </button>

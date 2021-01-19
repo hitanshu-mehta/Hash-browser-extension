@@ -1,11 +1,17 @@
-import { addVaultItem } from './../actions/vault.actions';
+import { getVault } from './../reducers/index';
+import { Store, select } from '@ngrx/store';
+import { map, switchMap } from 'rxjs/operators';
+import { encryptionKeyObj } from './../models/encryption-key';
+import { MasterPasswordObj, MasterKeyObj } from './../../auth/models/masterpassword';
+import { StorageService } from './../../core/services/storage.service';
 import { Injectable } from '@angular/core';
 import { VaultItem } from '../models/vault-item';
-import { VAULT } from '../mock-vault';
+import { Observable, of,from } from 'rxjs';
 
-import { Observable, of } from 'rxjs';
-
-import { map } from 'rxjs/operators';
+import {encryptLoginPassword,decryptLoginPassword} from 'hash-password-manager/passwordControl.js';
+ 
+import * as fromAuth from 'src/app/auth/reducers';
+import * as fromVault from '../reducers';
 
 
 @Injectable({
@@ -13,20 +19,47 @@ import { map } from 'rxjs/operators';
 })
 export class VaultService {
 
-  getVaultItems(): Observable<VaultItem[]> {
-    return of(VAULT);
-  }
+  private masterPasswordObj : MasterPasswordObj;
+  private masterPassword: string;
+  private vault: VaultItem[] = [];
 
   loadVault(): Observable<VaultItem[]> {
-    // TODO
-    
-    return of(VAULT);
-    return new Observable<VaultItem[]>();
+
+    return from(this.storageService.get<VaultItem[]>('vault')).pipe(
+      map((v: VaultItem[]) => this.vault = v),
+      switchMap(()=> of(this.vault))
+    )
+  }
+  getVaultSize():number{
+    if(this.vault == null) return 0;
+    return this.vault.length
+  }
+
+  encryptPassword(password: string | encryptionKeyObj): string | null{
+    const { masterKeyHash, masterKeySalt } = this.masterPasswordObj;
+    const { encryptionKey, encryptionKeyIv } = this.masterPasswordObj;
+    const masterKeyObject = { masterKeyHash, masterKeySalt };
+    const encryptionkeyObject = { encryptionKey, encryptionKeyIv };
+    return encryptLoginPassword(masterKeyObject,encryptionkeyObject,this.masterPassword,password);
+  }
+
+  decryptPassword(eObj:encryptionKeyObj | string){
+    const { masterKeyHash, masterKeySalt } = this.masterPasswordObj;
+    const { encryptionKey, encryptionKeyIv } = this.masterPasswordObj;
+    const masterKeyObject = { masterKeyHash, masterKeySalt };
+    const encryptionkeyObject = { encryptionKey, encryptionKeyIv };
+    return decryptLoginPassword(masterKeyObject,encryptionkeyObject,this.masterPassword,eObj);
   }
 
   addVaultItem(vaultItem: VaultItem): Observable<VaultItem>{
-    // TODO
-    return new Observable<VaultItem>();
+    return from(this.storageService.get<VaultItem[]>('vault')).pipe(
+      map((v: VaultItem[]) => {
+        this.vault = v;
+        this.vault.push(vaultItem);
+        this.storageService.save('vault',this.vault);
+      }),
+      switchMap(()=> of(vaultItem))
+    )
   }
 
   removeVaultItem(vaultItem: VaultItem){
@@ -39,4 +72,21 @@ export class VaultService {
     return new Observable<VaultItem>();
   }
 
+
+  constructor(private storageService: StorageService, private store: Store<fromAuth.State | fromVault.State>){
+    store.pipe(select(fromAuth.getMasterpasswordObj)).subscribe((obj) => this.masterPasswordObj = obj);
+    store.pipe(select(fromAuth.getMasterpassword)).subscribe((obj) => this.masterPassword = obj);
+    // store.pipe(select(fromVault.getVault)).subscribe(vault => this.vault = vault);
+    from(this.storageService.get<VaultItem[]>('vault'))
+    .subscribe(
+      (v: VaultItem[]) => {
+        if(v == null)
+          this.storageService.save('vault',this.vault);
+        else{
+          this.vault = v;
+        }
+      }
+    )
+  }
+  
 }

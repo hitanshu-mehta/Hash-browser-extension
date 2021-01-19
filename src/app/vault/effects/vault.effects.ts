@@ -34,7 +34,6 @@ export class VaultEffects{
             ofType(AddVaultItemActions.addVaultItem.type),
             map(action => action.vaultItem),
             exhaustMap((vaultItem:VaultItem) => {
-                console.log(vaultItem);
                 return this.vaultService.addVaultItem(vaultItem).pipe(
                     map(()=> VaultApiActions.addVaultItemSuccess({vaultItem})),
                     catchError(error => of(VaultApiActions.addVaultItemFailure({error})))

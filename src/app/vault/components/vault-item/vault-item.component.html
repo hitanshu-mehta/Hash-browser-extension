@@ -48,7 +48,7 @@
             ? "Password*"
             : "Password"
             }}</mat-label>
-          <input [value]="vaultItem.password" formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+          <input [value]="decryptedPassword" formControlName="password" [type]="hidePassword ? 'password' : 'text'"
             [readonly]="readOnly" matInput />
           <div matSuffix style="display: flex">
             <button type="button" mat-icon-button (click)="hidePassword = !hidePassword"

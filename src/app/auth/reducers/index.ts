@@ -3,7 +3,6 @@ import * as fromLoginPage from './login-page.reducer';
 import * as fromNewAccountPage from './new-account.reducer';
 import * as fromRoot from '../../reducers';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
-import { AuthApiActions } from '../actions';
 
 export interface AuthState{
     status: fromAuth.State;
@@ -63,3 +62,13 @@ export const getNewAccountPageError = createSelector(
   selectNewAccountPageState,
   fromNewAccountPage.getError
 );
+
+export const getMasterpasswordObj = createSelector(
+  selectAuthStatusState,
+  fromAuth.getMasterPasswordObj
+)
+
+export const getMasterpassword = createSelector(
+  selectAuthStatusState,
+  fromAuth.getMasterPassword
+)
