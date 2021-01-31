@@ -9,11 +9,13 @@ import { ClipboardService } from 'src/app/core/services/clipboard.service';
 
 
 @Component({
-    selector:'app-new-vault-item',
-    templateUrl:'./new-vault-item.component.html',
+    selector: 'app-new-vault-item',
+    templateUrl: './new-vault-item.component.html',
     styleUrls: ['./new-vault-item.component.scss']
 })
-export class NewVaultItemComponent implements OnInit{
+export class NewVaultItemComponent implements OnInit {
+
+    @Output() saveItem = new EventEmitter<VaultItem>();
 
     vaultItemForm = new FormGroup({
         name: new FormControl(''),
@@ -25,28 +27,27 @@ export class NewVaultItemComponent implements OnInit{
     hidePassword = true;
 
     vaultItem: VaultItem;
-    @Output() saveItem = new EventEmitter<VaultItem>();
-    
+
     constructor(
-        private router:Router,
+        private router: Router,
         private clipboard: ClipboardService,
         public dialog: MatDialog,
-        private snackbar: MatSnackBar){}
+        private snackbar: MatSnackBar) { }
 
-    ngOnInit(){
+    ngOnInit() {
         this.vaultItem = {
-            id: "",
-            name: "",
-            username: "",
-            password: "",
-            url: "",
+            id: '',
+            name: '',
+            username: '',
+            password: '',
+            url: '',
             createdAt: Date.now(),
-            updatedAt: Date.now()            
-        }
+            updatedAt: Date.now()
+        };
     }
 
 
-     // get functions
+    // get functions
     get name() {
         return this.vaultItemForm.get('name');
     }
@@ -63,27 +64,27 @@ export class NewVaultItemComponent implements OnInit{
         this.router.navigate(['/vault-list']);
     }
 
-    save(){
+    save() {
         if (this.vaultItemForm.touched) {
             // show dialog
-            this.openConfirmationDialog()
+            this.openConfirmationDialog();
         }
-       
+
     }
 
-    copyToClipboard(value: "", msg: string): void {
+    copyToClipboard(value: '', msg: string): void {
         this.clipboard.copy(value);
         this.clipboard.clearClipBoard();
         this.openSnackBar(msg, 'Ok');
-      }
-    
-    openSnackBar(message: string, action: string) {
-    this.snackbar.open(message, action, {
-        duration: 2000,
-    });
     }
 
-    updateVaultItemObj(){
+    openSnackBar(message: string, action: string) {
+        this.snackbar.open(message, action, {
+            duration: 2000,
+        });
+    }
+
+    updateVaultItemObj() {
         this.vaultItem.name = this.name.value;
         this.vaultItem.password = this.password.value;
         this.vaultItem.username = this.username.value;
@@ -91,13 +92,13 @@ export class NewVaultItemComponent implements OnInit{
 
     openConfirmationDialog() {
         const dialogRef = this.dialog.open(ConformationDialogComponent);
-    
+
         dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.updateVaultItemObj();
-            this.saveItem.emit(this.vaultItem);
-            // this.updateVaultItem();
-          }
+            if (result) {
+                this.updateVaultItemObj();
+                this.saveItem.emit(this.vaultItem);
+                // this.updateVaultItem();
+            }
         });
     }
 

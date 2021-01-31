@@ -66,9 +66,9 @@ export const getNewAccountPageError = createSelector(
 export const getMasterpasswordObj = createSelector(
   selectAuthStatusState,
   fromAuth.getMasterPasswordObj
-)
+);
 
 export const getMasterpassword = createSelector(
   selectAuthStatusState,
   fromAuth.getMasterPassword
-)
+);

@@ -16,13 +16,11 @@ export class SelectedVaultItemComponent implements OnDestroy{
     vaultItem$: Observable<VaultItem>;
     actionSubscription: Subscription;
 
-    constructor(private store: Store<fromVault.State>,private route:ActivatedRoute){
+    constructor(private store: Store<fromVault.State>,private route: ActivatedRoute){
         this.vaultItem$ = store.pipe(select(fromVault.getSelectedVaultItem));
         this.actionSubscription = this.route.paramMap
         .pipe(
-            map(params => {
-                return VaultActions.viewVaultItem({id:String(params.get('id'))})
-            })
+            map(params => VaultActions.viewVaultItem({id:String(params.get('id'))}))
         ).subscribe(store);
     }
 
@@ -31,7 +29,7 @@ export class SelectedVaultItemComponent implements OnDestroy{
     }
 
     ngOnDestroy(){
-        if (this.actionSubscription) this.actionSubscription.unsubscribe();
+        if (this.actionSubscription) {this.actionSubscription.unsubscribe();}
     }
-    
+
 }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { Credentials } from './../models/user';
 import { exhaustMap, map, catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { LoginPageActions, AuthApiActions, AuthActions, NewAccountPageActions } from '../actions';
@@ -11,18 +11,17 @@ import { LoginPageActions, AuthApiActions, AuthActions, NewAccountPageActions } 
 import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
 
 @Injectable()
-export class AuthEffects{
+export class AuthEffects {
 
-    login$ = createEffect(() => 
+    login$ = createEffect(() =>
         this.actions$.pipe(
             ofType(LoginPageActions.login.type),
             map(action => action.credentials),
-            exhaustMap((auth: Credentials) =>  {
-                return this.authService.login(auth).pipe(
+            exhaustMap((auth: Credentials) =>
+                from(this.authService.login(auth)).pipe(
                     map(user => AuthApiActions.loginSuccess({ user })),
-                    catchError(error =>of(AuthApiActions.loginFailure({ error })))
-                    )
-            })
+                    catchError(error => of(AuthApiActions.loginFailure({ error })))
+                ))
         )
     );
 
@@ -31,54 +30,54 @@ export class AuthEffects{
             ofType(AuthApiActions.loginSuccess.type),
             tap(() => this.router.navigate(['/main']))
         ),
-        {dispatch : false}
+        { dispatch: false }
     );
 
-    loginRedirect$ = createEffect(()=>
+    loginRedirect$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(AuthApiActions.loginRedirect,AuthActions.logout),
-            tap(()=> this.router.navigate(['/login']))
+            ofType(AuthApiActions.loginRedirect, AuthActions.logout),
+            tap(() => this.router.navigate(['/login']))
         ),
-        {dispatch: false}
+        { dispatch: false }
     );
 
-    loginConfirmation$ = createEffect(()=>
+    loginConfirmation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.logoutConfirmation.type),
             exhaustMap(() => {
-            const dialogRef = this.dialog.open<LogoutConfirmationDialogComponent,
-                undefined,
-                boolean
-            >(LogoutConfirmationDialogComponent);
+                const dialogRef = this.dialog.open<LogoutConfirmationDialogComponent,
+                    undefined,
+                    boolean
+                >(LogoutConfirmationDialogComponent);
 
-            return dialogRef.afterClosed();
+                return dialogRef.afterClosed();
             }),
             map(
-            result =>
-                result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
+                result =>
+                    result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
             )
         )
     );
 
-    signup$ = createEffect(()=>
+    signup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(NewAccountPageActions.signup.type),
             map(action => action.credentials),
             exhaustMap((auth: Credentials) =>
-                this.authService.signup(auth).pipe(
+                from(this.authService.signup(auth)).pipe(
                     map((obj) => AuthApiActions.signupSuccess(obj)),
-                    catchError(error => of(AuthApiActions.signupFailure({error})))
+                    catchError(error => of(AuthApiActions.signupFailure({ error })))
                 )
             )
         )
     );
 
-    signupSuccess$ = createEffect(()=>
+    signupSuccess$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthApiActions.signupSuccess.type),
-            tap(()=> this.router.navigate(['/main'])),
-            ),
-        {dispatch: false}
+            tap(() => this.router.navigate(['/main'])),
+        ),
+        { dispatch: false }
     );
 
     constructor(
@@ -86,5 +85,5 @@ export class AuthEffects{
         private authService: AuthService,
         private router: Router,
         private dialog: MatDialog,
-    ){}
+    ) { }
 }

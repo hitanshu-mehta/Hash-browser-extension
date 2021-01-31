@@ -24,7 +24,7 @@ export const COMPONENTS = [
     SelectedVaultItemComponent,
     NewVaultItemComponent,
     AddVaultItemComponent
-]
+];
 
 @NgModule({
     imports: [

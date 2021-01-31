@@ -31,7 +31,7 @@ export class RuntimeBackground{
                         console.log(this.autoFillService);
                         this.autoFillService.doAutoFillActiveTab({details:msg.details});
 
-                } 
+                }
         }
     }
 }

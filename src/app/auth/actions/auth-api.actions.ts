@@ -11,25 +11,25 @@ export const loginSuccess = createAction(
 export const loginFailure = createAction(
     '[Auth/API] Login Failure',
     props<{ error: any }>()
-  );
+);
 
 export const loginRedirect = createAction('[Auth/API] Login Redirect');
 
 export const signupSuccess = createAction(
-  '[Auth/API] Sign Success',
-  props<{user: User, masterPasswordObj: MasterPasswordObj, masterpassword: string}>()
+    '[Auth/API] Signup Success',
+    props<{ user: User; masterPasswordObj: MasterPasswordObj; masterpassword: string }>()
 );
 
 export const signupFailure = createAction(
-  '[Auth/API] Sign Failure',
-  props<{error: any}>()
+    '[Auth/API] Signup Failure',
+    props<{ error: any }>()
 );
 
 
 export type AuthApiActionsUnion = ReturnType<
-  | typeof loginSuccess
-  | typeof loginFailure
-  | typeof loginRedirect
-  | typeof signupSuccess
-  | typeof signupFailure
+    | typeof loginSuccess
+    | typeof loginFailure
+    | typeof loginRedirect
+    | typeof signupSuccess
+    | typeof signupFailure
 >;

@@ -3,9 +3,9 @@ import { Action, createReducer,on } from '@ngrx/store';
 
 
 export interface State {
-    loading: boolean,
-    loaded: boolean,
-    error: string | null,
+    loading: boolean;
+    loaded: boolean;
+    error: string | null;
 }
 
 const initialState: State = {
@@ -18,10 +18,10 @@ const addVaultItemReducer = createReducer(
     initialState,
     on(AddVaultItemActions.addVaultItem,(state)=>({...state,loaded:false,loading:true})),
     on(VaultApiActions.addVaultItemSuccess,(state)=>({...state,loaded:true,loading:false})),
-    on(VaultApiActions.addVaultItemFailure,(state,{error})=>({...state,error: error}))
-)
+    on(VaultApiActions.addVaultItemFailure,(state,{error})=>({...state,error}))
+);
 
 export const reducer = (state: State, action: Action) => addVaultItemReducer(state,action);
 
-export const getError = (state:State) => state.error;
-export const getLoaded = (state:State) => state.loaded;
+export const getError = (state: State) => state.error;
+export const getLoaded = (state: State) => state.loaded;

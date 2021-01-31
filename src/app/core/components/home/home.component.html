@@ -6,19 +6,36 @@
     <img src="../../../assets/security_2.svg" alt="Image" height="190px" />
   </div>
   <div class="row mb-2 mx-2">
-    <button mat-raised-button *ngIf="masterPasswordPresent" appStopProp appStopClick color="primary"
-      [routerLink]="'/login'">
+    <button
+      *ngIf="masterPasswordPresent$ | async"
+      mat-raised-button
+      appStopProp
+      appStopClick
+      color="primary"
+      [routerLink]="'/login'"
+    >
       Login
     </button>
   </div>
   <div class="row mb-2 mx-2">
-    <button *ngIf="!masterPasswordPresent" appStopProp appStopClick mat-raised-button color="primary"
-      [routerLink]="'/new-user'">
+    <button
+      *ngIf="(masterPasswordPresent$ | async) === false"
+      appStopProp
+      appStopClick
+      mat-raised-button
+      color="primary"
+      [routerLink]="'/new-user'"
+    >
       Create Account
     </button>
   </div>
   <div class="row mx-2">
-    <button appStopProp appStopClick mat-raised-button [routerLink]="'/password-generator-settings'">
+    <button
+      appStopProp
+      appStopClick
+      mat-raised-button
+      [routerLink]="'/password-generator-settings'"
+    >
       Generate Password
     </button>
   </div>

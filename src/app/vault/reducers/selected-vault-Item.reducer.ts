@@ -4,7 +4,7 @@ import { VaultItem } from './../models/vault-item';
 
 
 export interface State {
-    selectedVaultItemId: VaultItem
+    selectedVaultItemId: VaultItem;
 }
 
 const initialState: State = {
@@ -13,7 +13,7 @@ const initialState: State = {
 
 const selectedVaultItemReducer = createReducer(
     initialState,
-)
+);
 
 export const reducer = (state: State, action: Action) => selectedVaultItemReducer(state,action);
 

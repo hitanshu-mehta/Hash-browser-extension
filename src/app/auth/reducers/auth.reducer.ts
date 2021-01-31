@@ -1,7 +1,7 @@
 import { MasterPasswordObj } from './../models/masterpassword';
-import { Action, createReducer,on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { User } from './../models/user';
-import { AuthApiActions} from '../actions';
+import { AuthApiActions } from '../actions';
 
 export interface State {
     user: User | null;
@@ -17,8 +17,11 @@ export const initialState: State = {
 
 const authReducer = createReducer(
     initialState,
-    on(AuthApiActions.loginSuccess, (state, { user }) => ({...state, user })),
-    on(AuthApiActions.signupSuccess, (state, { user,masterPasswordObj,masterpassword }) => ({...state, user,masterPasswordObj,masterpassword}))
+    on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
+    on(
+        AuthApiActions.signupSuccess,
+        (state, { user, masterPasswordObj, masterpassword }) => ({ ...state, user, masterPasswordObj, masterpassword })
+    )
 );
 
 export const reducer = (state: State, action: Action) => authReducer(state, action);

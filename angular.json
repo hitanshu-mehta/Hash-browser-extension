@@ -114,9 +114,6 @@
             "lintFilePatterns": [
               "src/**/*.ts",
               "src/**/*.html"
-            ],
-            "tsConfig": [
-              "tsconfig.worker.json"
             ]
           }
         },

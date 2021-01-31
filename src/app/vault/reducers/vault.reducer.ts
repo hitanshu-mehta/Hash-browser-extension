@@ -17,11 +17,11 @@ const initialState: State = {
     currentSelectedId: null,
     vaultItems: [],
 };
-  
+
 const vaultReducer = createReducer(
     initialState,
     on(VaultActions.loadVault,(state)=> ({...state,loading:true})),
-    on(VaultApiActions.loadVaultSuccess,(state,{vaultItems})=> ({...state,loaded:true,loading:false,vaultItems:vaultItems})),
+    on(VaultApiActions.loadVaultSuccess,(state,{vaultItems})=> ({...state,loaded:true,loading:false,vaultItems})),
     on(VaultApiActions.addVaultItemSuccess, (state,{vaultItem})=>({...state,vaultItems:[...state.vaultItems, vaultItem]})),
     on(VaultApiActions.removeVaultItemSuccess,(state,{vaultItem})=>({
         ...state,
@@ -33,9 +33,9 @@ const vaultReducer = createReducer(
         return state;
     }),
     on(VaultActions.viewVaultItem,(state,{id})=>({...state,currentSelectedId:id}))
-)
+);
 
-export const reducer = (state:State, action:Action) => vaultReducer(state,action);
+export const reducer = (state: State, action: Action) => vaultReducer(state,action);
 
 export const getVaultItems = (state: State) => state.vaultItems;
 

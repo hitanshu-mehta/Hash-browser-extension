@@ -1,98 +1,89 @@
-import { AddVaultItemActionsUnion } from './../actions/add-vault-item.actions';
 import { Router } from '@angular/router';
 import { VaultItem } from './../models/vault-item';
 import { VaultService } from './../services/vault.service';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 
-import {SelectedVaultItemActions, VaultActions,VaultApiActions,AddVaultItemActions } from '../actions'
-import { mergeMap, map, catchError, exhaustMap, tap, concatMapTo} from 'rxjs/operators';
-import {of} from 'rxjs';
+import { SelectedVaultItemActions, VaultActions, VaultApiActions, AddVaultItemActions } from '../actions';
+import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
-export class VaultEffects{
+export class VaultEffects {
 
-    loadVault = createEffect(()=>
+    loadVault$ = createEffect(() =>
         this.actions$.pipe(
             ofType(VaultActions.loadVault.type),
-            mergeMap(()=>{
-                return this.vaultService.loadVault().pipe(
-                    map((vaultItems: VaultItem[]) =>
-                        VaultApiActions.loadVaultSuccess({vaultItems})
-                    ),
-                    catchError( error => 
-                        of(VaultApiActions.loadVaultFailure({ error }))
-                    )
+            mergeMap(() => this.vaultService.loadVault().pipe(
+                map((vaultItems: VaultItem[]) =>
+                    VaultApiActions.loadVaultSuccess({ vaultItems })
+                ),
+                catchError(error =>
+                    of(VaultApiActions.loadVaultFailure({ error }))
                 )
-            })
+            ))
         )
     );
 
 
-    addVaultItem = createEffect(() =>
+    addVaultItem$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AddVaultItemActions.addVaultItem.type),
             map(action => action.vaultItem),
-            exhaustMap((vaultItem:VaultItem) => {
-                return this.vaultService.addVaultItem(vaultItem).pipe(
-                    map(()=> VaultApiActions.addVaultItemSuccess({vaultItem})),
-                    catchError(error => of(VaultApiActions.addVaultItemFailure({error})))
-                )
-            })
+            exhaustMap((vaultItem: VaultItem) => this.vaultService.addVaultItem(vaultItem).pipe(
+                map(() => VaultApiActions.addVaultItemSuccess({ vaultItem })),
+                catchError(error => of(VaultApiActions.addVaultItemFailure({ error })))
+            ))
         )
     );
 
-    addVaultItemSuccess = createEffect(()=>
+    addVaultItemSuccess$ = createEffect(() =>
         this.actions$.pipe(
             ofType(VaultApiActions.addVaultItemSuccess.type),
             tap(() => this.router.navigate(['/vault-list']))
         ),
-        {dispatch: false}
+        { dispatch: false }
     );
 
-    addVaultItemNavigate = createEffect(() => 
+    addVaultItemNavigate$ = createEffect(() =>
         this.actions$.pipe(
             ofType(VaultActions.addVaultItem.type),
             tap(() => this.router.navigate(['/new-vault-item']))
         ),
-        {dispatch: false}
+        { dispatch: false }
     );
 
-    removeVaultItem = createEffect(()=>
-            this.actions$.pipe(
-                ofType(VaultActions.removeVaultItem.type),
-                map(action => action.vaultItem),
-                exhaustMap((vaultItem:VaultItem)=>{
-                    return this.vaultService.removeVaultItem(vaultItem).pipe(
-                        map(()=> VaultApiActions.removeVaultItemSuccess({vaultItem})),
-                        catchError((error) => of(VaultApiActions.removeVaultItemFailure({error})))
-                    )
-                })
-            )
+    removeVaultItem$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultActions.removeVaultItem.type),
+            map(action => action.vaultItem),
+            exhaustMap((vaultItem: VaultItem) => this.vaultService.removeVaultItem(vaultItem).pipe(
+                map(() => VaultApiActions.removeVaultItemSuccess({ vaultItem })),
+                catchError((error) => of(VaultApiActions.removeVaultItemFailure({ error })))
+            ))
+        )
     );
 
-    updateVaultItem = createEffect(()=>
+    updateVaultItem$ = createEffect(() =>
         this.actions$.pipe(
             ofType(SelectedVaultItemActions.updateVaultItem.type),
             map(action => action.vaultItem),
-            exhaustMap((oldVaultItem:VaultItem) =>{
-                return this.vaultService.updateVaultItem(oldVaultItem).pipe(
-                    map((updatedVaultItem: VaultItem)=> VaultApiActions.updateVaultItemSuccess({oldVaultItem,updatedVaultItem})),
-                    catchError((error) => of(VaultApiActions.updateVaultItemFailure({error})))
-                )
-            })
+            exhaustMap((oldVaultItem: VaultItem) => this.vaultService.updateVaultItem(oldVaultItem).pipe(
+                map((updatedVaultItem: VaultItem) => VaultApiActions.updateVaultItemSuccess({ oldVaultItem, updatedVaultItem })),
+                catchError((error) => of(VaultApiActions.updateVaultItemFailure({ error })))
+            ))
         )
     );
-     
+
 
     constructor(
-        private actions$: 
-            | Actions<VaultActions.VaultActionsUnion 
-            | VaultApiActions.VaultApiActionsUnion 
-            | SelectedVaultItemActions.SelectedVaultItemActionsUnion
-            | AddVaultItemActions.AddVaultItemActionsUnion>,
+        private actions$:
+            Actions<VaultActions.VaultActionsUnion
+                | VaultApiActions.VaultApiActionsUnion
+                | SelectedVaultItemActions.SelectedVaultItemActionsUnion
+                | AddVaultItemActions.AddVaultItemActionsUnion>,
         private vaultService: VaultService,
         private router: Router
-        ){}
+    ) { }
 
 }

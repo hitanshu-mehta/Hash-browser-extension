@@ -30,6 +30,10 @@ export class ConformationDialogComponent { }
 })
 export class VaultItemComponent implements OnInit {
 
+  @Input() vaultItem: VaultItem;
+  @Output() update = new EventEmitter<VaultItem>();
+  @Output() add = new EventEmitter<VaultItem>();
+
   vaultItemForm = new FormGroup({
     name: new FormControl(''),
     username: new FormControl(''),
@@ -42,10 +46,6 @@ export class VaultItemComponent implements OnInit {
   readOnly = true;
 
   decryptedPassword: string;
-
-  @Input() vaultItem: VaultItem;
-  @Output() update = new EventEmitter<VaultItem>();
-  @Output() add = new EventEmitter<VaultItem>();
 
   constructor(
     private router: Router,
@@ -75,7 +75,7 @@ export class VaultItemComponent implements OnInit {
     this.name.setValue(this.vaultItem.name);
     this.password.setValue(this.decryptedPassword);
     this.username.setValue(this.vaultItem.username);
-    
+
     // listen to value changes of name, username and password FormControl
     this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.vaultItem.name); });
     this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.vaultItem.username); });
@@ -86,7 +86,7 @@ export class VaultItemComponent implements OnInit {
   edit() {
     if (!this.readOnly && this.vaultItemForm.touched) {
       // show dialog
-      this.openConfirmationDialog()
+      this.openConfirmationDialog();
     }
     this.readOnly = !this.readOnly;
   }
@@ -101,7 +101,7 @@ export class VaultItemComponent implements OnInit {
   }
 
   addItem() {
-    if(!this.readOnly && this.vaultItemForm.touched){
+    if (!this.readOnly && this.vaultItemForm.touched) {
       this.openConfirmationDialog();
     }
 
@@ -117,11 +117,10 @@ export class VaultItemComponent implements OnInit {
   }
 
   updateView(f: AbstractControl, prevValue: any) {
-    if (f.value !== prevValue)
-      {f.setErrors(() => { });}
+    if (f.value !== prevValue) { f.setErrors(() => { }); }
   }
 
-  copyToClipboard(value: "", msg: string): void {
+  copyToClipboard(value: '', msg: string): void {
     this.clipboard.copy(value);
     this.clipboard.clearClipBoard();
     this.openSnackBar(msg, 'Ok');
@@ -133,7 +132,7 @@ export class VaultItemComponent implements OnInit {
     });
   }
 
-  undo(){
+  undo() {
     this.name.setValue(this.vaultItem.name);
     this.username.setValue(this.vaultItem.username);
     this.password.setValue(this.vaultItem.password);
@@ -146,7 +145,7 @@ export class VaultItemComponent implements OnInit {
       if (result) {
         // this.updateVaultItem();
       }
-      else{
+      else {
         this.undo();
       }
     });

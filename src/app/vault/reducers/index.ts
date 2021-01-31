@@ -11,22 +11,22 @@ export interface VaultState {
     addVaultItemStatus: fromAddVaultItemPage.State;
 }
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
     vault: VaultState;
 }
 
 export const reducers: ActionReducerMap<
     VaultState
 > = {
-    status:fromVault.reducer,
+    status: fromVault.reducer,
     selectedVaultItemStatus: fromSelectedVaultItemPage.reducer,
     addVaultItemStatus: fromAddVaultItemPage.reducer,
 };
 
-export const selectVaultState = createFeatureSelector<State,VaultState>('vault');
+export const selectVaultState = createFeatureSelector<State, VaultState>('vault');
 
 
-// Vault 
+// Vault
 export const selectVaultStatusState = createSelector(
     selectVaultState,
     (state: VaultState) => state.status
@@ -45,30 +45,26 @@ export const getSelectedVaultId = createSelector(
 export const getSelectedVaultItem = createSelector(
     getVault,
     getSelectedVaultId,
-    (vaultItems, id) => {
-        return vaultItems.filter(v => v.id === id)[0];
-    } 
-)
+    (vaultItems, id) => vaultItems.filter(v => v.id === id)[0]
+);
 
-// Select Vault Page 
+// Select Vault Page
 export const selectVaultItemState = createSelector(
     selectVaultState,
     (state: VaultState) => state.selectedVaultItemStatus
 );
 
 
-// Add Vault Page 
+// Add Vault Page
 export const addVaultItemState = createSelector(
     selectVaultState,
     (state: VaultState) => state.addVaultItemStatus
-)
+);
 
 export const getVaultSize = createSelector(
     getVault,
     (vault: VaultItem[]) => {
-        if(vault === null)
-            return 0
-        else 
-            vault.length;
+        if (vault === null) { return 0; }
+        else { return vault.length; }
     }
-)
+);

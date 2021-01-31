@@ -3,7 +3,7 @@ import { createAction, props, union } from '@ngrx/store';
 
 export const updateVaultItem = createAction(
     '[Selected Vault Item Page] Update selected vault item',
-    props<{vaultItem:VaultItem}>()
+    props<{vaultItem: VaultItem}>()
 );
 
 

@@ -1,21 +1,25 @@
 /* eslint-disable */
 /// <reference lib="webworker" />
-import { verifyMasterPassword } from 'hash-password-manager/masterPassword.js';
+/* eslint-enable */
+
+import { verifyMasterPassword, setMasterPassword } from 'hash-password-manager/masterPassword.js';
+
+const processMessage = ({ sender, payload }): any => {
+    switch (sender) {
+        case 'login':
+            return verifyMasterPassword(payload.masterPasswordObj, payload.password);
+        case 'signup':
+            return setMasterPassword(payload.password);
+    }
+
+};
 
 addEventListener('message', ({ data }) => {
-  const response = processMessage(data);
-  console.log('in worker');
-  postMessage(response);
+    const response = processMessage(data);
+    postMessage(response);
 });
 
-function processMessage({sender,password}): any {
-  switch(sender){
-    case 'login':
-      return verifyMasterPassword(password);
-  }
 
-}
 
-/* eslint-enable */
 
 

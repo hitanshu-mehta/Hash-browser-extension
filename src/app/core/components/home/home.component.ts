@@ -1,28 +1,25 @@
-import { AuthService } from './../../../auth/services/auth.service';
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { Component } from '@angular/core';
-import * as fromCore from '../../reducers';
+import { Component, OnInit } from '@angular/core';
+import * as fromCore from '../../../reducers';
 import { HomePageActions } from '../../actions';
 
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  appName = 'Hass Passward Manager';
-  masterPasswordPresent : boolean;
+export class HomeComponent implements OnInit {
+    appName = 'Hass Passward Manager';
+    masterPasswordPresent$: Observable<boolean>;
 
-  constructor(
-    private store: Store<fromCore.State>,
-    private authService: AuthService
-    ) { 
-      this.authService.checkMasterPasswordPresent().subscribe((v) => {console.log(v);this.masterPasswordPresent = v});
-      // TODO
-      // this.store.dispatch(HomePageActions.checkMasterPasswordPresent());
-      // this.store.pipe(select(fromCore.getMasterPasswordPresent)).subscribe((v)=> this.masterPasswordPresent = v)
+    constructor(
+        private store: Store<fromCore.State>,
+    ) { }
+
+    ngOnInit() {
+        this.store.dispatch(HomePageActions.checkMasterPasswordPresent());
+        this.masterPasswordPresent$ = this.store.pipe(select(fromCore.getMasterPasswordPresent));
     }
-  
 
 }
