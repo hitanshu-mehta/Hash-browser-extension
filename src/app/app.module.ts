@@ -30,6 +30,7 @@ import { BlurClickDirective } from './directives/blur-click.directive';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
         FormsModule,
         ClipboardModule,
         OverlayModule,
+        PortalModule,
         StrongPasswordModule,
         VaultModule,
         AuthModule,

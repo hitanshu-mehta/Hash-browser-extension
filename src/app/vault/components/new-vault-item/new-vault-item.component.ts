@@ -15,7 +15,7 @@ import { ClipboardService } from 'src/app/core/services/clipboard.service';
 })
 export class NewVaultItemComponent implements OnInit {
 
-    @Output() saveItem = new EventEmitter<VaultItem>();
+    @Output() addItem = new EventEmitter<VaultItem>();
 
     vaultItemForm = new FormGroup({
         name: new FormControl(''),
@@ -64,7 +64,7 @@ export class NewVaultItemComponent implements OnInit {
         this.router.navigate(['/vault-list']);
     }
 
-    save() {
+    add() {
         if (this.vaultItemForm.touched) {
             // show dialog
             this.openConfirmationDialog();
@@ -96,7 +96,7 @@ export class NewVaultItemComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.updateVaultItemObj();
-                this.saveItem.emit(this.vaultItem);
+                this.addItem.emit(this.vaultItem);
                 // this.updateVaultItem();
             }
         });

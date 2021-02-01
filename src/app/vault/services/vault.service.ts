@@ -1,4 +1,3 @@
-import { getVault } from './../reducers/index';
 import { Store, select } from '@ngrx/store';
 import { map, switchMap } from 'rxjs/operators';
 import { EncryptionKeyObj } from './../models/encryption-key';
@@ -13,20 +12,35 @@ import { encryptLoginPassword, decryptLoginPassword } from 'hash-password-manage
 import * as fromAuth from 'src/app/auth/reducers';
 import * as fromVault from '../reducers';
 
+interface WorkerMessage {
+    sender: string;
+    payload: any;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class VaultService {
 
-    private masterPasswordObj: MasterPasswordObj;
     private masterPassword: string;
+    private masterKeyObj: MasterKeyObj;
+    private encryptionKeyObj: EncryptionKeyObj;
     private vault: VaultItem[] = [];
+    private worker: Worker;
+    private workerAvailable = true;
 
     constructor(private storageService: StorageService, private store: Store<fromAuth.State | fromVault.State>) {
-        store.pipe(select(fromAuth.getMasterpasswordObj)).subscribe((obj) => this.masterPasswordObj = obj);
-        store.pipe(select(fromAuth.getMasterpassword)).subscribe((obj) => this.masterPassword = obj);
-        // store.pipe(select(fromVault.getVault)).subscribe(vault => this.vault = vault);
+        this.store.pipe(select(fromAuth.getMasterpasswordObj)).subscribe((obj: MasterPasswordObj) => {
+            this.masterKeyObj = {
+                masterKeyHash: obj?.masterKeyHash,
+                masterKeySalt: obj?.masterKeySalt
+            };
+            this.encryptionKeyObj = {
+                encryptionKey: obj?.encryptionKey,
+                encryptionKeyIv: obj?.encryptionKeyIv
+            };
+        });
+        this.store.pipe(select(fromAuth.getMasterpassword)).subscribe((obj) => this.masterPassword = obj);
         from(this.storageService.get<VaultItem[]>('vault'))
             .subscribe(
                 (v: VaultItem[]) => {
@@ -36,8 +50,17 @@ export class VaultService {
                     }
                 }
             );
+        this.worker = new Worker('../workers/vault.worker', { type: 'module' });
+        if (!this.worker) { this.workerAvailable = false; }
     }
 
+    async sendToWebWorker(workerMessage: WorkerMessage): Promise<any> {
+
+        return new Promise((resolve) => {
+            this.worker.postMessage(workerMessage);
+            this.worker.onmessage = ({ data }) => resolve(data);
+        });
+    }
 
     loadVault(): Observable<VaultItem[]> {
 
@@ -46,25 +69,35 @@ export class VaultService {
             switchMap(() => of(this.vault))
         );
     }
+
     getVaultSize(): number {
         if (this.vault == null) { return 0; }
         return this.vault.length;
     }
 
-    encryptPassword(password: string | EncryptionKeyObj): string | null {
-        const { masterKeyHash, masterKeySalt } = this.masterPasswordObj;
-        const { encryptionKey, encryptionKeyIv } = this.masterPasswordObj;
-        const masterKeyObject = { masterKeyHash, masterKeySalt };
-        const encryptionkeyObject = { encryptionKey, encryptionKeyIv };
-        return encryptLoginPassword(masterKeyObject, encryptionkeyObject, this.masterPassword, password);
+    async encryptPassword(password: string): Promise<EncryptionKeyObj> {
+
+        console.log('Encryption start', this.masterKeyObj, this.encryptionKeyObj, this.masterPassword);
+        if (this.workerAvailable) {
+            return await this.sendToWebWorker(
+                {
+                    sender: 'encryptPassword',
+                    payload: {
+                        masterKeyObj: this.masterKeyObj,
+                        encryptionKeyObj: this.encryptionKeyObj,
+                        masterPassword: this.masterPassword,
+                        password
+                    }
+                });
+            console.log('Encryption end');
+        }
+        else {
+            return encryptLoginPassword(this.masterKeyObj, this.encryptionKeyObj, this.masterPassword, password);
+        }
     }
 
     decryptPassword(eObj: EncryptionKeyObj | string) {
-        const { masterKeyHash, masterKeySalt } = this.masterPasswordObj;
-        const { encryptionKey, encryptionKeyIv } = this.masterPasswordObj;
-        const masterKeyObject = { masterKeyHash, masterKeySalt };
-        const encryptionkeyObject = { encryptionKey, encryptionKeyIv };
-        return decryptLoginPassword(masterKeyObject, encryptionkeyObject, this.masterPassword, eObj);
+        return decryptLoginPassword(this.masterKeyObj, this.encryptionKeyObj, this.masterPassword, eObj);
     }
 
     addVaultItem(vaultItem: VaultItem): Observable<VaultItem> {

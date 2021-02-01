@@ -9,8 +9,14 @@
         <mat-form-field appearance="standard">
           <mat-label>{{
             name.dirty && name.value !== vaultItem.name ? "Name*" : "Name"
-            }}</mat-label>
-          <input formControlName="name" type="text" [value]="vaultItem.name" [readonly]="readOnly" matInput />
+          }}</mat-label>
+          <input
+            formControlName="name"
+            type="text"
+            [value]="vaultItem.name"
+            [readonly]="readOnly"
+            matInput
+          />
         </mat-form-field>
       </div>
 
@@ -19,21 +25,33 @@
         <mat-form-field appearance="standard">
           <mat-label>{{
             username.dirty && username.value !== vaultItem.username
-            ? "Username*"
-            : "Username"
-            }}</mat-label>
-          <input formControlName="username" [type]="hideUsername ? 'password' : 'text'" [value]="vaultItem.username"
-            [readonly]="readOnly" matInput />
+              ? "Username*"
+              : "Username"
+          }}</mat-label>
+          <input
+            formControlName="username"
+            [type]="hideUsername ? 'password' : 'text'"
+            [value]="vaultItem.username"
+            [readonly]="readOnly"
+            matInput
+          />
           <div matSuffix style="display: flex">
-            <button type="button" mat-icon-button (click)="hideUsername = !hideUsername"
-              [attr.aria-label]="'Hide Username'">
+            <button
+              type="button"
+              mat-icon-button
+              (click)="hideUsername = !hideUsername"
+              [attr.aria-label]="'Hide Username'"
+            >
               <mat-icon>
                 {{ hideUsername ? "visibility_off" : "visibility" }}
               </mat-icon>
             </button>
-            <button type="button" mat-icon-button aria-label="Copy" (click)="
-                  copyToClipboard(this.username.value, 'Username Copied')
-                ">
+            <button
+              type="button"
+              mat-icon-button
+              aria-label="Copy"
+              (click)="copyToClipboard(this.username.value, 'Username Copied')"
+            >
               <mat-icon>content_copy</mat-icon>
             </button>
           </div>
@@ -45,21 +63,33 @@
         <mat-form-field appearance="standard">
           <mat-label>{{
             password.dirty && password.value !== vaultItem.password
-            ? "Password*"
-            : "Password"
-            }}</mat-label>
-          <input [value]="decryptedPassword" formControlName="password" [type]="hidePassword ? 'password' : 'text'"
-            [readonly]="readOnly" matInput />
+              ? "Password*"
+              : "Password"
+          }}</mat-label>
+          <input
+            [value]="decryptedPassword"
+            formControlName="password"
+            [type]="hidePassword ? 'password' : 'text'"
+            [readonly]="readOnly"
+            matInput
+          />
           <div matSuffix style="display: flex">
-            <button type="button" mat-icon-button (click)="hidePassword = !hidePassword"
-              [attr.aria-label]="'Hide Password'">
+            <button
+              type="button"
+              mat-icon-button
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Hide Password'"
+            >
               <mat-icon>
                 {{ hidePassword ? "visibility_off" : "visibility" }}
               </mat-icon>
             </button>
-            <button type="button" mat-icon-button aria-label="Copy" (click)="
-                  copyToClipboard(this.password.value, 'Password Copied')
-                ">
+            <button
+              type="button"
+              mat-icon-button
+              aria-label="Copy"
+              (click)="copyToClipboard(this.password.value, 'Password Copied')"
+            >
               <mat-icon>content_copy</mat-icon>
             </button>
           </div>
@@ -70,19 +100,38 @@
       <div class="row">
         <mat-form-field>
           <mat-label>Url</mat-label>
-          <input type="text" [value]="vaultItem.url" [readonly]="readOnly" matInput />
+          <input
+            type="text"
+            [value]="vaultItem.url"
+            [readonly]="readOnly"
+            matInput
+          />
         </mat-form-field>
       </div>
 
       <div class="row justify-content-between mx-0">
         <div class="col d-flex justify-content-start">
-          <button mat-raised-button type="button" [color]="readOnly ? 'primary' : 'warn'" appStopProp appBlurClick
-            appStopClick (click)="edit()">
+          <button
+            mat-raised-button
+            type="button"
+            [color]="readOnly ? 'primary' : 'warn'"
+            appStopProp
+            appBlurClick
+            appStopClick
+            (click)="edit()"
+          >
             {{ readOnly ? "Edit" : "Save" }}
           </button>
         </div>
         <div class="col d-flex justify-content-end">
-          <button mat-raised-button type="button" appStopProp appBlurClick appStopClick (click)="back()">
+          <button
+            mat-raised-button
+            type="button"
+            appStopProp
+            appBlurClick
+            appStopClick
+            (click)="back()"
+          >
             Back
           </button>
         </div>

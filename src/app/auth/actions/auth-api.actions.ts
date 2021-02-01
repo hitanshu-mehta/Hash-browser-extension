@@ -5,7 +5,7 @@ import { createAction, props } from '@ngrx/store';
 
 export const loginSuccess = createAction(
     '[Auth/API] Login Success',
-    props<{ user: User }>()
+    props<{ user: User; masterPasswordObj: MasterPasswordObj; masterpassword: string }>()
 );
 
 export const loginFailure = createAction(

@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-confirmation-dialog',
-  template: `
+    selector: 'app-confirmation-dialog',
+    template: `
   <h2 mat-dialog-title>Confirm Changes</h2>
   <div mat-dialog-content>Are you sure about the changes you made? Once these changes are made it cannot be undone.</div>
   <mat-dialog-actions>
@@ -24,136 +24,136 @@ import { Router } from '@angular/router';
 export class ConformationDialogComponent { }
 
 @Component({
-  selector: 'app-vault-item',
-  templateUrl: './vault-item.component.html',
-  styleUrls: ['./vault-item.component.scss']
+    selector: 'app-vault-item',
+    templateUrl: './vault-item.component.html',
+    styleUrls: ['./vault-item.component.scss']
 })
 export class VaultItemComponent implements OnInit {
 
-  @Input() vaultItem: VaultItem;
-  @Output() update = new EventEmitter<VaultItem>();
-  @Output() add = new EventEmitter<VaultItem>();
+    @Input() vaultItem: VaultItem;
+    @Output() update = new EventEmitter<VaultItem>();
+    @Output() add = new EventEmitter<VaultItem>();
 
-  vaultItemForm = new FormGroup({
-    name: new FormControl(''),
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
-
-
-  hideUsername = true;
-  hidePassword = true;
-  readOnly = true;
-
-  decryptedPassword: string;
-
-  constructor(
-    private router: Router,
-    private clipboard: ClipboardService,
-    public dialog: MatDialog,
-    private snackbar: MatSnackBar,
-    private vaultService: VaultService) { }
-
-  // get functions
-  get name() {
-    return this.vaultItemForm.get('name');
-  }
-
-  get username() {
-    return this.vaultItemForm.get('username');
-  }
-
-  get password() {
-    return this.vaultItemForm.get('password');
-  }
-
-  ngOnInit() {
-
-    this.decryptedPassword = this.vaultService.decryptPassword(this.vaultItem.password);
-
-    // set initial values
-    this.name.setValue(this.vaultItem.name);
-    this.password.setValue(this.decryptedPassword);
-    this.username.setValue(this.vaultItem.username);
-
-    // listen to value changes of name, username and password FormControl
-    this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.vaultItem.name); });
-    this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.vaultItem.username); });
-    this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.vaultItem.password); });
-
-  }
-
-  edit() {
-    if (!this.readOnly && this.vaultItemForm.touched) {
-      // show dialog
-      this.openConfirmationDialog();
-    }
-    this.readOnly = !this.readOnly;
-  }
-
-  updateItem() {
-    if (!this.readOnly && this.vaultItemForm.touched) {
-      // show dialog
-      this.openConfirmationDialog();
-    }
-    this.updateVaultItemObj();
-    this.update.emit(this.vaultItem);
-  }
-
-  addItem() {
-    if (!this.readOnly && this.vaultItemForm.touched) {
-      this.openConfirmationDialog();
-    }
-
-    this.updateVaultItemObj();
-    this.add.emit(this.vaultItem);
-  }
-
-  updateVaultItemObj() {
-    this.vaultItem.username = this.username.value;
-    this.vaultItem.password = this.password.value;
-    this.vaultItem.name = this.name.value;
-    this.vaultItem.updatedAt = Date.now();
-  }
-
-  updateView(f: AbstractControl, prevValue: any) {
-    if (f.value !== prevValue) { f.setErrors(() => { }); }
-  }
-
-  copyToClipboard(value: '', msg: string): void {
-    this.clipboard.copy(value);
-    this.clipboard.clearClipBoard();
-    this.openSnackBar(msg, 'Ok');
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snackbar.open(message, action, {
-      duration: 2000,
+    vaultItemForm = new FormGroup({
+        name: new FormControl(''),
+        username: new FormControl(''),
+        password: new FormControl(''),
     });
-  }
 
-  undo() {
-    this.name.setValue(this.vaultItem.name);
-    this.username.setValue(this.vaultItem.username);
-    this.password.setValue(this.vaultItem.password);
-  }
 
-  openConfirmationDialog() {
-    const dialogRef = this.dialog.open(ConformationDialogComponent);
+    hideUsername = true;
+    hidePassword = true;
+    readOnly = true;
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.updateVaultItem();
-      }
-      else {
-        this.undo();
-      }
-    });
-  }
+    decryptedPassword: string;
 
-  back() {
-    this.router.navigate(['/vault-list']);
-  }
+    constructor(
+        private router: Router,
+        private clipboard: ClipboardService,
+        public dialog: MatDialog,
+        private snackbar: MatSnackBar,
+        private vaultService: VaultService) { }
+
+    // get functions
+    get name() {
+        return this.vaultItemForm.get('name');
+    }
+
+    get username() {
+        return this.vaultItemForm.get('username');
+    }
+
+    get password() {
+        return this.vaultItemForm.get('password');
+    }
+
+    ngOnInit() {
+
+        this.decryptedPassword = this.vaultService.decryptPassword(this.vaultItem.password);
+
+        // set initial values
+        this.name.setValue(this.vaultItem.name);
+        this.password.setValue(this.decryptedPassword);
+        this.username.setValue(this.vaultItem.username);
+
+        // listen to value changes of name, username and password FormControl
+        this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.vaultItem.name); });
+        this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.vaultItem.username); });
+        this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.vaultItem.password); });
+
+    }
+
+    edit() {
+        if (!this.readOnly && this.vaultItemForm.touched) {
+            // show dialog
+            this.openConfirmationDialog();
+        }
+        this.readOnly = !this.readOnly;
+    }
+
+    updateItem() {
+        if (!this.readOnly && this.vaultItemForm.touched) {
+            // show dialog
+            this.openConfirmationDialog();
+        }
+        this.updateVaultItemObj();
+        this.update.emit(this.vaultItem);
+    }
+
+    addItem() {
+        if (!this.readOnly && this.vaultItemForm.touched) {
+            this.openConfirmationDialog();
+        }
+
+        this.updateVaultItemObj();
+        this.add.emit(this.vaultItem);
+    }
+
+    updateVaultItemObj() {
+        this.vaultItem.username = this.username.value;
+        this.vaultItem.password = this.password.value;
+        this.vaultItem.name = this.name.value;
+        this.vaultItem.updatedAt = Date.now();
+    }
+
+    updateView(f: AbstractControl, prevValue: any) {
+        if (f.value !== prevValue) { f.setErrors(() => { }); }
+    }
+
+    copyToClipboard(value: '', msg: string): void {
+        this.clipboard.copy(value);
+        this.clipboard.clearClipBoard();
+        this.openSnackBar(msg, 'Ok');
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackbar.open(message, action, {
+            duration: 2000,
+        });
+    }
+
+    undo() {
+        this.name.setValue(this.vaultItem.name);
+        this.username.setValue(this.vaultItem.username);
+        this.password.setValue(this.vaultItem.password);
+    }
+
+    openConfirmationDialog() {
+        const dialogRef = this.dialog.open(ConformationDialogComponent);
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // this.updateVaultItem();
+            }
+            else {
+                this.undo();
+            }
+        });
+    }
+
+    back() {
+        this.router.navigate(['/vault-list']);
+    }
 
 }
 

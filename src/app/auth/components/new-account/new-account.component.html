@@ -5,8 +5,15 @@
       <div class="row">
         <mat-form-field appearance="standard">
           <mat-label>Username</mat-label>
-          <input matInput formControlName="username" type="text" id="username" autocomplete="off"
-            arai-discribedby="Username" placeholder="Username" />
+          <input
+            matInput
+            formControlName="username"
+            type="text"
+            id="username"
+            autocomplete="off"
+            arai-discribedby="Username"
+            placeholder="Username"
+          />
           <mat-error *ngIf="username.touched && username.invalid">
             {{ getUsernameErrorMessages() }}
           </mat-error>
@@ -17,10 +24,25 @@
       <div class="row">
         <mat-form-field appearance="standard">
           <mat-label>Password</mat-label>
-          <input #pwd matInput type="text" autocomplete="off" formControlName="password"
-            [type]="hide ? 'password' : 'text'" id="password" aria-describedby="Password" placeholder="Password" />
-          <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-            [attr.aria-pressed]="hide">
+          <input
+            #pwd
+            matInput
+            type="text"
+            autocomplete="off"
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+            id="password"
+            aria-describedby="Password"
+            placeholder="Password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide Password'"
+            [attr.aria-pressed]="hide"
+          >
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
           <mat-error *ngIf="password.touched && password.invalid">
@@ -33,10 +55,23 @@
       <div class="row">
         <mat-form-field appearance="standard">
           <mat-label>Re-Enter Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" autocomplete="off" formControlName="repassword"
-            [attr.aria-describeBy]="repassword" placeholder="Re Enter Password" />
-          <button #rpwd type="button" mat-icon-button matSuffix (click)="hide = !hide"
-            [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="hide">
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            autocomplete="off"
+            formControlName="repassword"
+            [attr.aria-describeBy]="repassword"
+            placeholder="Re Enter Password"
+          />
+          <button
+            #rpwd
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide Password'"
+            [attr.aria-pressed]="hide"
+          >
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
           <mat-error *ngIf="repassword.touched">
@@ -47,24 +82,26 @@
 
       <!-- Strength meter -->
       <div class="row mb-2">
-        <app-strength-meter [password]="this.password.value" [userData]="[this.username.value]">
+        <app-strength-meter
+          [password]="this.password.value"
+          [userData]="[this.username.value]"
+        >
         </app-strength-meter>
       </div>
 
       <div class="row mb-2">
-        <mat-error>{{getWarning()}}</mat-error>
+        <mat-error>{{ getWarning() }}</mat-error>
       </div>
-
 
       <div *ngIf="this.password.dirty" class="row mb-2">
         <div class="row my-0 py-0" *ngFor="let suggestion of getSuggestions()">
-          <mat-error style="color: #2BAE66FF !important;">{{suggestion}}</mat-error>
+          <mat-error style="color: #2bae66ff !important">{{
+            suggestion
+          }}</mat-error>
         </div>
       </div>
 
-      <div>
-
-      </div>
+      <div></div>
 
       <!-- Generate Password -->
       <div class="row">
@@ -76,18 +113,30 @@
 
       <!-- Submit Button -->
       <div class="row mx-3 submit-button">
-        <button mat-raised-button color="primary" appStopProp appStopClick type="submit" (click)="onSubmit()">
+        <button
+          mat-raised-button
+          color="primary"
+          appStopProp
+          appStopClick
+          type="submit"
+          (click)="onSubmit()"
+        >
           Submit
         </button>
       </div>
 
       <!-- Back -->
       <div class="mb-3 mx-3 row submit-button">
-        <button mat-raised-button appStopProp appStopClick type="button" (click)="back()">
+        <button
+          mat-raised-button
+          appStopProp
+          appStopClick
+          type="button"
+          (click)="back()"
+        >
           Back
         </button>
       </div>
-
     </form>
   </div>
 </div>

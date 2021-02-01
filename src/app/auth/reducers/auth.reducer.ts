@@ -17,7 +17,10 @@ export const initialState: State = {
 
 const authReducer = createReducer(
     initialState,
-    on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user })),
+    on(
+        AuthApiActions.loginSuccess,
+        (state, { user, masterPasswordObj, masterpassword }) => ({ ...state, user, masterpassword, masterPasswordObj })
+    ),
     on(
         AuthApiActions.signupSuccess,
         (state, { user, masterPasswordObj, masterpassword }) => ({ ...state, user, masterPasswordObj, masterpassword })

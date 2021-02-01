@@ -68,3 +68,13 @@ export const getVaultSize = createSelector(
         else { return vault.length; }
     }
 );
+
+export const getVaultItemToAdd = createSelector(
+    addVaultItemState,
+    fromAddVaultItemPage.getVaultItem
+);
+
+export const getAddVaultItemLoading = createSelector(
+    addVaultItemState,
+    fromAddVaultItemPage.getLoading
+);

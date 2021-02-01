@@ -39,16 +39,13 @@ export class AuthService {
         let isVerified: boolean;
 
         if (this.workerAvailable) {
-            await this.sendToWebWorker(
+            isVerified = await this.sendToWebWorker(
                 {
                     sender: 'login',
                     payload: {
-                        password: password,
+                        password,
                         masterPasswordObj: this.masterPasswordObj,
                     }
-                })
-                .then((obj) => {
-                    isVerified = obj;
                 });
         }
         else { isVerified = verifyMasterPassword(this.masterPasswordObj, password); }

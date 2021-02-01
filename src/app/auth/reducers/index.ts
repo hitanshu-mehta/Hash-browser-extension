@@ -4,7 +4,7 @@ import * as fromNewAccountPage from './new-account.reducer';
 import * as fromRoot from '../../reducers';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 
-export interface AuthState{
+export interface AuthState {
     status: fromAuth.State;
     loginPage: fromLoginPage.State;
     newAccountPage: fromNewAccountPage.State;
@@ -27,48 +27,48 @@ export const reducers: ActionReducerMap<
 export const selectAuthState = createFeatureSelector<State, AuthState>('auth');
 
 export const selectAuthStatusState = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.status
+    selectAuthState,
+    (state: AuthState) => state.status
 );
 export const getUser = createSelector(selectAuthStatusState, fromAuth.getUser);
 export const getLoggedIn = createSelector(getUser, user => !!user);
 
 export const selectLoginPageState = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.loginPage
+    selectAuthState,
+    (state: AuthState) => state.loginPage
 );
 
 export const getLoginPageError = createSelector(
-  selectLoginPageState,
-  fromLoginPage.getError
+    selectLoginPageState,
+    fromLoginPage.getError
 );
 
 export const getLoginPagePending = createSelector(
-  selectLoginPageState,
-  fromLoginPage.getPending
+    selectLoginPageState,
+    fromLoginPage.getPending
 );
 
 export const selectNewAccountPageState = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.newAccountPage
+    selectAuthState,
+    (state: AuthState) => state.newAccountPage
 );
 
 export const getNewAccountPagePending = createSelector(
-  selectNewAccountPageState,
-  fromNewAccountPage.getPending
+    selectNewAccountPageState,
+    fromNewAccountPage.getPending
 );
 
 export const getNewAccountPageError = createSelector(
-  selectNewAccountPageState,
-  fromNewAccountPage.getError
+    selectNewAccountPageState,
+    fromNewAccountPage.getError
 );
 
 export const getMasterpasswordObj = createSelector(
-  selectAuthStatusState,
-  fromAuth.getMasterPasswordObj
+    selectAuthStatusState,
+    fromAuth.getMasterPasswordObj
 );
 
 export const getMasterpassword = createSelector(
-  selectAuthStatusState,
-  fromAuth.getMasterPassword
+    selectAuthStatusState,
+    fromAuth.getMasterPassword
 );

@@ -1,14 +1,17 @@
+import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { Credentials } from './../models/user';
-import { exhaustMap, map, catchError, tap } from 'rxjs/operators';
+import { exhaustMap, map, catchError, tap, withLatestFrom } from 'rxjs/operators';
 import { of, from } from 'rxjs';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { LoginPageActions, AuthApiActions, AuthActions, NewAccountPageActions } from '../actions';
 
 import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
+
+import * as fromAuth from '../reducers';
 
 @Injectable()
 export class AuthEffects {
@@ -19,7 +22,9 @@ export class AuthEffects {
             map(action => action.credentials),
             exhaustMap((auth: Credentials) =>
                 from(this.authService.login(auth)).pipe(
-                    map(user => AuthApiActions.loginSuccess({ user })),
+                    withLatestFrom(this.store.select(fromAuth.getMasterpasswordObj)),
+                    map(([user, masterPasswordObj]) =>
+                        AuthApiActions.loginSuccess({ user, masterpassword: auth.password, masterPasswordObj })),
                     catchError(error => of(AuthApiActions.loginFailure({ error })))
                 ))
         )
@@ -85,5 +90,6 @@ export class AuthEffects {
         private authService: AuthService,
         private router: Router,
         private dialog: MatDialog,
+        private store: Store<fromAuth.State>
     ) { }
 }

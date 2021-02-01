@@ -1,10 +1,11 @@
+import { EncryptionKeyObj } from './../models/encryption-key';
 import { updateVaultItem } from './../actions/selected-vault-item.actions';
-import { Action, createReducer,on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { VaultActions, VaultApiActions } from '../actions';
 import { VaultItem } from './../models/vault-item';
 
 
-export interface State{
+export interface State {
     loaded: boolean;
     loading: boolean;
     currentSelectedId: string | null;
@@ -20,22 +21,27 @@ const initialState: State = {
 
 const vaultReducer = createReducer(
     initialState,
-    on(VaultActions.loadVault,(state)=> ({...state,loading:true})),
-    on(VaultApiActions.loadVaultSuccess,(state,{vaultItems})=> ({...state,loaded:true,loading:false,vaultItems})),
-    on(VaultApiActions.addVaultItemSuccess, (state,{vaultItem})=>({...state,vaultItems:[...state.vaultItems, vaultItem]})),
-    on(VaultApiActions.removeVaultItemSuccess,(state,{vaultItem})=>({
+    on(VaultActions.loadVault, (state) => ({ ...state, loading: true })),
+    on(VaultApiActions.loadVaultSuccess, (state, { vaultItems }) => ({ ...state, loaded: true, loading: false, vaultItems })),
+    on(VaultApiActions.addVaultItemSuccess, (state, { vaultItem }) => ({ ...state, vaultItems: [...state.vaultItems, vaultItem] })),
+    on(VaultApiActions.removeVaultItemSuccess, (state, { vaultItem }) => ({
         ...state,
-        vaultItems:state.vaultItems.filter(v => v.id !== vaultItem.id
-    )})),
-    on(VaultApiActions.updateVaultItemSuccess,(state,{oldVaultItem,updatedVaultItem})=>{
+        vaultItems: state.vaultItems.filter(v => v.id !== vaultItem.id
+        )
+    })),
+    on(VaultApiActions.updateVaultItemSuccess, (state, { oldVaultItem, updatedVaultItem }) => {
         state.vaultItems = state.vaultItems.filter(v => v.id !== oldVaultItem.id);
         state.vaultItems.push(updatedVaultItem);
         return state;
     }),
-    on(VaultActions.viewVaultItem,(state,{id})=>({...state,currentSelectedId:id}))
+    on(VaultActions.viewVaultItem, (state, { id }) => ({ ...state, currentSelectedId: id })),
+    on(VaultApiActions.addVaultItem, (state, { vaultItem }) => ({ ...state, itemToAdd: vaultItem }))
+    // on(VaultApiActions.encryptLoginPasswordSuccess, (state, {encryptionKeyObj: EncryptionKeyObj}) => {
+
+    // })
 );
 
-export const reducer = (state: State, action: Action) => vaultReducer(state,action);
+export const reducer = (state: State, action: Action) => vaultReducer(state, action);
 
 export const getVaultItems = (state: State) => state.vaultItems;
 
