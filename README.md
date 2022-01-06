@@ -8,3 +8,8 @@ All APIs used for encryption/decrytion and random hash generation is present at 
 - Crytographically secure password generator
 - Password strength checker
 - Auto-fill credentials (WIP)
+
+# Screenshots
+
+![login](src\assets\login_page.png)
+![vault](src\assets\vault.png)
