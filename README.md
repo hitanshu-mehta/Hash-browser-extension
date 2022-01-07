@@ -11,5 +11,5 @@ All APIs used for encryption/decrytion and random hash generation is present at 
 
 # Screenshots
 
-![login](src\assets\login_page.png)
-![vault](src\assets\vault.png)
+![login](src/assets/login_page.png)
+![vault](src/assets/vault.png)
