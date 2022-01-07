@@ -1,7 +1,10 @@
+import { VaultActions } from 'src/app/vault/actions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { VaultItem } from 'src/app/vault/models/vault-item';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import * as fromVault from '../../reducers'
 
 @Component({
     selector: 'app-vault-item-view',
@@ -9,7 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class VaultItemViewComponent {
 
-    constructor(private router: Router, private route: ActivatedRoute) { }
+    constructor(private router: Router, private route: ActivatedRoute, private store: Store<fromVault.State>) { }
 
     @Input() vaultItem: VaultItem;
 
@@ -20,8 +23,28 @@ export class VaultItemViewComponent {
         url: new FormControl(''),
     });
 
+    // getter functions
+    get name() {
+        return this.vaultItemForm.get('name');
+    }
+
+    get username() {
+        return this.vaultItemForm.get('username');
+    }
+
+    get password() {
+        return this.vaultItemForm.get('password');
+    }
+
     save() {
-        // TODO
+        let toAddVaultItem: VaultItem = {
+            ...this.vaultItem,
+            name: this.name.value,
+            username: this.username.value,
+            password: this.password.value,
+        }
+
+        this.store.dispatch(VaultActions.addVaultItem({ vaultItem: toAddVaultItem }));
     }
 
     back() {

@@ -1,3 +1,4 @@
+import { VaultActions } from 'src/app/vault/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { VaultItem } from './../models/vault-item';
 
@@ -29,6 +30,6 @@ export const reducer = (state: State, action: Action) => vaultReducer(state, act
 
 export const getVaultItems = (state: State) => state.vaultItems;
 
-export const getSelectedItemId = (state: State) => state.currentId;
+export const getCurrentId = (state: State) => state.currentId;
 
 export const getVaultStatus = (state: State) => state.status;
