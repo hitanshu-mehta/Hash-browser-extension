@@ -8,6 +8,5 @@ import { VaultItem } from '../../models/vault-item';
     styleUrls: ['./vault-list.component.scss']
 })
 export class VaultListComponent {
-
     @Input() vaultItems: VaultItem[];
 }

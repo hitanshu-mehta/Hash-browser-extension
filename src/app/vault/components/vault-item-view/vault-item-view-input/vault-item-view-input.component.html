@@ -1,0 +1,34 @@
+<div class="row">
+  <mat-form-field appearance="standard">
+    <mat-label>{{ label }}</mat-label>
+    <input
+      matInput
+      [type]="type"
+      [value]="value"
+      [readonly]="readOnly"
+      (change)="inputChanged($event.target.value)"
+    />
+    <div matSuffix style="display: flex">
+      <button
+        mat-icon-button
+        *ngIf="hideButton"
+        type="button"
+        (click)="toggleVisibility()"
+        [attr.aria-label]="'Hide' + label"
+      >
+        <mat-icon>
+          {{ hidden ? "visibility_off" : "visibility" }}
+        </mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        *ngIf="copyButton"
+        type="button"
+        aria-label="Copy"
+        (click)="copyToClipboard()"
+      >
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </div>
+  </mat-form-field>
+</div>

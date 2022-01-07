@@ -1,4 +1,6 @@
 <div>
-    <app-vault-item [vaultItem]="vaultItem$ | async" (update)="updateItem($event)">
-    </app-vault-item>
+  <app-vault-item-view
+    [vaultItem]="vaultItem$ | async"
+  >
+  </app-vault-item-view>
 </div>

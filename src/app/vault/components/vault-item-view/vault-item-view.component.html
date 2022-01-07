@@ -1,0 +1,75 @@
+<div class="parent" p-0 m-0>
+  <mat-toolbar> </mat-toolbar>
+
+  <div class="container-flex">
+    <form [formGroup]="vaultItemForm">
+      <!-- Name -->
+      <app-vault-view-input
+        formControlName="name"
+        [value]="vaultItem.name"
+        [label]="'Name'"
+        [type]="'text'"
+      ></app-vault-view-input>
+
+      <!-- Username -->
+      <app-vault-view-input
+        formControlName="username"
+        [value]="vaultItem.username"
+        [label]="'Username'"
+        [hideButton]="true"
+        [copyButton]="true"
+      >
+      </app-vault-view-input>
+
+      <!-- Password -->
+      <app-vault-view-input
+        formControlName="password"
+        [label]="'Password'"
+        [value]="vaultItem.password"
+        [hideButton]="true"
+        [copyButton]="true"
+      >
+      </app-vault-view-input>
+
+      <!-- URL -->
+      <app-vault-view-input
+        formControlName="url"
+        [label]="'URL'"
+        [value]="vaultItem.url"
+        [type]="'text'"
+        [copyButton]="true"
+      ></app-vault-view-input>
+
+      <!-- Save/Edit Button -->
+      <div class="row justify-content-between mx-0">
+        <div class="col d-flex justify-content-start">
+          <button
+            mat-raised-button
+            type="button"
+            [color]="'primary'"
+            appStopProp
+            appBlurClick
+            appStopClick
+            (click)="edit()"
+          >
+            Save
+          </button>
+        </div>
+
+        <!-- Back Button -->
+        <div class="col d-flex justify-content-end">
+          <button
+            mat-raised-button
+            type="button"
+            appStopProp
+            appBlurClick
+            appStopClick
+            (click)="back()"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
