@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { VaultItem } from 'src/app/vault/models/vault-item';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class VaultItemViewComponent {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private route: ActivatedRoute) { }
 
     @Input() vaultItem: VaultItem;
 
@@ -20,7 +20,7 @@ export class VaultItemViewComponent {
         url: new FormControl(''),
     });
 
-    edit() {
+    save() {
         // TODO
     }
 
