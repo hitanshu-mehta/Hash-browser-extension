@@ -1,3 +1,4 @@
+import { VAULT } from './../mock-vault';
 import { Store, select } from '@ngrx/store';
 import { map, switchMap } from 'rxjs/operators';
 import { EncryptionKeyObj } from './../models/encryption-key';
@@ -11,6 +12,7 @@ import { encryptLoginPassword, decryptLoginPassword } from 'hash-password-manage
 
 import * as fromAuth from 'src/app/auth/reducers';
 import * as fromVault from '../reducers';
+import { ok } from 'assert';
 
 interface WorkerMessage {
     sender: string;
@@ -64,6 +66,7 @@ export class VaultService {
 
     loadVault(): Observable<VaultItem[]> {
 
+        return of(VAULT);
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
             map((v: VaultItem[]) => this.vault = v),
             switchMap(() => of(this.vault))

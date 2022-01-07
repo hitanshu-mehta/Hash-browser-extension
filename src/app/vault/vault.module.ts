@@ -1,3 +1,6 @@
+import { VaultItemViewComponent } from './components/vault-item-view/vault-item-view.component';
+import { VaultItemViewInputComponent } from './components/vault-item-view/vault-item-view-input/vault-item-view-input.component';
+import { VaultListItemComponent } from './components/vault-list/vault-list-item/vault-list-item.component';
 import { UtilsModule } from './../utils/utils.module';
 import { NewVaultItemComponent } from './components/new-vault-item/new-vault-item.component';
 import { VaultEffects } from './effects/vault.effects';
@@ -24,7 +27,10 @@ export const COMPONENTS = [
     ConformationDialogComponent,
     SelectedVaultItemComponent,
     NewVaultItemComponent,
-    AddVaultItemComponent
+    AddVaultItemComponent,
+    VaultListItemComponent,
+    VaultItemViewComponent,
+    VaultItemViewInputComponent,
 ];
 
 @NgModule({

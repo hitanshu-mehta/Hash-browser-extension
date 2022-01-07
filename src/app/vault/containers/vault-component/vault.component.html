@@ -4,6 +4,7 @@
         <div class="title-text">Logins</div>
         <mat-divider></mat-divider>
     </div>
+
     <div class="row px-0" [ngSwitch]="vaultStatus">
         <app-vault-list *ngSwitchCase="VaultStatus.LOADED" [vaultItems]="vaultItems$ | async"></app-vault-list>
         <app-display-text *ngSwitchCase="VaultStatus.FAILED_LOADING" [text]="'Failed to load vault!'" [type]="'danger'">
