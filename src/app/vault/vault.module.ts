@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { VaultRoutingModule } from './vault-routing.module';
+import { VaultEffects } from './effects/vault.effects';
+import { reducers } from './reducers';
+import { StoreModule } from '@ngrx/store';
 
 export const COMPONENTS = [
     VaultComponent,
@@ -28,7 +31,8 @@ export const COMPONENTS = [
         ReactiveFormsModule,
         VaultRoutingModule,
         UtilsModule,
-        // EffectsModule.forFeature([VaultEffects])
+        StoreModule.forFeature('vault', reducers),
+        EffectsModule.forFeature([VaultEffects])
     ],
     declarations: COMPONENTS,
     exports: COMPONENTS
