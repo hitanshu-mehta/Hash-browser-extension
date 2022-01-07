@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ClipboardService } from 'src/app/core/services/clipboard.service';
 
-
 @Component({
     selector: 'app-new-vault-item',
     templateUrl: './new-vault-item.component.html',
@@ -65,11 +64,11 @@ export class NewVaultItemComponent implements OnInit {
     }
 
     add() {
-        if (this.vaultItemForm.touched) {
-            // show dialog
-            this.openConfirmationDialog();
+        // show dialog
+        if (this.vaultItemForm.touched && this.openConfirmationDialog()) {
+            this.updateVaultItemObj();
+            this.addItem.emit(this.vaultItem);
         }
-
     }
 
     copyToClipboard(value: '', msg: string): void {
@@ -90,16 +89,12 @@ export class NewVaultItemComponent implements OnInit {
         this.vaultItem.username = this.username.value;
     }
 
-    openConfirmationDialog() {
+    openConfirmationDialog(): boolean {
         const dialogRef = this.dialog.open(ConformationDialogComponent);
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.updateVaultItemObj();
-                this.addItem.emit(this.vaultItem);
-                // this.updateVaultItem();
-            }
-        });
+        let resp = false;
+        dialogRef.afterClosed().subscribe(r => resp = r);
+        return resp;
     }
 
 }

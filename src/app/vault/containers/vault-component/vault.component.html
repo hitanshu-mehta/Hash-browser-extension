@@ -1,12 +1,15 @@
-<div class="container-flex m-0 p-0">
+<div class="container-fluid m-0 p-0">
     <div class="row title align-middle">
         <mat-divider></mat-divider>
         <div class="title-text">Logins</div>
         <mat-divider></mat-divider>
     </div>
-    <div class="row px-0">
-        <app-vault-list [vaultItems]="vaultItems$ | async"></app-vault-list>
+    <div class="row px-0" [ngSwitch]="vaultStatus">
+        <app-vault-list *ngSwitchCase="VaultStatus.LOADED" [vaultItems]="vaultItems$ | async"></app-vault-list>
+        <app-display-text *ngSwitchCase="VaultStatus.FAILED_LOADING" [text]="'Failed to load vault!'" [type]="'danger'">
+        </app-display-text>
     </div>
+
     <div class="row justify-content-center mt-3">
         <div class="col"></div>
         <div class="col">

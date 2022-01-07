@@ -125,7 +125,6 @@ export class NewAccountComponent implements OnInit {
             password: this.password.value
         };
         this.store.dispatch(NewAccountPageActions.signup({ credentials }));
-
     }
 
     generatePassword(): void {

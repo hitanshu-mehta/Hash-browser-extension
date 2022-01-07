@@ -55,13 +55,6 @@ export class VaultEffects {
         { dispatch: false }
     );
 
-    addVaultItemNavigate$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(VaultActions.addVaultItem.type),
-            tap(() => this.router.navigate(['/new-vault-item']))
-        ),
-        { dispatch: false }
-    );
 
     removeVaultItem$ = createEffect(() =>
         this.actions$.pipe(
@@ -88,7 +81,7 @@ export class VaultEffects {
     encryptLoginPassword$ = createEffect(() =>
         this.actions$.pipe(
             ofType(VaultApiActions.encryptLoginPassword.type),
-            map(action => { console.log('Encryption Effect'); return action.password; }),
+            map(action => { return action.password; }),
             exhaustMap(password => from(this.vaultService.encryptPassword(password)).pipe(
                 map((encryptionKeyObj: EncryptionKeyObj) => VaultApiActions.encryptLoginPasswordSuccess(({ encryptionKeyObj }))),
                 catchError(error => of(VaultApiActions.encryptLoginPasswordFailure({ error })))

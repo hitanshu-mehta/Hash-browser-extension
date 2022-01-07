@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-// import { passwordGenerator } from 'hash-password-manager/randomGenerator';
+import { passwordGenerator } from 'hash-password-manager/randomGenerator';
 import { Observable } from 'rxjs';
 
 export interface PasswordConfig {
@@ -54,13 +54,12 @@ export class GeneratePasswordService {
 
         return new Observable((observer) => {
             try {
-                const pwd = 'abcderd';
-                // passwordGenerator.generatePassword(
-                //     length,
-                //     currentSelectedLowerLength,
-                //     currentSelectedUpperLength,
-                //     currentSelectedDigitLength,
-                //     currentSelectedSpecialLength);
+                const pwd = passwordGenerator.generate(
+                    length,
+                    currentSelectedLowerLength,
+                    currentSelectedUpperLength,
+                    currentSelectedDigitLength,
+                    currentSelectedSpecialLength);
                 observer.next(pwd as string);
             } catch (err) {
                 observer.error(err);

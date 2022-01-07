@@ -77,7 +77,6 @@ export class VaultService {
 
     async encryptPassword(password: string): Promise<EncryptionKeyObj> {
 
-        console.log('Encryption start', this.masterKeyObj, this.encryptionKeyObj, this.masterPassword);
         if (this.workerAvailable) {
             return await this.sendToWebWorker(
                 {
@@ -89,7 +88,6 @@ export class VaultService {
                         password
                     }
                 });
-            console.log('Encryption end');
         }
         else {
             return encryptLoginPassword(this.masterKeyObj, this.encryptionKeyObj, this.masterPassword, password);

@@ -54,7 +54,7 @@ export class VaultItemComponent implements OnInit {
         private snackbar: MatSnackBar,
         private vaultService: VaultService) { }
 
-    // get functions
+    // getter functions
     get name() {
         return this.vaultItemForm.get('name');
     }
@@ -68,7 +68,6 @@ export class VaultItemComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.decryptedPassword = this.vaultService.decryptPassword(this.vaultItem.password);
 
         // set initial values
@@ -80,13 +79,16 @@ export class VaultItemComponent implements OnInit {
         this.name.valueChanges.subscribe((val) => { this.updateView(this.name, this.vaultItem.name); });
         this.username.valueChanges.subscribe((val) => { this.updateView(this.username, this.vaultItem.username); });
         this.password.valueChanges.subscribe((val) => { this.updateView(this.password, this.vaultItem.password); });
-
     }
 
     edit() {
         if (!this.readOnly && this.vaultItemForm.touched) {
-            // show dialog
-            this.openConfirmationDialog();
+            if (this.openConfirmationDialog()) {
+
+            }
+            else {
+                this.undo();
+            }
         }
         this.readOnly = !this.readOnly;
     }
@@ -138,17 +140,12 @@ export class VaultItemComponent implements OnInit {
         this.password.setValue(this.vaultItem.password);
     }
 
-    openConfirmationDialog() {
+    openConfirmationDialog(): boolean {
         const dialogRef = this.dialog.open(ConformationDialogComponent);
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                // this.updateVaultItem();
-            }
-            else {
-                this.undo();
-            }
-        });
+        let resp = false;
+        dialogRef.afterClosed().subscribe(r => resp = r);
+        return resp;
     }
 
     back() {

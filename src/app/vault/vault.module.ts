@@ -1,3 +1,4 @@
+import { UtilsModule } from './../utils/utils.module';
 import { NewVaultItemComponent } from './components/new-vault-item/new-vault-item.component';
 import { VaultEffects } from './effects/vault.effects';
 import { EffectsModule } from '@ngrx/effects';
@@ -33,7 +34,8 @@ export const COMPONENTS = [
         MaterialModule,
         ReactiveFormsModule,
         VaultRoutingModule,
-        StoreModule.forFeature('vault',reducers),
+        UtilsModule,
+        StoreModule.forFeature('vault', reducers),
         EffectsModule.forFeature([VaultEffects])
     ],
     declarations: COMPONENTS,

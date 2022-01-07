@@ -1,28 +1,32 @@
-import { EncryptionKeyObj } from './../models/encryption-key';
-import { updateVaultItem } from './../actions/selected-vault-item.actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { VaultActions, VaultApiActions } from '../actions';
 import { VaultItem } from './../models/vault-item';
 
+export enum VaultStatus {
+    LOADING,
+    LOADED,
+    FAILED_LOADING
+}
 
 export interface State {
-    loaded: boolean;
-    loading: boolean;
+    status: VaultStatus;
     currentSelectedId: string | null;
     vaultItems: VaultItem[];
+    error: any;
 }
 
 const initialState: State = {
-    loaded: false,
-    loading: false,
+    status: VaultStatus.LOADING,
     currentSelectedId: null,
     vaultItems: [],
+    error: null,
 };
 
 const vaultReducer = createReducer(
     initialState,
     on(VaultActions.loadVault, (state) => ({ ...state, loading: true })),
-    on(VaultApiActions.loadVaultSuccess, (state, { vaultItems }) => ({ ...state, loaded: true, loading: false, vaultItems })),
+    on(VaultApiActions.loadVaultSuccess, (state, { vaultItems }) => ({ ...state, status: VaultStatus.LOADED, vaultItems })),
+    on(VaultApiActions.loadVaultFailure, (state, { error }) => ({ ...state, status: VaultStatus.FAILED_LOADING, vaultItems: [], error })),
     on(VaultApiActions.addVaultItemSuccess, (state, { vaultItem }) => ({ ...state, vaultItems: [...state.vaultItems, vaultItem] })),
     on(VaultApiActions.removeVaultItemSuccess, (state, { vaultItem }) => ({
         ...state,
@@ -46,3 +50,5 @@ export const reducer = (state: State, action: Action) => vaultReducer(state, act
 export const getVaultItems = (state: State) => state.vaultItems;
 
 export const getSelectedItemId = (state: State) => state.currentSelectedId;
+
+export const getVaultStatus = (state: State) => state.status;
