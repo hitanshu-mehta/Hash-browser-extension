@@ -3,14 +3,14 @@ import { createAction, props, union } from '@ngrx/store';
 
 export const loadVault = createAction('[Vault] Load Vault Items');
 
-export const viewVaultItem = createAction(
+export const getVaultItem = createAction(
     '[Vault] View Vault Item',
     props<{ id: string }>()
 );
 
 export const addVaultItem = createAction(
     '[Vault] Add Vault Item',
-    props<{ id: VaultItem }>()
+    props<{ vaultItem: VaultItem }>()
 );
 
 export const removeVaultItem = createAction(
@@ -20,7 +20,7 @@ export const removeVaultItem = createAction(
 
 const all = union({
     loadVault,
-    viewVaultItem,
+    getVaultItem,
     addVaultItem,
     removeVaultItem,
 });

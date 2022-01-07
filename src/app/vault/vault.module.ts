@@ -2,7 +2,6 @@ import { VaultItemViewComponent } from './components/vault-item-view/vault-item-
 import { VaultItemViewInputComponent } from './components/vault-item-view/vault-item-view-input/vault-item-view-input.component';
 import { VaultListItemComponent } from './components/vault-list/vault-list-item/vault-list-item.component';
 import { UtilsModule } from './../utils/utils.module';
-import { VaultEffects } from './effects/vault.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { VaultListComponent } from './components/vault-list/vault-list.component';
 import { VaultComponent } from './containers/vault-component/vault.component';
@@ -29,7 +28,7 @@ export const COMPONENTS = [
         ReactiveFormsModule,
         VaultRoutingModule,
         UtilsModule,
-        EffectsModule.forFeature([VaultEffects])
+        // EffectsModule.forFeature([VaultEffects])
     ],
     declarations: COMPONENTS,
     exports: COMPONENTS
