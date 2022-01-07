@@ -1,9 +1,9 @@
-import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import * as fromVault from './vault.reducer';
 import * as fromRoot from '../../reducers';
 
 export interface VaultState {
-    vaultState: fromVault.State;
+    status: fromVault.State;
 }
 
 export interface State extends fromRoot.State {
@@ -13,15 +13,27 @@ export interface State extends fromRoot.State {
 export const reducers: ActionReducerMap<
     VaultState
 > = {
-    vaultState: fromVault.reducer,
+    status: fromVault.reducer,
 };
 
-const selectVaultState = createSelector(
-    createFeatureSelector<State, VaultState>('vault'),
-    (state: VaultState) => state.vaultState
+export const selectVaultState = createFeatureSelector<State, VaultState>('vault');
+
+export const selectVaultStateStatus = createSelector(
+    selectVaultState,
+    (state: VaultState) => state.status
 );
 
+export const getVaultItems = createSelector(
+    selectVaultStateStatus,
+    fromVault.getVaultItems
+)
+
 export const getCurrentVaultId = createSelector(
-    selectVaultState,
+    selectVaultStateStatus,
     fromVault.getCurrentId
+)
+
+export const getVaultStatus = createSelector(
+    selectVaultStateStatus,
+    fromVault.getVaultStatus
 )

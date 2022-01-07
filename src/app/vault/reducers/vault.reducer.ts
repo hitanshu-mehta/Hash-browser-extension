@@ -1,4 +1,4 @@
-import { VaultActions } from 'src/app/vault/actions';
+import { VaultActions, VaultApiActions } from 'src/app/vault/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 import { VaultItem } from './../models/vault-item';
 
@@ -24,6 +24,9 @@ const initialState: State = {
 
 const vaultReducer = createReducer(
     initialState,
+    on(VaultActions.loadVault, (state) => ({ ...state, status: VaultStatus.LOADING })),
+    on(VaultApiActions.loadVaultSuccess, (state, { vaultItems }) => ({ ...state, status: VaultStatus.LOADED, vaultItems })),
+    on(VaultApiActions.loadVaultFailure, (state, { error }) => ({ ...state, status: VaultStatus.FAILED_LOADING, vaultItems: [], error }))
 );
 
 export const reducer = (state: State, action: Action) => vaultReducer(state, action);
