@@ -1,11 +1,13 @@
+import { from, Observable, of } from 'rxjs';
 import { StorageService } from './../../core/services/storage.service';
 import { MasterPasswordObj } from '../models/masterpassword';
-import { LoadingSpinnerService } from './../../core/services/loading-spinner.service';
 import { Injectable } from '@angular/core';
 
 import { verifyMasterPassword, setMasterPassword } from 'hash-password-manager/masterPassword.js';
 import { Credentials } from './../models/user';
 import { User } from '../models/user';
+import { map, switchMap } from 'rxjs/operators';
+import { VaultItem } from 'src/app/vault/models/vault-item';
 
 interface WorkerMessage {
     sender: string;
@@ -90,6 +92,13 @@ export class AuthService {
             return false;
         }
         return true;
+    }
+
+    loadMasterPasswordObj() : Observable<MasterPasswordObj> {
+        return from(this.storageService.get<MasterPasswordObj>('MasterPasswordObj')).pipe(
+            map((obj: MasterPasswordObj) => this.masterPasswordObj = obj),
+            switchMap(() => of(this.masterPasswordObj))
+        );
     }
 
 }

@@ -25,6 +25,15 @@ export const signupFailure = createAction(
     props<{ error: any }>()
 );
 
+export const loadMasterPasswordObjSuccess = createAction(
+    '[Login Page] Load Masterpassword Obj Success',
+    props<{ masterPasswordObj: MasterPasswordObj }>()
+)
+
+export const loadMasterPasswordObjFailure = createAction(
+        '[Login Page] Load Masterpassword Obj Failure',
+        props<{ error: any }>()
+)
 
 export type AuthApiActionsUnion = ReturnType<
     | typeof loginSuccess
@@ -32,4 +41,6 @@ export type AuthApiActionsUnion = ReturnType<
     | typeof loginRedirect
     | typeof signupSuccess
     | typeof signupFailure
+    | typeof loadMasterPasswordObjSuccess
+    | typeof loadMasterPasswordObjFailure
 >;
