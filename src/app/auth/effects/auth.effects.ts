@@ -1,9 +1,11 @@
+import { MasterPasswordObj } from './../models/masterpassword';
+import { loadMasterPasswordObj } from './../actions/login-page.actions';
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { Credentials } from './../models/user';
-import { exhaustMap, map, catchError, tap, withLatestFrom } from 'rxjs/operators';
+import { exhaustMap, map, catchError, tap, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { of, from } from 'rxjs';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
@@ -15,6 +17,20 @@ import * as fromAuth from '../reducers';
 
 @Injectable()
 export class AuthEffects {
+
+    loadMasterPasswordObj$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(LoginPageActions.loadMasterPasswordObj),
+            mergeMap(() => this.authService.loadMasterPasswordObj().pipe(
+                map((obj: MasterPasswordObj) =>
+                    AuthApiActions.loadMasterPasswordObjSuccess({ masterPasswordObj: obj })
+                ),
+                catchError(error =>
+                    of(AuthApiActions.loadMasterPasswordObjFailure({ error }))
+                )
+            ))
+        )
+    );
 
     login$ = createEffect(() =>
         this.actions$.pipe(

@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
         private location: Location) { }
 
     ngOnInit() {
+        this.store.dispatch(LoginPageActions.loadMasterPasswordObj());
+
         this.pending$.subscribe(pending => {
             if (pending) {
                 this.spinner.show('Logging in\n This may take sometime.');
