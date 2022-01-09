@@ -26,14 +26,14 @@ export const selectVaultStateStatus = createSelector(
 export const getVaultItems = createSelector(
     selectVaultStateStatus,
     fromVault.getVaultItems
-)
+);
 
-export const getCurrentVaultId = createSelector(
+export const getCurrentVaultItem = createSelector(
     selectVaultStateStatus,
-    fromVault.getCurrentId
-)
+    fromVault.getCurrentVaultItem
+);
 
 export const getVaultStatus = createSelector(
     selectVaultStateStatus,
     fromVault.getVaultStatus
-)
+);

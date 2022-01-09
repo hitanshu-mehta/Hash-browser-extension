@@ -5,7 +5,7 @@ import { MasterPasswordObj, MasterKeyObj } from './../../auth/models/masterpassw
 import { StorageService } from './../../core/services/storage.service';
 import { Injectable } from '@angular/core';
 import { VaultItem } from '../models/vault-item';
-import { Observable, of, from, pipe } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 
 import { encryptLoginPassword, decryptLoginPassword } from 'hash-password-manager/passwordUtils.js';
 
@@ -92,8 +92,8 @@ export class VaultService {
         }
     }
 
-    decryptPassword(eObj: EncryptionKeyObj | string) {
-        return decryptLoginPassword(this.masterKeyObj, this.encryptionKeyObj, this.masterPassword, eObj);
+    decryptPassword(eObj: EncryptionKeyObj | string): Observable<string> {
+        return of(decryptLoginPassword(this.masterKeyObj, this.encryptionKeyObj, this.masterPassword, eObj));
     }
 
     addVaultItem(vaultItem: VaultItem): Observable<VaultItem> {
@@ -102,8 +102,8 @@ export class VaultService {
             map((v: VaultItem[]) => {
                 newVI = JSON.parse(JSON.stringify(vaultItem));
                 if (newVI.id === null || newVI.id === "")
-                newVI.id = this.getUId();
-                
+                    newVI.id = this.getUId();
+
                 this.vault = v;
                 this.vault.push(newVI);
                 this.storageService.save('vault', this.vault);
@@ -114,6 +114,20 @@ export class VaultService {
 
     getUId(): string {
         return Date.now().toString(36) + Math.random().toString(36).substring(2);
+    }
+
+    getVaultItem(id: string): Observable<VaultItem> {
+        let toReturn: VaultItem = null;
+        return from(this.storageService.get<VaultItem[]>('vault')).pipe(
+            map((v: VaultItem[]) => {
+                this.vault = v;
+                let items = this.vault.filter(v => v.id == id);
+                if (items.length === 0)
+                    return new Error("Item not found with id:" + id);
+                toReturn = items[0];
+            }),
+            switchMap(() => of(toReturn))
+        );
     }
 
     removeVaultItem(id: string): Observable<VaultItem[]> {

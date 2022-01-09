@@ -6,7 +6,7 @@
       <!-- Name -->
       <app-vault-view-input
         formControlName="name"
-        [value]="vaultItem.name"
+        [value]="(vaultItem$ | async)?.name"
         [label]="'Name'"
         [type]="'text'"
       ></app-vault-view-input>
@@ -14,7 +14,7 @@
       <!-- Username -->
       <app-vault-view-input
         formControlName="username"
-        [value]="vaultItem.username"
+        [value]="(vaultItem$ | async)?.username"
         [label]="'Username'"
         [hideButton]="true"
         [copyButton]="true"
@@ -25,7 +25,7 @@
       <app-vault-view-input
         formControlName="password"
         [label]="'Password'"
-        [value]="vaultItem.password"
+        [value]="(vaultItem$ | async)?.password"
         [hideButton]="true"
         [copyButton]="true"
       >
@@ -35,7 +35,7 @@
       <app-vault-view-input
         formControlName="url"
         [label]="'URL'"
-        [value]="vaultItem.url"
+        [value]="(vaultItem$ | async)?.url"
         [type]="'text'"
         [copyButton]="true"
       ></app-vault-view-input>

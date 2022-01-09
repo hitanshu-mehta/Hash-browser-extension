@@ -90,4 +90,42 @@ export class VaultEffects {
             ))
         )
     );
+
+    getVaultItem$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultActions.getVaultItem.type),
+            pluck('id'),
+            switchMap(id => {
+                if (id === '-1')
+                    return of(VaultActions.newVaultItem());
+                return of(VaultApiActions.getVaultItem({ id }))
+            })
+        )
+    );
+
+    getVaultItemAPI$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultApiActions.getVaultItem.type),
+            pluck('id'),
+            exhaustMap(id => this.vaultService.getVaultItem(id).pipe(
+                map(vaultItem => VaultApiActions.decryptVault({ vaultItem })),
+                catchError(error => of(VaultApiActions.getVaultItemFailure({ error })))
+            ))
+        )
+    );
+
+    decryptVault$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultApiActions.decryptVault.type),
+            pluck('vaultItem'),
+            exhaustMap((vaultItem: VaultItem) => this.vaultService.decryptPassword(vaultItem.password as EncryptionKeyObj).pipe(
+                map(password => {
+                    let decVaultItem: VaultItem = Object.assign({}, vaultItem);
+                    decVaultItem.password = password;
+                    return VaultApiActions.decryptVaultSuccess({ vaultItem: decVaultItem })
+                }),
+                catchError(error => of(VaultApiActions.decryptVaultFailure({ error })))
+            ))
+        )
+    );
 }
