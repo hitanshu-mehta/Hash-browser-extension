@@ -26,6 +26,21 @@ export const addVaultItemFailure = createAction(
     props<{ error: any }>()
 );
 
+export const removeVaultItem = createAction(
+    '[Vault/Api] Remove Vault Item',
+    props<{ id: string }>()
+);
+
+export const removeVaultItemSuccess = createAction(
+    '[Vault/Api] Remove Vault Item Success',
+    props<{ vaultItems: VaultItem[] }>()
+);
+
+export const removeVaultItemFailure = createAction(
+    '[Vault/Api] Remove Vault Item Failure',
+    props<{ error: any }>()
+);
+
 export const encryptVault = createAction(
     '[Vault/Api] Encrypt Vault',
     props<{ vaultItem: VaultItem }>()
