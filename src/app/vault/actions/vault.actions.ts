@@ -19,7 +19,12 @@ export const removeVaultItem = createAction(
 );
 
 export const newVaultItem = createAction(
-    '[Vault] new Vault Item'
+    '[Vault] New Vault Item'
+)
+
+export const updateVaultItem = createAction(
+    '[Vault] Update Vault Item',
+    props<{ vaultItem: VaultItem }>()
 )
 
 const all = union({
@@ -27,5 +32,7 @@ const all = union({
     getVaultItem,
     addVaultItem,
     removeVaultItem,
+    newVaultItem,
+    updateVaultItem,
 });
 export type VaultActionsUnion = typeof all;

@@ -19,6 +19,9 @@ export enum VaultStatus {
     LOADING_ITEM,
     FAILED_LOADING_ITEM,
     ITEM_LOADED,
+    ADDING_ITEM,
+    ITEM_ADDED,
+    FAILED_ADDING_ITEM,
 }
 
 export interface State {
@@ -40,10 +43,10 @@ const vaultReducer = createReducer(
     on(VaultActions.loadVault, (state) => ({ ...state, status: VaultStatus.LOADING })),
     on(VaultApiActions.loadVaultSuccess, (state, { vaultItems }) => ({ ...state, status: VaultStatus.LOADED, vaultItems })),
     on(VaultApiActions.loadVaultFailure, (state, { error }) => ({ ...state, status: VaultStatus.FAILED_LOADING, error })),
-    on(VaultActions.addVaultItem, (state, { vaultItem }) => ({ ...state, currentVaultItem: vaultItem })),
-    on(VaultApiActions.addVaultItemSuccess, (state, { vaultItem }) => ({ ...state, vaultItems: [...state.vaultItems, vaultItem] })),
-    on(VaultApiActions.addVaultItemFailure, (state, { error }) => ({ ...state, error })),
-    on(VaultActions.newVaultItem, (state) => ({ ...state, currentVaultItem: EMPTY_VAULT_ITEM })),
+    on(VaultActions.addVaultItem, (state, { vaultItem }) => ({ ...state, currentVaultItem: vaultItem, status: VaultStatus.ADDING_ITEM })),
+    on(VaultApiActions.addVaultItemSuccess, (state, { vaultItem }) => ({ ...state, vaultItems: [...state.vaultItems, vaultItem], status: VaultStatus.ITEM_ADDED })),
+    on(VaultApiActions.addVaultItemFailure, (state, { error }) => ({ ...state, error, status: VaultStatus.FAILED_ADDING_ITEM })),
+    on(VaultActions.newVaultItem, (state) => ({ ...state, currentVaultItem: EMPTY_VAULT_ITEM, status: VaultStatus.ITEM_LOADED })),
     on(VaultApiActions.encryptVaultFailure, (state, { error }) => ({ ...state, error })),
     on(VaultApiActions.removeVaultItemSuccess, (state, { vaultItems }) => ({ ...state, vaultItems: vaultItems })),
     on(VaultApiActions.removeVaultItemFailure, (state, { error }) => ({ ...state, error })),
