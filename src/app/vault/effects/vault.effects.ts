@@ -71,4 +71,23 @@ export class VaultEffects {
             ))
         )
     );
+
+    removeVaultItem$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultActions.removeVaultItem.type),
+            pluck('id'),
+            switchMap(id => of(VaultApiActions.removeVaultItem({ id })))
+        )
+    );
+
+    removeVaultItemAPI$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultApiActions.removeVaultItem.type),
+            pluck('id'),
+            exhaustMap(id => this.vaultService.removeVaultItem(id).pipe(
+                map(vaultItems => VaultApiActions.removeVaultItemSuccess({ vaultItems })),
+                catchError(error => of(VaultApiActions.removeVaultItemFailure({ error })))
+            ))
+        )
+    );
 }

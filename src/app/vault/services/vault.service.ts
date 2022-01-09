@@ -100,13 +100,13 @@ export class VaultService {
         let newVI: VaultItem;
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
             map((v: VaultItem[]) => {
-                this.vault = v;
-                this.vault.push(vaultItem);
-                this.storageService.save('vault', this.vault);
-
                 newVI = JSON.parse(JSON.stringify(vaultItem));
                 if (newVI.id === null || newVI.id === "")
-                    newVI.id = this.getUId();
+                newVI.id = this.getUId();
+                
+                this.vault = v;
+                this.vault.push(newVI);
+                this.storageService.save('vault', this.vault);
             }),
             switchMap(() => of(newVI))
         );
@@ -116,9 +116,15 @@ export class VaultService {
         return Date.now().toString(36) + Math.random().toString(36).substring(2);
     }
 
-    removeVaultItem(vaultItem: VaultItem) {
-        // TODO
-        return new Observable<any>();
+    removeVaultItem(id: string): Observable<VaultItem[]> {
+        return from(this.storageService.get<VaultItem[]>('vault')).pipe(
+            map((v: VaultItem[]) => {
+                this.vault = v;
+                this.vault = this.vault.filter(v => v.id != id);
+                this.storageService.save('vault', this.vault);
+            }),
+            switchMap(() => of(this.vault))
+        );
     }
 
     updateVaultItem(vaultItem: VaultItem): Observable<VaultItem> {
