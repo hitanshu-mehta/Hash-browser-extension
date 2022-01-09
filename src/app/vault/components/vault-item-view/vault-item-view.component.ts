@@ -11,10 +11,17 @@ import * as fromVault from '../../reducers'
     templateUrl: './vault-item-view.component.html',
 })
 export class VaultItemViewComponent {
+    @Input() vaultItem: VaultItem = {
+        name: '', username: '',
+        id: '',
+        password: '',
+        url: '',
+        createdAt: 0,
+        updatedAt: 0,
+    };
 
     constructor(private router: Router, private route: ActivatedRoute, private store: Store<fromVault.State>) { }
 
-    @Input() vaultItem: VaultItem;
 
     vaultItemForm = new FormGroup({
         name: new FormControl(''),
@@ -36,12 +43,20 @@ export class VaultItemViewComponent {
         return this.vaultItemForm.get('password');
     }
 
+    get url() {
+        return this.vaultItemForm.get('url');
+    }
+
     save() {
         let toAddVaultItem: VaultItem = {
             ...this.vaultItem,
+            id: null,
             name: this.name.value,
             username: this.username.value,
             password: this.password.value,
+            url: this.url.value,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         }
 
         this.store.dispatch(VaultActions.addVaultItem({ vaultItem: toAddVaultItem }));

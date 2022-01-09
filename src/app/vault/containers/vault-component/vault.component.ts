@@ -6,7 +6,6 @@ import { Store, select } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import * as fromVault from '../../reducers';
 import { VaultActions } from '../../actions';
-import { getVaultItems } from '../../reducers';
 
 @Component({
     selector: 'app-vault',
@@ -28,7 +27,7 @@ export class VaultComponent implements OnInit {
     }
 
     addVaultItem() {
-        this.store.dispatch(VaultActions.addVaultItem({ vaultItem: null }))
+        this.router.navigate(['./vault-item', '-1'])
     }
 
     public get VaultStatus(): typeof VaultStatus {

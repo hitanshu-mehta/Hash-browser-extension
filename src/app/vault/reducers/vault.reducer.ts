@@ -10,14 +10,14 @@ export enum VaultStatus {
 
 export interface State {
     status: VaultStatus;
-    currentId: string | null;
+    currentId: string;
     vaultItems: VaultItem[];
     error: any;
 }
 
 const initialState: State = {
     status: VaultStatus.LOADING,
-    currentId: null,
+    currentId: "",
     vaultItems: [],
     error: null,
 };
@@ -25,8 +25,12 @@ const initialState: State = {
 const vaultReducer = createReducer(
     initialState,
     on(VaultActions.loadVault, (state) => ({ ...state, status: VaultStatus.LOADING })),
+    on(VaultActions.addVaultItem, (state, { vaultItem }) => ({ ...state, currentVaultItem: vaultItem })),
     on(VaultApiActions.loadVaultSuccess, (state, { vaultItems }) => ({ ...state, status: VaultStatus.LOADED, vaultItems })),
-    on(VaultApiActions.loadVaultFailure, (state, { error }) => ({ ...state, status: VaultStatus.FAILED_LOADING, vaultItems: [], error }))
+    on(VaultApiActions.loadVaultFailure, (state, { error }) => ({ ...state, status: VaultStatus.FAILED_LOADING, error })),
+    on(VaultApiActions.addVaultItemSuccess, (state, { vaultItem }) => ({ ...state, vaultItems: [...state.vaultItems, vaultItem] })),
+    on(VaultApiActions.encryptVaultFailure, (state, { error }) => ({ ...state, error })),
+    on(VaultApiActions.addVaultItemFailure, (state, { error }) => ({ ...state, error }))
 );
 
 export const reducer = (state: State, action: Action) => vaultReducer(state, action);
