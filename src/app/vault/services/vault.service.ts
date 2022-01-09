@@ -1,4 +1,3 @@
-import { VAULT } from './../mock-vault';
 import { Store, select } from '@ngrx/store';
 import { map, switchMap } from 'rxjs/operators';
 import { EncryptionKeyObj } from './../models/encryption-key';
@@ -6,13 +5,12 @@ import { MasterPasswordObj, MasterKeyObj } from './../../auth/models/masterpassw
 import { StorageService } from './../../core/services/storage.service';
 import { Injectable } from '@angular/core';
 import { VaultItem } from '../models/vault-item';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, pipe } from 'rxjs';
 
 import { encryptLoginPassword, decryptLoginPassword } from 'hash-password-manager/passwordUtils.js';
 
 import * as fromAuth from 'src/app/auth/reducers';
 import * as fromVault from '../reducers';
-import { ok } from 'assert';
 
 interface WorkerMessage {
     sender: string;
@@ -65,8 +63,6 @@ export class VaultService {
     }
 
     loadVault(): Observable<VaultItem[]> {
-
-        return of(VAULT);
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
             map((v: VaultItem[]) => this.vault = v),
             switchMap(() => of(this.vault))
@@ -79,7 +75,6 @@ export class VaultService {
     }
 
     async encryptPassword(password: string): Promise<EncryptionKeyObj> {
-
         if (this.workerAvailable) {
             return await this.sendToWebWorker(
                 {
@@ -102,14 +97,23 @@ export class VaultService {
     }
 
     addVaultItem(vaultItem: VaultItem): Observable<VaultItem> {
+        let newVI: VaultItem;
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
             map((v: VaultItem[]) => {
                 this.vault = v;
                 this.vault.push(vaultItem);
                 this.storageService.save('vault', this.vault);
+
+                newVI = JSON.parse(JSON.stringify(vaultItem));
+                if (newVI.id === null || newVI.id === "")
+                    newVI.id = this.getUId();
             }),
-            switchMap(() => of(vaultItem))
+            switchMap(() => of(newVI))
         );
+    }
+
+    getUId(): string {
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
     }
 
     removeVaultItem(vaultItem: VaultItem) {
