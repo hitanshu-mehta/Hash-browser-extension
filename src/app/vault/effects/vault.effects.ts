@@ -1,9 +1,10 @@
-import { catchError, exhaustMap, map, mergeMap, switchMap, tap, pluck } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { catchError, exhaustMap, map, mergeMap, switchMap, pluck } from 'rxjs/operators';
 import { VaultService } from './../services/vault.service';
 import { VaultActions, VaultApiActions } from 'src/app/vault/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from "@angular/core";
-import { from, of } from 'rxjs';
+import { concat, from, of } from 'rxjs';
 import { VaultItem } from '../models/vault-item';
 import { EncryptionKeyObj } from '../models/encryption-key';
 
@@ -23,6 +24,19 @@ export class VaultEffects {
                 catchError(error => of(VaultApiActions.loadVaultFailure({ error })))
             ))
         )
+    );
+
+    updateVaultItem$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(VaultActions.updateVaultItem.type),
+            pluck('vaultItem'),
+            mergeMap(vaultItem =>
+                concat(
+                    of(VaultActions.removeVaultItem({ id: vaultItem.id })),
+                    of(VaultActions.addVaultItem({ vaultItem }))
+                )
+            ),
+        ),
     );
 
     addVaultItem$ = createEffect(() =>

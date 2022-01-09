@@ -20,6 +20,8 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
     status$: Observable<VaultStatus> = this.store.pipe(select(fromVault.getVaultStatus));
     actionSubscription: Subscription;
 
+    private currentVaultId: string;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -30,21 +32,32 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.status$.subscribe(s => {
             switch (s) {
+                case VaultStatus.LOADING_ITEM:
+                    this.spinner.show('Loading vault item.');
+                    break;
+                case VaultStatus.ADDING_ITEM:
+                    this.spinner.show('Adding vault item.');
+                    break;
                 case VaultStatus.ITEM_LOADED:
                     this.spinner.hide();
                     this.openSnackBar('Vault item loaded', 'Ok', 2000);
                     break;
-                case VaultStatus.LOADING_ITEM:
-                    this.spinner.show("Loading vault item.");
+                case VaultStatus.ITEM_ADDED:
+                    this.spinner.hide();
+                    this.openSnackBar('Vault item added.', 'Ok', 2000);
                     break;
                 case VaultStatus.FAILED_LOADING_ITEM:
                     this.spinner.hide();
                     this.back();
                     break;
-
+                case VaultStatus.FAILED_ADDING_ITEM:
+                    this.spinner.hide();
+                    break;
             }
         });
+
         this.vaultItem$.subscribe(v => {
+            this.currentVaultId = v?.id;
             if (v) {
                 this.updateForm(v);
             }
@@ -93,7 +106,7 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
 
     save() {
         let toAddVaultItem: VaultItem = {
-            id: null,
+            id: this.currentVaultId,
             name: this.name.value,
             username: this.username.value,
             password: this.password.value,
@@ -102,7 +115,10 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
             updatedAt: Date.now(),
         }
 
-        this.store.dispatch(VaultActions.addVaultItem({ vaultItem: toAddVaultItem }));
+        if (this.currentVaultId)
+            this.store.dispatch(VaultActions.updateVaultItem({ vaultItem: toAddVaultItem }));
+        else
+            this.store.dispatch(VaultActions.addVaultItem({ vaultItem: toAddVaultItem }));
     }
 
     updateForm(vaultItem: VaultItem) {
