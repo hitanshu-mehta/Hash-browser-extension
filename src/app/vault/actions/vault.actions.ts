@@ -18,6 +18,10 @@ export const removeVaultItem = createAction(
     props<{ id: string }>()
 );
 
+export const newVaultItem = createAction(
+    '[Vault] new Vault Item'
+)
+
 const all = union({
     loadVault,
     getVaultItem,
