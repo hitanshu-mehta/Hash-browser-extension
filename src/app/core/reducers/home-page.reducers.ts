@@ -1,18 +1,20 @@
 import { createReducer, Action, on } from '@ngrx/store';
 import { HomePageActions } from '../actions';
 
-
 export interface State {
-    masterPasswordPresent: boolean;
+  masterPasswordPresent: boolean;
 }
 
 const initialState: State = {
-    masterPasswordPresent: false,
+  masterPasswordPresent: false,
 };
 
 const homePageReducer = createReducer(
-    initialState,
-    on(HomePageActions.checkMasterPasswordPresentSuccess, (state, { present }) => ({ ...state, masterPasswordPresent: present }))
+  initialState,
+  on(HomePageActions.checkMasterPasswordPresentSuccess, (state, { present }) => ({
+    ...state,
+    masterPasswordPresent: present,
+  }))
 );
 
 export const reducer = (state: State, action: Action) => homePageReducer(state, action);

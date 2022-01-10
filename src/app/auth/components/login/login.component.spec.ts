@@ -8,9 +8,8 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
-    })
-    .compileComponents();
+      declarations: [LoginComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -28,7 +27,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.contains('password')).toBeTruthy();
   });
 
-  it('should make both controls required',() => {
+  it('should make both controls required', () => {
     const usernameControl = component.loginForm.get('username');
     const passwordControl = component.loginForm.get('password');
 
@@ -39,10 +38,9 @@ describe('LoginComponent', () => {
     expect(passwordControl.valid).toBeFalsy();
   });
 
-  it('password controll should require minimum 8 charaters',() => {
+  it('password controll should require minimum 8 charaters', () => {
     const control = component.loginForm.get('password');
     control.value('123456');
     expect(control.valid).toBeFalsy();
   });
-
 });

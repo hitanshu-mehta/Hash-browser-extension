@@ -5,18 +5,13 @@ import { NgModule } from '@angular/core';
 import { VaultListComponent } from './components/vault-list/vault-list.component';
 
 const vaultRoutes: Routes = [
-    { path: 'vault-list', redirectTo: 'main' },
-    { path: 'vault-list', component: VaultListComponent },
-    { path: 'vault-item/:id', component: VaultItemViewComponent },
+  { path: 'vault-list', redirectTo: 'main' },
+  { path: 'vault-list', component: VaultListComponent },
+  { path: 'vault-item/:id', component: VaultItemViewComponent },
 ];
 
-
 @NgModule({
-    imports: [
-        RouterModule.forChild(vaultRoutes)
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [RouterModule.forChild(vaultRoutes)],
+  exports: [RouterModule],
 })
-export class VaultRoutingModule { }
+export class VaultRoutingModule {}

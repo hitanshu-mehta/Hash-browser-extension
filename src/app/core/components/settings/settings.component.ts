@@ -10,10 +10,9 @@ export interface Setting {
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
-
   settings: Setting[];
   currentActiveSettingIndex = -1;
 
@@ -23,14 +22,14 @@ export class SettingsComponent {
         index: 0,
         title: 'Change Master Password',
         active: false,
-        route: ''
+        route: '',
       },
       {
         index: 1,
         title: 'Generate Random Password',
         active: false,
-        route: '/password-generator-settings'
-      }
+        route: '/password-generator-settings',
+      },
     ];
   }
 
@@ -41,5 +40,4 @@ export class SettingsComponent {
     this.settings[index].active = true;
     this.currentActiveSettingIndex = index;
   }
-
 }

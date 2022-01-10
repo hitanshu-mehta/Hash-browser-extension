@@ -7,7 +7,14 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "p:verify": "prettier --config ./.prettierrc --write \"src/{app,environments}/**/*{.ts,.html,.scss}\"",
+    "p:fix": "prettier --config ./.prettierrc --list-different \"src/{app,environments}/**/*{.ts,.html,.scss}\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run p:fix"
+    }
   },
   "private": true,
   "dependencies": {
@@ -61,6 +68,7 @@
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
     "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^7.0.4",
     "jasmine-core": "^3.6.0",
     "jasmine-spec-reporter": "^6.0.0",
     "karma": "~4.1.0",
@@ -69,7 +77,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ngrx-store-freeze": "^0.2.4",
-    "prettier": "^2.2.1",
+    "prettier": "^2.5.1",
     "protractor": "~5.4.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",

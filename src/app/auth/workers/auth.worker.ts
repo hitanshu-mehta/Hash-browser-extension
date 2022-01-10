@@ -5,21 +5,15 @@
 import { verifyMasterPassword, setMasterPassword } from 'hash-password-manager/masterPassword.js';
 
 const processMessage = ({ sender, payload }): any => {
-    switch (sender) {
-        case 'login':
-            return verifyMasterPassword(payload.masterPasswordObj, payload.password);
-        case 'signup':
-            return setMasterPassword(payload.password);
-    }
-
+  switch (sender) {
+    case 'login':
+      return verifyMasterPassword(payload.masterPasswordObj, payload.password);
+    case 'signup':
+      return setMasterPassword(payload.password);
+  }
 };
 
 addEventListener('message', ({ data }) => {
-    const response = processMessage(data);
-    postMessage(response);
+  const response = processMessage(data);
+  postMessage(response);
 });
-
-
-
-
-

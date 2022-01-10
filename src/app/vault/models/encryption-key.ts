@@ -1,4 +1,4 @@
 export interface EncryptionKeyObj {
-    encryptionKey: string;
-    encryptionKeyIv: string;
+  encryptionKey: string;
+  encryptionKeyIv: string;
 }

@@ -9,80 +9,80 @@ import * as fromAuth from '../../reducers';
 import { Store, select } from '@ngrx/store';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-    loginForm = new FormGroup({
-        username: new FormControl('', Validators.required),
-        password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  loginForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+  });
+
+  pending$ = this.store.pipe(select(fromAuth.getLoginPagePending));
+  error$ = this.store.pipe(select(fromAuth.getLoginPageError));
+  // hide or show password
+  hide = true;
+  errorMessage: string | null;
+
+  constructor(
+    private store: Store<fromAuth.State>,
+    private spinner: LoadingSpinnerService,
+    private location: Location
+  ) {}
+
+  ngOnInit() {
+    this.store.dispatch(LoginPageActions.loadMasterPasswordObj());
+
+    this.pending$.subscribe((pending) => {
+      if (pending) {
+        this.spinner.show('Logging in\n This may take sometime.');
+        this.loginForm.disable();
+      } else {
+        this.spinner.hide();
+        this.loginForm.enable();
+      }
     });
 
-    pending$ = this.store.pipe(select(fromAuth.getLoginPagePending));
-    error$ = this.store.pipe(select(fromAuth.getLoginPageError));
-    // hide or show password
-    hide = true;
-    errorMessage: string | null;
+    this.error$.subscribe((errorMsg) => {
+      this.errorMessage = errorMsg;
+    });
+  }
 
-    constructor(
-        private store: Store<fromAuth.State>,
-        private spinner: LoadingSpinnerService,
-        private location: Location) { }
+  // Getter functions
+  get username() {
+    return this.loginForm.get('username');
+  }
 
-    ngOnInit() {
-        this.store.dispatch(LoginPageActions.loadMasterPasswordObj());
+  get password() {
+    return this.loginForm.get('password');
+  }
 
-        this.pending$.subscribe(pending => {
-            if (pending) {
-                this.spinner.show('Logging in\n This may take sometime.');
-                this.loginForm.disable();
-            } else {
-                this.spinner.hide();
-                this.loginForm.enable();
-            }
-        });
-
-        this.error$.subscribe(errorMsg => { this.errorMessage = errorMsg; });
+  // Error Messages
+  getUsernameErrorMessage(): string {
+    if (this.username.hasError('required')) {
+      return 'Username is required';
     }
+  }
 
-    // Getter functions
-    get username() {
-        return this.loginForm.get('username');
+  getPasswordErrorMessage(): string {
+    if (this.password.hasError('required')) {
+      return 'Password is required';
     }
-
-    get password() {
-        return this.loginForm.get('password');
+    if (this.password.hasError('minlength')) {
+      return 'Minimum length of password should be ' + this.password.errors.minlength.requiredLength;
     }
+  }
 
-    // Error Messages
-    getUsernameErrorMessage(): string {
+  onSubmit(): void {
+    const credentials: Credentials = {
+      username: this.username.value,
+      password: this.password.value,
+    };
+    this.store.dispatch(LoginPageActions.login({ credentials }));
+  }
 
-        if (this.username.hasError('required')) {
-            return 'Username is required';
-        }
-    }
-
-    getPasswordErrorMessage(): string {
-        if (this.password.hasError('required')) {
-            return 'Password is required';
-        }
-        if (this.password.hasError('minlength')) {
-            return 'Minimum length of password should be ' + this.password.errors.minlength.requiredLength;
-        }
-    }
-
-    onSubmit(): void {
-        const credentials: Credentials = {
-            username: this.username.value,
-            password: this.password.value
-        };
-        this.store.dispatch(LoginPageActions.login({ credentials }));
-    }
-
-
-    back(): void {
-        this.location.back();
-    }
-
+  back(): void {
+    this.location.back();
+  }
 }

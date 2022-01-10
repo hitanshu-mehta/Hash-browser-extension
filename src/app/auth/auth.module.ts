@@ -12,24 +12,19 @@ import { NewAccountComponent } from './components/new-account/new-account.compon
 import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
 
-
-const COMPONENTS =[
-    LoginComponent,
-    NewAccountComponent,
-    LogoutConfirmationDialogComponent,
-];
+const COMPONENTS = [LoginComponent, NewAccountComponent, LogoutConfirmationDialogComponent];
 
 @NgModule({
-    imports:[
-        CommonModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        StrongPasswordModule,
-        AuthRoutingModule,
-        StoreModule.forFeature('auth',reducers),
-        EffectsModule.forFeature([AuthEffects])
-    ],
-    declarations: COMPONENTS,
-    entryComponents: [LogoutConfirmationDialogComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    StrongPasswordModule,
+    AuthRoutingModule,
+    StoreModule.forFeature('auth', reducers),
+    EffectsModule.forFeature([AuthEffects]),
+  ],
+  declarations: COMPONENTS,
+  entryComponents: [LogoutConfirmationDialogComponent],
 })
 export class AuthModule {}

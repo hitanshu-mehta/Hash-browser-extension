@@ -8,29 +8,27 @@ import * as fromVault from '../../reducers';
 import { VaultActions } from '../../actions';
 
 @Component({
-    selector: 'app-vault',
-    templateUrl: './vault.component.html',
-    styleUrls: ['./vault.component.scss']
+  selector: 'app-vault',
+  templateUrl: './vault.component.html',
+  styleUrls: ['./vault.component.scss'],
 })
 export class VaultComponent implements OnInit {
+  vaultItems$: Observable<VaultItem[]>;
+  vaultStatus: VaultStatus;
 
-    vaultItems$: Observable<VaultItem[]>;
-    vaultStatus: VaultStatus;
+  constructor(private router: Router, private store: Store<fromVault.State>) {}
 
-    constructor(private router: Router, private store: Store<fromVault.State>) {
-    }
+  ngOnInit() {
+    this.store.dispatch(VaultActions.loadVault());
+    this.vaultItems$ = this.store.pipe(select(fromVault.getVaultItems));
+    this.store.select(fromVault.getVaultStatus).subscribe((status: VaultStatus) => (this.vaultStatus = status));
+  }
 
-    ngOnInit() {
-        this.store.dispatch(VaultActions.loadVault());
-        this.vaultItems$ = this.store.pipe(select(fromVault.getVaultItems));
-        this.store.select(fromVault.getVaultStatus).subscribe((status: VaultStatus) => this.vaultStatus = status);
-    }
+  addVaultItem() {
+    this.router.navigate(['./vault-item', '-1']);
+  }
 
-    addVaultItem() {
-        this.router.navigate(['./vault-item', '-1']);
-    }
-
-    public get vaultStatusEnum(): typeof VaultStatus {
-        return VaultStatus;
-    }
+  public get vaultStatusEnum(): typeof VaultStatus {
+    return VaultStatus;
+  }
 }

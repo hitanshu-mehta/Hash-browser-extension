@@ -11,23 +11,16 @@ import { AppComponent } from './containers/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 
 export const COMPONENTS = [
-    AppComponent,
-    HomeComponent,
-    MainTabComponent,
-    SettingsComponent,
-    RandomPasswordSettingComponent,
+  AppComponent,
+  HomeComponent,
+  MainTabComponent,
+  SettingsComponent,
+  RandomPasswordSettingComponent,
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        VaultModule
-    ],
-    declarations: COMPONENTS,
-    exports: COMPONENTS
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MaterialModule, VaultModule],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
-export class CoreModule { }
+export class CoreModule {}

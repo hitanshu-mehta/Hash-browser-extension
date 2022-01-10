@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
  * otherwise it will close with undefined.
  */
 @Component({
-    template: `
+  template: `
     <h2 mat-dialog-title>Logout</h2>
     <mat-dialog-content>Are you sure you want to logout?</mat-dialog-content>
     <mat-dialog-actions>
@@ -13,8 +13,8 @@ import { Component } from '@angular/core';
       <button mat-button [mat-dialog-close]="true">OK</button>
     </mat-dialog-actions>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
         width: 100%;
@@ -30,6 +30,6 @@ import { Component } from '@angular/core';
         padding: 0;
       }
     `,
-    ],
+  ],
 })
-export class LogoutConfirmationDialogComponent { }
+export class LogoutConfirmationDialogComponent {}

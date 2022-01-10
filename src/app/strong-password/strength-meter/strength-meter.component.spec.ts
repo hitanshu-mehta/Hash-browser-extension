@@ -8,9 +8,8 @@ describe('StrengthMeterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StrengthMeterComponent ]
-    })
-    .compileComponents();
+      declarations: [StrengthMeterComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

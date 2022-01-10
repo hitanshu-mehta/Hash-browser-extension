@@ -11,35 +11,32 @@ import { RandomPasswordSettingComponent } from './core/components/settings/rando
 import { AuthGuard } from './auth/services/auth-guard.service';
 
 const appRoutes: Routes = [
-    {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
-    },
-    {
-        path: 'home',
-        component: HomeComponent,
-    },
-    {
-        path: 'main',
-        component: MainTabComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'new-user',
-        component: NewAccountComponent,
-    },
-    {
-        path: 'password-generator-settings',
-        component: RandomPasswordSettingComponent,
-    }
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+  },
+  {
+    path: 'main',
+    component: MainTabComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'new-user',
+    component: NewAccountComponent,
+  },
+  {
+    path: 'password-generator-settings',
+    component: RandomPasswordSettingComponent,
+  },
 ];
 
-
 @NgModule({
-    imports: [RouterModule.forRoot(
-        appRoutes,
-        { enableTracing: false })],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(appRoutes, { enableTracing: false })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
