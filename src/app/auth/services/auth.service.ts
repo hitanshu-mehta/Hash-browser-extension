@@ -94,7 +94,7 @@ export class AuthService {
         return true;
     }
 
-    loadMasterPasswordObj() : Observable<MasterPasswordObj> {
+    loadMasterPasswordObj(): Observable<MasterPasswordObj> {
         return from(this.storageService.get<MasterPasswordObj>('MasterPasswordObj')).pipe(
             map((obj: MasterPasswordObj) => this.masterPasswordObj = obj),
             switchMap(() => of(this.masterPasswordObj))

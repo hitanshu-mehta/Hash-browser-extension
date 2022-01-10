@@ -6,8 +6,8 @@
     </div>
 
     <div class="row px-0" [ngSwitch]="vaultStatus">
-        <app-vault-list *ngSwitchCase="VaultStatus.LOADED" [vaultItems]="vaultItems$ | async"></app-vault-list>
-        <app-display-text *ngSwitchCase="VaultStatus.FAILED_LOADING" [text]="'Failed to load vault!'" [type]="'danger'">
+        <app-vault-list *ngSwitchCase="vaultStatusEnum.loaded" [vaultItems]="vaultItems$ | async"></app-vault-list>
+        <app-display-text *ngSwitchCase="vaultStatusEnum.failedLoading" [text]="'Failed to load vault!'" [type]="'danger'">
         </app-display-text>
     </div>
 

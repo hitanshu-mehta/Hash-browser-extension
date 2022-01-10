@@ -6,7 +6,7 @@ import { VaultItem } from 'src/app/vault/models/vault-item';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import * as fromVault from '../../reducers'
+import * as fromVault from '../../reducers';
 import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,6 +20,13 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
     status$: Observable<VaultStatus> = this.store.pipe(select(fromVault.getVaultStatus));
     actionSubscription: Subscription;
 
+    vaultItemForm = new FormGroup({
+        name: new FormControl(''),
+        username: new FormControl(''),
+        password: new FormControl(''),
+        url: new FormControl(''),
+    });
+
     private currentVaultId: string;
 
     constructor(
@@ -32,25 +39,25 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.status$.subscribe(s => {
             switch (s) {
-                case VaultStatus.LOADING_ITEM:
+                case VaultStatus.loadingItem:
                     this.spinner.show('Loading vault item.');
                     break;
-                case VaultStatus.ADDING_ITEM:
+                case VaultStatus.addingItem:
                     this.spinner.show('Adding vault item.');
                     break;
-                case VaultStatus.ITEM_LOADED:
+                case VaultStatus.itemLoaded:
                     this.spinner.hide();
                     this.openSnackBar('Vault item loaded', 'Ok', 2000);
                     break;
-                case VaultStatus.ITEM_ADDED:
+                case VaultStatus.itemAdded:
                     this.spinner.hide();
                     this.openSnackBar('Vault item added.', 'Ok', 2000);
                     break;
-                case VaultStatus.FAILED_LOADING_ITEM:
+                case VaultStatus.failedLoadingItem:
                     this.spinner.hide();
                     this.back();
                     break;
-                case VaultStatus.FAILED_ADDING_ITEM:
+                case VaultStatus.failedAddingItem:
                     this.spinner.hide();
                     break;
             }
@@ -61,7 +68,7 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
             if (v) {
                 this.updateForm(v);
             }
-            else
+            else {
                 this.updateForm({
                     name: '',
                     username: '',
@@ -70,6 +77,7 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
                     createdAt: 0,
                     updatedAt: 0
                 });
+            }
         });
         this.actionSubscription = this.route.paramMap.pipe(
             map(params => VaultActions.getVaultItem({ id: params.get('id') }))
@@ -79,13 +87,6 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         if (this.actionSubscription) { this.actionSubscription.unsubscribe(); }
     }
-
-    vaultItemForm = new FormGroup({
-        name: new FormControl(''),
-        username: new FormControl(''),
-        password: new FormControl(''),
-        url: new FormControl(''),
-    });
 
     // getter functions
     get name() {
@@ -105,7 +106,7 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        let toAddVaultItem: VaultItem = {
+        const toAddVaultItem: VaultItem = {
             id: this.currentVaultId,
             name: this.name.value,
             username: this.username.value,
@@ -113,20 +114,18 @@ export class VaultItemViewComponent implements OnInit, OnDestroy {
             url: this.url.value,
             createdAt: Date.now(),
             updatedAt: Date.now(),
-        }
+        };
 
-        if (this.currentVaultId)
-            this.store.dispatch(VaultActions.updateVaultItem({ vaultItem: toAddVaultItem }));
-        else
-            this.store.dispatch(VaultActions.addVaultItem({ vaultItem: toAddVaultItem }));
+        if (this.currentVaultId) { this.store.dispatch(VaultActions.updateVaultItem({ vaultItem: toAddVaultItem })); }
+        else { this.store.dispatch(VaultActions.addVaultItem({ vaultItem: toAddVaultItem })); }
     }
 
     updateForm(vaultItem: VaultItem) {
         this.vaultItemForm.setValue({
-            'name': vaultItem['name'],
-            'username': vaultItem['username'],
-            'password': vaultItem['password'],
-            'url': vaultItem['url']
+            name: vaultItem.name,
+            username: vaultItem.username,
+            password: vaultItem.password,
+            url: vaultItem.url
         });
     }
 

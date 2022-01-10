@@ -9,11 +9,11 @@ import * as fromVault from '../../../reducers';
 })
 export class VaultListItemComponent {
 
-    constructor(private store: Store<fromVault.State>) { }
-
     @Input() name: string;
     @Input() username: string;
     @Input() id: string;
+
+    constructor(private store: Store<fromVault.State>) { }
 
     delete(): void {
         this.store.dispatch(VaultActions.removeVaultItem({ id: this.id }));

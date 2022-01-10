@@ -6,10 +6,10 @@ import { Component, Input } from '@angular/core';
 })
 export class DisplayTextComponent {
 
-    @Input() text: String;
-    @Input() type: String;
+    @Input() text: string;
+    @Input() type: string;
 
-    public get class(): String {
-        return "text-center-" + this.type;
+    public get class(): string {
+        return 'text-center-' + this.type;
     }
 }

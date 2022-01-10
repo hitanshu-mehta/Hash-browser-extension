@@ -1,5 +1,5 @@
-import { createAction, props, union } from "@ngrx/store";
-import { VaultItem } from "../models/vault-item";
+import { createAction, props, union } from '@ngrx/store';
+import { VaultItem } from '../models/vault-item';
 
 export const loadVaultSuccess = createAction(
     '[Vault/Api] Load Vault Success',
@@ -59,28 +59,28 @@ export const encryptVaultFailure = createAction(
 export const getVaultItem = createAction(
     '[Vault/Api] Get Vault Item',
     props<{ id: string }>()
-)
+);
 
 export const getVaultItemFailure = createAction(
     '[Vault/Api] Get Vault Item Failure',
     props<{ error: any }>()
-)
+);
 
 
 export const decryptVault = createAction(
     '[Vault/Api] Decrypt Vault Item',
     props<{ vaultItem: VaultItem }>()
-)
+);
 
 export const decryptVaultSuccess = createAction(
     '[Vault/Api] Decrypt Vault Item Success',
     props<{ vaultItem: VaultItem }>()
-)
+);
 
 export const decryptVaultFailure = createAction(
     '[Vault/Api] Decrypt Vault Item Failure',
     props<{ error: any }>()
-)
+);
 
 const all = union({
     loadVaultSuccess,

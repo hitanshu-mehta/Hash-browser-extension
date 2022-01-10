@@ -1,20 +1,14 @@
-import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, map, mergeMap, switchMap, pluck } from 'rxjs/operators';
 import { VaultService } from './../services/vault.service';
 import { VaultActions, VaultApiActions } from 'src/app/vault/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { concat, from, of } from 'rxjs';
 import { VaultItem } from '../models/vault-item';
 import { EncryptionKeyObj } from '../models/encryption-key';
 
 @Injectable()
 export class VaultEffects {
-
-    constructor(
-        private actions$: Actions<VaultActions.VaultActionsUnion>,
-        private vaultService: VaultService,
-    ) { }
 
     loadVault$ = createEffect(() =>
         this.actions$.pipe(
@@ -53,9 +47,9 @@ export class VaultEffects {
             pluck('vaultItem'),
             exhaustMap((vaultItem: VaultItem) => from(this.vaultService.encryptPassword(vaultItem.password as string)).pipe(
                 map((encryptionKeyObj: EncryptionKeyObj) => {
-                    let encVaultItem: VaultItem = Object.assign({}, vaultItem);
+                    const encVaultItem: VaultItem = Object.assign({}, vaultItem);
                     encVaultItem.password = encryptionKeyObj;
-                    return VaultApiActions.encryptVaultSuccess({ vaultItem: encVaultItem })
+                    return VaultApiActions.encryptVaultSuccess({ vaultItem: encVaultItem });
                 }),
                 catchError(error => of(VaultApiActions.encryptVaultFailure({ error })))
             ))
@@ -80,7 +74,7 @@ export class VaultEffects {
         this.actions$.pipe(
             ofType(VaultApiActions.addVaultItem.type),
             exhaustMap(vaultItem => this.vaultService.addVaultItem(vaultItem).pipe(
-                map((vaultItem: VaultItem) => VaultApiActions.addVaultItemSuccess({ vaultItem })),
+                map((v: VaultItem) => VaultApiActions.addVaultItemSuccess({ vaultItem: v })),
                 catchError(error => of(VaultApiActions.addVaultItemFailure({ error })))
             ))
         )
@@ -110,9 +104,8 @@ export class VaultEffects {
             ofType(VaultActions.getVaultItem.type),
             pluck('id'),
             switchMap(id => {
-                if (id === '-1')
-                    return of(VaultActions.newVaultItem());
-                return of(VaultApiActions.getVaultItem({ id }))
+                if (id === '-1') { return of(VaultActions.newVaultItem()); }
+                return of(VaultApiActions.getVaultItem({ id }));
             })
         )
     );
@@ -134,12 +127,17 @@ export class VaultEffects {
             pluck('vaultItem'),
             exhaustMap((vaultItem: VaultItem) => this.vaultService.decryptPassword(vaultItem.password as EncryptionKeyObj).pipe(
                 map(password => {
-                    let decVaultItem: VaultItem = Object.assign({}, vaultItem);
+                    const decVaultItem: VaultItem = Object.assign({}, vaultItem);
                     decVaultItem.password = password;
-                    return VaultApiActions.decryptVaultSuccess({ vaultItem: decVaultItem })
+                    return VaultApiActions.decryptVaultSuccess({ vaultItem: decVaultItem });
                 }),
                 catchError(error => of(VaultApiActions.decryptVaultFailure({ error })))
             ))
         )
     );
+
+    constructor(
+        private actions$: Actions<VaultActions.VaultActionsUnion>,
+        private vaultService: VaultService,
+    ) { }
 }

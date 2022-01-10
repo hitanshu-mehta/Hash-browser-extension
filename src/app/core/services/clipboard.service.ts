@@ -22,9 +22,7 @@ export class ClipboardService {
   }
 
   public clearClipBoard(time: number = null){
-    console.log(this.clearClipBoardIntervals[this.currentSelectedIndex]);
     setTimeout(() => {
-      console.log('Callback');
       this.clipboard.copy(' ');
     }, time === null ? this.clearClipBoardIntervals[this.currentSelectedIndex]: time);
   }

@@ -9,6 +9,6 @@ export const login = createAction(
 
 export const loadMasterPasswordObj = createAction(
     '[Login Page] Load Masterpassword Obj',
-)
+);
 
 export type LoginPageActionsUnion = ReturnType<typeof login>;

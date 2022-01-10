@@ -27,10 +27,10 @@ export class VaultComponent implements OnInit {
     }
 
     addVaultItem() {
-        this.router.navigate(['./vault-item', '-1'])
+        this.router.navigate(['./vault-item', '-1']);
     }
 
-    public get VaultStatus(): typeof VaultStatus {
+    public get vaultStatusEnum(): typeof VaultStatus {
         return VaultStatus;
     }
 }

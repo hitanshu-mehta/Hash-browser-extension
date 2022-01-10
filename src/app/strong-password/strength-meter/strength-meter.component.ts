@@ -32,7 +32,6 @@ export class StrengthMeterComponent implements  OnChanges {
   constructor(private passwordStrengthService: PasswordStrengthService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes);
     const passwordChange = changes.password;
     const userDataChange = changes.userData;
 

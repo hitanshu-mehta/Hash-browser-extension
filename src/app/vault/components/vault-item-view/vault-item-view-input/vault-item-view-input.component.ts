@@ -16,8 +16,6 @@ import { ClipboardService } from 'src/app/core/services/clipboard.service';
 })
 export class VaultItemViewInputComponent implements ControlValueAccessor {
 
-    constructor(private clipboard: ClipboardService, private snackbar: MatSnackBar) { }
-
     @Input() label: string;
     @Input() type: string;
     @Input() value: string;
@@ -30,6 +28,9 @@ export class VaultItemViewInputComponent implements ControlValueAccessor {
     hidden = false;
     disabled = false;
     touched = false;
+
+    constructor(private clipboard: ClipboardService, private snackbar: MatSnackBar) { }
+
     onChange = (_value: string) => { };
     onTouched = () => { };
 
@@ -43,12 +44,6 @@ export class VaultItemViewInputComponent implements ControlValueAccessor {
         this.clipboard.copy(this.value);
         this.clipboard.clearClipBoard();
         this.openSnackBar(this.label + ' copied.', 'Ok');
-    }
-
-    private openSnackBar(message: string, action: string) {
-        this.snackbar.open(message, action, {
-            duration: 2000,
-        });
     }
 
     inputChanged(value: string) {
@@ -82,4 +77,9 @@ export class VaultItemViewInputComponent implements ControlValueAccessor {
         }
     }
 
+    private openSnackBar(message: string, action: string) {
+        this.snackbar.open(message, action, {
+            duration: 2000,
+        });
+    }
 }

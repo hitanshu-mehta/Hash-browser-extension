@@ -101,8 +101,7 @@ export class VaultService {
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
             map((v: VaultItem[]) => {
                 newVI = JSON.parse(JSON.stringify(vaultItem));
-                if (newVI.id === null || newVI.id === "")
-                    newVI.id = this.getUId();
+                if (newVI.id === null || newVI.id === '') { newVI.id = this.getUId(); }
 
                 this.vault = v;
                 this.vault.push(newVI);
@@ -119,11 +118,10 @@ export class VaultService {
     getVaultItem(id: string): Observable<VaultItem> {
         let toReturn: VaultItem = null;
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
-            map((v: VaultItem[]) => {
-                this.vault = v;
-                let items = this.vault.filter(v => v.id == id);
-                if (items.length === 0)
-                    return new Error("Item not found with id:" + id);
+            map((vault: VaultItem[]) => {
+                this.vault = vault;
+                const items = this.vault.filter(v => v.id === id);
+                if (items.length === 0) { return new Error('Item not found with id:' + id); }
                 toReturn = items[0];
             }),
             switchMap(() => of(toReturn))
@@ -132,18 +130,13 @@ export class VaultService {
 
     removeVaultItem(id: string): Observable<VaultItem[]> {
         return from(this.storageService.get<VaultItem[]>('vault')).pipe(
-            map((v: VaultItem[]) => {
-                this.vault = v;
-                this.vault = this.vault.filter(v => v.id != id);
+            map((vault: VaultItem[]) => {
+                this.vault = vault;
+                this.vault = this.vault.filter(v => v.id !== id);
                 this.storageService.save('vault', this.vault);
             }),
             switchMap(() => of(this.vault))
         );
-    }
-
-    updateVaultItem(vaultItem: VaultItem): Observable<VaultItem> {
-        // TODO
-        return new Observable<VaultItem>();
     }
 
 }

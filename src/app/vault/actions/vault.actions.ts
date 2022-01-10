@@ -20,12 +20,12 @@ export const removeVaultItem = createAction(
 
 export const newVaultItem = createAction(
     '[Vault] New Vault Item'
-)
+);
 
 export const updateVaultItem = createAction(
     '[Vault] Update Vault Item',
     props<{ vaultItem: VaultItem }>()
-)
+);
 
 const all = union({
     loadVault,
