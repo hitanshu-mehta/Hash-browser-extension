@@ -11,7 +11,6 @@ import { ClipboardService } from '../../../services/clipboard.service';
   styleUrls: ['./random-password-setting.component.scss'],
 })
 export class RandomPasswordSettingComponent {
-
   hide = true;
 
   settings: PasswordConfig;
@@ -34,8 +33,11 @@ export class RandomPasswordSettingComponent {
   generatedPassword = '';
   errorMsg = '';
 
-
-  constructor(private generatePasswordService: GeneratePasswordService, private location: Location, private clipboard: ClipboardService) {
+  constructor(
+    private generatePasswordService: GeneratePasswordService,
+    private location: Location,
+    private clipboard: ClipboardService
+  ) {
     this.settings = generatePasswordService.getSettings();
     this.currentSelectedLength = this.settings.length;
     this.maxLowerLength = this.maxUpperLength = this.maxDigitLength = this.maxSpecialLength = this.settings.maxLength;
@@ -47,10 +49,11 @@ export class RandomPasswordSettingComponent {
 
   isValidValues(): boolean {
     const val: boolean =
-      (this.currentSelectedLowerLength +
+      this.currentSelectedLowerLength +
         this.currentSelectedUpperLength +
         this.currentSelectedDigitLength +
-        this.currentSelectedSpecialLength <= this.currentSelectedLength);
+        this.currentSelectedSpecialLength <=
+      this.currentSelectedLength;
     if (!val) {
       this.errorMsg = 'Sum of minimum lengths should be less than total length!';
     }
@@ -58,26 +61,30 @@ export class RandomPasswordSettingComponent {
   }
 
   getPassword(): void {
-    this.generatePasswordService.generatePassword(this.currentSelectedLength,
-      this.currentSelectedLowerLength,
-      this.currentSelectedUpperLength,
-      this.currentSelectedDigitLength,
-      this.currentSelectedSpecialLength).subscribe((password: string) => {
-        this.generatedPassword = password;
-      },
+    this.generatePasswordService
+      .generatePassword(
+        this.currentSelectedLength,
+        this.currentSelectedLowerLength,
+        this.currentSelectedUpperLength,
+        this.currentSelectedDigitLength,
+        this.currentSelectedSpecialLength
+      )
+      .subscribe(
+        (password: string) => {
+          this.generatedPassword = password;
+        },
         (err) => {
           this.errorMsg = err.message;
-        });
+        }
+      );
   }
 
   back(): void {
     this.location.back();
   }
 
-  copyToClipboard(): void{
+  copyToClipboard(): void {
     this.clipboard.copy(this.generatedPassword);
     this.clipboard.clearClipBoard();
   }
-
 }
-

@@ -1,7 +1,5 @@
 <ng-container>
-  <div
-    style="display: flex; justify-content: space-between; align-items: center"
-  >
+  <div style="display: flex; justify-content: space-between; align-items: center">
     <div style="display: flex; align-items: center">
       <mat-icon matListAvatar>public</mat-icon>
 
@@ -17,25 +15,13 @@
       </div>
     </div>
     <div>
-      <button
-        appStopClick
-        appBlurClick
-        appStopProp
-        mat-icon-button
-        (click)="delete()"
-      >
+      <button appStopClick appBlurClick appStopProp mat-icon-button (click)="delete()">
         <mat-icon color="warn">delete</mat-icon>
       </button>
       <button appStopClick appBlurClick appStopProp mat-icon-button>
         <mat-icon>content_copy</mat-icon>
       </button>
-      <button
-        appStopClick
-        appBlurClick
-        appStopProp
-        [routerLink]="['/vault-item', id]"
-        mat-icon-button
-      >
+      <button appStopClick appBlurClick appStopProp [routerLink]="['/vault-item', id]" mat-icon-button>
         <mat-icon>open_in_new</mat-icon>
       </button>
     </div>

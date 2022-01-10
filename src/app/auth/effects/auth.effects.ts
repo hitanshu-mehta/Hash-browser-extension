@@ -17,95 +17,103 @@ import * as fromAuth from '../reducers';
 
 @Injectable()
 export class AuthEffects {
-
-    loadMasterPasswordObj$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(LoginPageActions.loadMasterPasswordObj),
-            mergeMap(() => this.authService.loadMasterPasswordObj().pipe(
-                map((obj: MasterPasswordObj) =>
-                    AuthApiActions.loadMasterPasswordObjSuccess({ masterPasswordObj: obj })
-                ),
-                catchError(error =>
-                    of(AuthApiActions.loadMasterPasswordObjFailure({ error }))
-                )
-            ))
+  loadMasterPasswordObj$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.loadMasterPasswordObj),
+      mergeMap(() =>
+        this.authService.loadMasterPasswordObj().pipe(
+          map((obj: MasterPasswordObj) =>
+            AuthApiActions.loadMasterPasswordObjSuccess({
+              masterPasswordObj: obj,
+            })
+          ),
+          catchError((error) => of(AuthApiActions.loadMasterPasswordObjFailure({ error })))
         )
-    );
+      )
+    )
+  );
 
-    login$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(LoginPageActions.login.type),
-            map(action => action.credentials),
-            exhaustMap((auth: Credentials) =>
-                from(this.authService.login(auth)).pipe(
-                    withLatestFrom(this.store.select(fromAuth.getMasterpasswordObj)),
-                    map(([user, masterPasswordObj]) =>
-                        AuthApiActions.loginSuccess({ user, masterpassword: auth.password, masterPasswordObj })),
-                    catchError(error => of(AuthApiActions.loginFailure({ error })))
-                ))
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.login.type),
+      map((action) => action.credentials),
+      exhaustMap((auth: Credentials) =>
+        from(this.authService.login(auth)).pipe(
+          withLatestFrom(this.store.select(fromAuth.getMasterpasswordObj)),
+          map(([user, masterPasswordObj]) =>
+            AuthApiActions.loginSuccess({
+              user,
+              masterpassword: auth.password,
+              masterPasswordObj,
+            })
+          ),
+          catchError((error) => of(AuthApiActions.loginFailure({ error })))
         )
-    );
+      )
+    )
+  );
 
-    loginSuccess$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthApiActions.loginSuccess.type),
-            tap(() => this.router.navigate(['/main']))
-        ),
-        { dispatch: false }
-    );
+  loginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.loginSuccess.type),
+        tap(() => this.router.navigate(['/main']))
+      ),
+    { dispatch: false }
+  );
 
-    loginRedirect$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthApiActions.loginRedirect, AuthActions.logout),
-            tap(() => this.router.navigate(['/login']))
-        ),
-        { dispatch: false }
-    );
+  loginRedirect$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.loginRedirect, AuthActions.logout),
+        tap(() => this.router.navigate(['/login']))
+      ),
+    { dispatch: false }
+  );
 
-    loginConfirmation$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthActions.logoutConfirmation.type),
-            exhaustMap(() => {
-                const dialogRef = this.dialog.open<LogoutConfirmationDialogComponent,
-                    undefined,
-                    boolean
-                >(LogoutConfirmationDialogComponent);
+  loginConfirmation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.logoutConfirmation.type),
+      exhaustMap(() => {
+        const dialogRef = this.dialog.open<LogoutConfirmationDialogComponent, undefined, boolean>(
+          LogoutConfirmationDialogComponent
+        );
 
-                return dialogRef.afterClosed();
-            }),
-            map(
-                result =>
-                    result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()
-            )
+        return dialogRef.afterClosed();
+      }),
+      map((result) => (result ? AuthActions.logout() : AuthActions.logoutConfirmationDismiss()))
+    )
+  );
+
+  signup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(NewAccountPageActions.signup.type),
+      map((action) => action.credentials),
+      exhaustMap((auth: Credentials) =>
+        from(this.authService.signup(auth)).pipe(
+          map((obj) => AuthApiActions.signupSuccess(obj)),
+          catchError((error) => of(AuthApiActions.signupFailure({ error })))
         )
-    );
+      )
+    )
+  );
 
-    signup$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(NewAccountPageActions.signup.type),
-            map(action => action.credentials),
-            exhaustMap((auth: Credentials) =>
-                from(this.authService.signup(auth)).pipe(
-                    map((obj) => AuthApiActions.signupSuccess(obj)),
-                    catchError(error => of(AuthApiActions.signupFailure({ error })))
-                )
-            )
-        )
-    );
+  signupSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthApiActions.signupSuccess.type),
+        tap(() => this.router.navigate(['/main']))
+      ),
+    { dispatch: false }
+  );
 
-    signupSuccess$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthApiActions.signupSuccess.type),
-            tap(() => this.router.navigate(['/main'])),
-        ),
-        { dispatch: false }
-    );
-
-    constructor(
-        private actions$: Actions<LoginPageActions.LoginPageActionsUnion | NewAccountPageActions.NewAccountPageActionsUnion>,
-        private authService: AuthService,
-        private router: Router,
-        private dialog: MatDialog,
-        private store: Store<fromAuth.State>
-    ) { }
+  constructor(
+    private actions$: Actions<
+      LoginPageActions.LoginPageActionsUnion | NewAccountPageActions.NewAccountPageActionsUnion
+    >,
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog,
+    private store: Store<fromAuth.State>
+  ) {}
 }

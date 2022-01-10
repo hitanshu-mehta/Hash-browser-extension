@@ -16,25 +16,25 @@ import { reducers } from './reducers';
 import { StoreModule } from '@ngrx/store';
 
 export const COMPONENTS = [
-    VaultComponent,
-    VaultListComponent,
-    VaultListItemComponent,
-    VaultItemViewComponent,
-    VaultItemViewInputComponent,
+  VaultComponent,
+  VaultListComponent,
+  VaultListItemComponent,
+  VaultItemViewComponent,
+  VaultItemViewInputComponent,
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        MaterialModule,
-        ReactiveFormsModule,
-        VaultRoutingModule,
-        UtilsModule,
-        StoreModule.forFeature('vault', reducers),
-        EffectsModule.forFeature([VaultEffects])
-    ],
-    declarations: COMPONENTS,
-    exports: COMPONENTS
+  imports: [
+    CommonModule,
+    FormsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    VaultRoutingModule,
+    UtilsModule,
+    StoreModule.forFeature('vault', reducers),
+    EffectsModule.forFeature([VaultEffects]),
+  ],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
 })
-export class VaultModule { }
+export class VaultModule {}

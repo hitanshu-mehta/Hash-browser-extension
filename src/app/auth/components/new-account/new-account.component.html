@@ -43,7 +43,7 @@
             [attr.aria-label]="'Hide Password'"
             [attr.aria-pressed]="hide"
           >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
           <mat-error *ngIf="password.touched && password.invalid">
             {{ getPasswordErrorMessages() }}
@@ -72,7 +72,7 @@
             [attr.aria-label]="'Hide Password'"
             [attr.aria-pressed]="hide"
           >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
           <mat-error *ngIf="repassword.touched">
             {{ getRepasswordErrorMessages() }}
@@ -82,11 +82,7 @@
 
       <!-- Strength meter -->
       <div class="row mb-2">
-        <app-strength-meter
-          [password]="this.password.value"
-          [userData]="[this.username.value]"
-        >
-        </app-strength-meter>
+        <app-strength-meter [password]="this.password.value" [userData]="[this.username.value]"> </app-strength-meter>
       </div>
 
       <div class="row mb-2">
@@ -95,9 +91,7 @@
 
       <div *ngIf="this.password.dirty" class="row mb-2">
         <div class="row my-0 py-0" *ngFor="let suggestion of getSuggestions()">
-          <mat-error style="color: #2bae66ff !important">{{
-            suggestion
-          }}</mat-error>
+          <mat-error style="color: #2bae66ff !important">{{ suggestion }}</mat-error>
         </div>
       </div>
 
@@ -113,29 +107,14 @@
 
       <!-- Submit Button -->
       <div class="row mx-3 submit-button">
-        <button
-          mat-raised-button
-          color="primary"
-          appStopProp
-          appStopClick
-          type="submit"
-          (click)="onSubmit()"
-        >
+        <button mat-raised-button color="primary" appStopProp appStopClick type="submit" (click)="onSubmit()">
           Submit
         </button>
       </div>
 
       <!-- Back -->
       <div class="mb-3 mx-3 row submit-button">
-        <button
-          mat-raised-button
-          appStopProp
-          appStopClick
-          type="button"
-          (click)="back()"
-        >
-          Back
-        </button>
+        <button mat-raised-button appStopProp appStopClick type="button" (click)="back()">Back</button>
       </div>
     </form>
   </div>

@@ -1,40 +1,32 @@
 // This code is taken from
 // https://github.com/mikeybyker/angular2-zxcvbn/blob/master/src/app/strong-password/strength-meter/strength-meter.component.css
 
-.meter
-{
+.meter {
   height: 8px;
   margin: 2px 0;
   display: flex;
 }
 
-.meter .section
-{
+.meter .section {
   flex: 1;
   margin-right: 5px;
   transition: background-color 1s linear;
 }
-.meter .section:last-child
-{
+.meter .section:last-child {
   margin-right: 0;
 }
-.meter.level-0 .section:first-child
-{
+.meter.level-0 .section:first-child {
   background-color: #a94442;
 }
-.meter.level-1 .section:nth-child(-n+2)
-{
+.meter.level-1 .section:nth-child(-n + 2) {
   background-color: orangered;
 }
-.meter.level-2 .section:nth-child(-n+3)
-{
+.meter.level-2 .section:nth-child(-n + 3) {
   background-color: yellow;
 }
-.meter.level-3 .section:nth-child(-n+4)
-{
+.meter.level-3 .section:nth-child(-n + 4) {
   background-color: greenyellow;
 }
-.meter.level-4 .section:nth-child(-n+5)
-{
-  background-color: #42A948;
+.meter.level-4 .section:nth-child(-n + 5) {
+  background-color: #42a948;
 }

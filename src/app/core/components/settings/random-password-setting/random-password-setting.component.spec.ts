@@ -8,9 +8,8 @@ describe('RandomPasswordSettingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RandomPasswordSettingComponent ]
-    })
-    .compileComponents();
+      declarations: [RandomPasswordSettingComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

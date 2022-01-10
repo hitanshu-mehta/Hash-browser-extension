@@ -1,28 +1,28 @@
 import { AutofillService } from '../core/services/autofill.service';
 import { RuntimeBackground } from './runtime.background';
 
-export class MainBackground{
+export class MainBackground {
+  private rumtimeBackGround: RuntimeBackground;
+  private autofillService: AutofillService;
 
-    private rumtimeBackGround: RuntimeBackground;
-    private autofillService: AutofillService;
+  constructor() {
+    this.autofillService = new AutofillService();
 
-    constructor(){
-        this.autofillService = new AutofillService();
+    this.rumtimeBackGround = new RuntimeBackground(this, this.autofillService);
+  }
 
-        this.rumtimeBackGround = new RuntimeBackground(this,this.autofillService);
+  async bootstrap() {
+    await this.rumtimeBackGround.init();
+  }
+
+  collectPageDetails(tab: any, sender: string) {
+    if (tab == null || !tab.id) {
+      return;
     }
 
-    async bootstrap(){
-        await this.rumtimeBackGround.init();
-    }
-
-    collectPageDetails(tab: any, sender: string){
-        if(tab == null || !tab.id)
-            {return;}
-
-        chrome.tabs.sendMessage(tab.id,{
-            command:'collectPageDetails',
-            sender
-        });
-    }
+    chrome.tabs.sendMessage(tab.id, {
+      command: 'collectPageDetails',
+      sender,
+    });
+  }
 }

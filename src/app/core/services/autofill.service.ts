@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AutofillService {
+  constructor() {}
 
-  constructor() { }
-
-  async doAutoFillActiveTab(pageDetails: any){
-
-    const autoFillResponse = await this.doAutoFill({pageDetails});
+  async doAutoFillActiveTab(pageDetails: any) {
+    const autoFillResponse = await this.doAutoFill({ pageDetails });
 
     return autoFillResponse;
   }
@@ -19,5 +17,4 @@ export class AutofillService {
     // Generate fillScipt
     // send tab msg with command 'fillform'
   }
-
 }

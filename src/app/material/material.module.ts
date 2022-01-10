@@ -20,29 +20,29 @@ import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 
 const MODULES = [
-    MatFormFieldModule,
-    MatInputModule,
-    MatSliderModule,
-    MatChipsModule,
-    MatBadgeModule,
-    MatButtonToggleModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatCardModule,
-    MatStepperModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatListModule,
-    MatDialogModule
+  MatFormFieldModule,
+  MatInputModule,
+  MatSliderModule,
+  MatChipsModule,
+  MatBadgeModule,
+  MatButtonToggleModule,
+  MatExpansionModule,
+  MatProgressSpinnerModule,
+  MatTabsModule,
+  MatCardModule,
+  MatStepperModule,
+  MatButtonModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatDialogModule,
+  MatSnackBarModule,
+  MatListModule,
+  MatDialogModule,
 ];
 
 @NgModule({
-    imports: MODULES,
-    exports: MODULES
+  imports: MODULES,
+  exports: MODULES,
 })
 export class MaterialModule {}

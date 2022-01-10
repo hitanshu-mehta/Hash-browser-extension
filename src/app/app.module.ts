@@ -14,14 +14,12 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './core/containers/app/app.component';
 
-
 // Angular cdk
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 // Modules
 import { StrongPasswordModule } from './strong-password/strong-password.module';
-
 
 // Directives
 import { StopPropDirective } from './directives/stop-prop.directive';
@@ -33,31 +31,26 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
-    declarations: [
-        StopPropDirective,
-        StopClickDirective,
-        BlurClickDirective,
-    ],
-    imports: [
-        AppRoutingModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        FormsModule,
-        ClipboardModule,
-        OverlayModule,
-        PortalModule,
-        StrongPasswordModule,
-        VaultModule,
-        AuthModule,
-        CoreModule,
-        StoreModule.forRoot(reducers, { metaReducers }),
-        EffectsModule.forRoot([HomePageEffects]),
-        StoreRouterConnectingModule.forRoot()
-    ],
-    providers: [
-    ],
-    bootstrap: [AppComponent],
-    exports: [RouterModule]
+  declarations: [StopPropDirective, StopClickDirective, BlurClickDirective],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ClipboardModule,
+    OverlayModule,
+    PortalModule,
+    StrongPasswordModule,
+    VaultModule,
+    AuthModule,
+    CoreModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot([HomePageEffects]),
+    StoreRouterConnectingModule.forRoot(),
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  exports: [RouterModule],
 })
-export class AppModule { }
+export class AppModule {}
